@@ -8,7 +8,7 @@ class GradientDescent:
         for i in data[0]:
             for j in data[1]:
                 # dynamic amount of for loops here
-                 urrent_index =  [i,j]# [array of i,j,k,...]
+                current_index = [i, j]  # [array of i,j,k,...]
                 if self.function(*current_index) < self.function(*self.minimum):
                     self.minimum = [i, j]
 
@@ -22,7 +22,7 @@ class GradientDescent:
             num_steps=num_steps, delta=delta, alpha=scaling_factor)
 
         print(
-            'descending function: y = {}x + {}'.format(round(beta_1, 5), round(beta_0, 5)))
+            'descending function: y = {}x + {}'.format(round(self.minimum[0], 5), round(self.minimum[1], 5)))
 
         return self.minimum
 
@@ -37,7 +37,7 @@ class GradientDescent:
                 return sum([self.minimum[i] * x ** (i + 1) for i in range(0, self.minimum)])
 
             # if logging: #<--- is commented out because i dont want 100 lines of numbers
-                #print('y = {}x + {}'.format(round(y1,2), round(x1,2)))
+                # print('y = {}x + {}'.format(round(y1,2), round(x1,2)))
 
             step += 1
             return self.gradient_descent(prev_terms=value_nots, num_steps=num_steps, step=step)
