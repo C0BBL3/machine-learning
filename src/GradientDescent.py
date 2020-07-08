@@ -18,9 +18,10 @@ class GradientDescent:
         return [self.tangent_slope_at_point(delta, i) for i in range(0, self.num_vars)]
 
     def descend(self, scaling_factor=0.001, delta=0.001, num_steps=4, logging=True):
-        self.minimum = self.gradient_descent(num_steps=num_steps, delta=delta, alpha=scaling_factor)
+        self.minimum = self.gradient_descent(
+            num_steps=num_steps, delta=delta, alpha=scaling_factor)
 
-        print('descending function: y = {}x + {}'.format(*[round(minimum, 5) for minimum in self.minimum])
+        print('descending function: y = {}x + {}'.format(*[str(round(minimum, 5)) + 'x^' + str(self.minimum.index(minimum) + 1) + ' + ' for minimum in self.minimum])
 
         return self.minimum
 
