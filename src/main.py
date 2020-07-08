@@ -13,7 +13,6 @@ def sum_squared_error(beta_0, beta_1, beta_2):
 
 
 minimizer = GradientDescent(sum_squared_error)
-minimizer.descend(scaling_factor=0.001, delta=0.01,
-                  num_steps=100, logging=True)
-mimimizer.minimum
-sum_squared_error(minimizer.minimum)
+minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=100, logging=True)
+minimizer.minimum
+sum_squared_error(*minimizer.minimum)
