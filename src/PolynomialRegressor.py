@@ -1,7 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
-from Matrix_Class import Matrix
+from MatrixClass import Matrix
 
 
 class PolynomialRegressor:
