@@ -22,16 +22,18 @@ class GradientDescent:
             num_steps=num_steps, delta=delta, alpha=scaling_factor)
 
         print(
-            'descending function: y = {}x + {}'.format(round(self.minimum[0], 5), round(self.minimum[1], 5)))
+            # round(self.minimum[0], 5), round(self.minimum[1], 5)))
+            'descending function: y = {}x + {}'.format(
+                *[round(minimum, 5) for minimum in self.minimum])
 
         return self.minimum
 
     def gradient_descent(self, prev_terms=None, num_steps=1, step=0, logging=False, alpha=0.001, delta=0.001, precision=0.001):
         if step < num_steps:
-            value_nots = self.minimum
-            minimum_gradient = self.compute_gradient()
+            value_nots=self.minimum
+            self.minimum_gradient=self.compute_gradient()
             for i in range(0, len(self.minimum)):
-                self.minimum[i] -= alpha * minimum_gradient[i]
+                self.minimum[i] -= alpha * self.minimum_gradient[i]
 
             def function(x):
                 return sum([self.minimum[i] * x ** (i + 1) for i in range(0, self.minimum)])
@@ -46,8 +48,8 @@ class GradientDescent:
             return self.minimum
 
     def tangent_slope_at_point(self, h, derivative):
-        if derivative == 'x':
-            return (self.function(self.minimum[0] + h, self.minimum[0]) - self.function(self.minimum[0] - h, self.minimum[0])) / (2 * h)
-
-        if derivative == 'y':
-            return (self.function(self.minimum[0], self.minimum[0] + h) - self.function(self.minimum[0], self.minimum[0] - h)) / (2 * h)
+        positive_delta=[self.minimum[i] if i !=
+            derivative else self.minimum[i] + h for i in range(0, self.num_vars)]
+        negative_delta=[self.minimum[i] if i !=
+            derivative else self.minimum[i] - h for i in range(0, self.num_vars)]
+        return (self.function(*positive_delta) - self.function(*negative_delta)) / (2 * h)
