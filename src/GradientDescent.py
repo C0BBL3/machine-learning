@@ -21,10 +21,7 @@ class GradientDescent:
         self.minimum = self.gradient_descent(
             num_steps=num_steps, delta=delta, alpha=scaling_factor)
 
-        print(
-            # round(self.minimum[0], 5), round(self.minimum[1], 5)))
-            'descending function: y = {}x + {}'.format(
-                *[round(minimum, 5) for minimum in self.minimum])
+        print('descending function: y = {}x + {}'.format(*[round(minimum, 5) for minimum in self.minimum])
 
         return self.minimum
 
