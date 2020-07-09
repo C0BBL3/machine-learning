@@ -4,12 +4,11 @@ class GradientDescent:
         self.num_vars = f.__code__.co_argcount
         self.minimum = [0 for i in range(0, self.num_vars)]
 
-    def grid_search(self, data):
+    def grid_search(self, data): #<--- workn't'isn't'ith 
         for i in range(0, data[i]):
             current_index = []
             for j in range(0, data):
                 current_index.append(data[j][i])
-                print(current_index)
                 if self.function(*current_index) < self.function(*self.minimum):
                     self.minimum = current_index       
 
@@ -25,7 +24,6 @@ class GradientDescent:
         string_arr = ''
         for i in arr:
             string_arr += i
-        print(string_arr)
         string += string_arr
         
         print(string)

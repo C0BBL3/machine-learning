@@ -1,18 +1,41 @@
 from GradientDescent import GradientDescent
 
-data = [(0, 1), (1, 2), (2, 4), (3, 10)]
+def single_variable_function(x):
+    return (x-1)**2
+def two_variable_function(x, y):
+    return (x-1)**2 + (y-1)**3
+def three_variable_function(x, y, z):
+    return (x-1)**2 + (y-1)**3 + (z-1)**4
+def six_variable_function(x1, x2, x3, x4, x5, x6):
+    return (x1-1)**2 + (x2-1)**3 + (x3-1)**4 + x4 + 2*x5 + 3*x6
+ 
+minimizer = GradientDescent(single_variable_function)
+print(minimizer.minimum)
 
+print(minimizer.compute_gradient(delta=0.01))
 
-def sum_squared_error(beta_0, beta_1, beta_2):
-    squared_errors = []
-    for (x, y) in data:
-        estimation = beta_0 + beta_1*x + beta_2*(x**2)
-        error = estimation - y
-        squared_errors.append(error**2)
-    return sum(squared_errors)
+print(minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True))
 
+ 
+minimizer = GradientDescent(two_variable_function)
+print(minimizer.minimum)
 
-minimizer = GradientDescent(sum_squared_error)
-minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=100, logging=True)
-minimizer.minimum
-sum_squared_error(*minimizer.minimum)
+print(minimizer.compute_gradient(delta=0.01))
+
+print(minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True))
+
+ 
+minimizer = GradientDescent(three_variable_function)
+print(minimizer.minimum)
+
+print(minimizer.compute_gradient(delta=0.01))
+
+print(minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True))
+
+ 
+minimizer = GradientDescent(six_variable_function)
+print(minimizer.minimum)
+
+print(minimizer.compute_gradient(delta=0.01))
+
+print(minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True))
