@@ -1,4 +1,4 @@
-from GradientDescent import GradientDescent
+from gradient_descent import GradientDescent
 
 data = [(0, 1), (1, 2), (2, 4), (3, 10)]
 

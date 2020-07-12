@@ -1,16 +1,16 @@
 class GradientDescent:
     def __init__(self, f):
         self.function = f
+        self.minimum = [0, 0]
         self.num_vars = f.__code__.co_argcount
-        self.minimum = [0 for i in range(0, self.num_vars)]
 
-    def grid_search(self, data): #<--- workn't'isn't'ith 
-        for i in range(0, data[i]):
-            current_index = []
-            for j in range(0, data):
-                current_index.append(data[j][i])
+    def grid_search(self, data):
+        for i in data[0]:
+            for j in data[1]:
+                # dynamic amount of for loops here
+                current_index = [i, j]  # [array of i,j,k,...]
                 if self.function(*current_index) < self.function(*self.minimum):
-                    self.minimum = current_index       
+                    self.minimum = [i, j]
 
         return self.minimum
 
@@ -35,7 +35,7 @@ class GradientDescent:
 
             def function(x):
                 return sum([self.minimum[i] * x ** (i + 1) for i in range(0, self.minimum)])
- 
+
             # if logging: #<--- is commented out because i dont want 100 lines of numbers
                 # print('y = {}x + {}'.format(round(y1,2), round(x1,2)))
 
@@ -46,6 +46,8 @@ class GradientDescent:
             return self.minimum
 
     def tangent_slope_at_point(self, h, derivative):
-        positive_delta = [self.minimum[i] if i != derivative else self.minimum[i] + h for i in range(0, self.num_vars)]
-        negative_delta = [self.minimum[i] if i != derivative else self.minimum[i] - h for i in range(0, self.num_vars)]
+        positive_delta = [self.minimum[i] if i !=
+                          derivative else self.minimum[i] + h for i in range(0, self.num_vars)]
+        negative_delta = [self.minimum[i] if i !=
+                          derivative else self.minimum[i] - h for i in range(0, self.num_vars)]
         return (self.function(*positive_delta) - self.function(*negative_delta)) / (2 * h)
