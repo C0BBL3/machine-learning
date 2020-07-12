@@ -1,2 +1,2 @@
 language = "bash"
-run = "python src/main.py"
+run = "python tests/test_GradientDescent.py"
