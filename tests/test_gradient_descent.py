@@ -37,7 +37,7 @@ minimizer = GradientDescent(two_variable_function)
 
 gradient = round(minimizer.compute_gradient(delta=0.01), 10)
 
-assert minimizer.minimum == [-2.0000000000,
+assert gradient == [-2.0000000000,
                              3.0001000000], 'Gradient should be [-2.0000000000, 3.0001000000] but was actually {}'.format(gradient)
 
 
@@ -46,7 +46,7 @@ minimizer = GradientDescent(three_variable_function)
 
 gradient = round(minimizer.compute_gradient(delta=0.01), 10)
 
-assert minimizer.minimum == [-2.0000000000, 3.0001000000, -
+assert gradient == [-2.0000000000, 3.0001000000, -
                              4.0004000000], 'Gradient should be [-2.0000000000, 3.0001000000, -4.0004000000] but was actually {}'.format(gradient)
 
 
@@ -55,7 +55,7 @@ minimizer = GradientDescent(six_variable_function)
 
 gradient = round(minimizer.compute_gradient(delta=0.01), 10)
 
-assert minimizer.minimum == [-2.0000000000, 3.0001000000, -4.0004000000, 1.0000000000, 2.0000000000,
+assert gradient == [-2.0000000000, 3.0001000000, -4.0004000000, 1.0000000000, 2.0000000000,
                              3.0000000000], 'Gradient should be [-2.0000000000, 3.0001000000, -4.0004000000, 1.0000000000, 2.0000000000, 3.0000000000] but was actually {}'.format(gradient)
 
 
@@ -106,7 +106,7 @@ minimizer = GradientDescent(single_variable_function)
 
 minimizer.grid_search([[0, 0.25, 0.75]])
 
-grid_search round(minimizer.minimum, 10)
+grid_search = round(minimizer.minimum, 10)
 
 assert minimizer.minimum == [
     0.75], 'Grid Search should be [0.75] but was {}'.format(grid_search)
@@ -117,7 +117,7 @@ minimizer = GradientDescent(two_variable_function)
 
 minimizer.grid_search([[0, 0.25, 0.75], [0.9, 1, 1.1]])
 
-grid_search round(minimizer.minimum, 10)
+grid_search = round(minimizer.minimum, 10)
 
 assert minimizer.minimum == [
     0.75, 0.9], 'Grid Search should be [0.75, 0.9] but was {}'.format(grid_search)
@@ -129,7 +129,7 @@ minimizer = GradientDescent(three_variable_function)
 minimizer.grid_search(
     [[0, 0.25, 0.75], [0.9, 1, 1.1], [0, 1, 2, 3]])
 
-grid_search round(minimizer.minimum, 10)
+grid_search = round(minimizer.minimum, 10)
 
 assert minimizer.minimum == [
     0.75, 0.9, 1], 'Grid Search should be [0.75, 0.9, 1] but was {}'.format(grid_search)
@@ -141,7 +141,7 @@ minimizer = GradientDescent(six_variable_function)
 minimizer.grid_search([[0, 0.25, 0.75], [0.9, 1, 1.1], [0, 1, 2, 3],
                        [-2, -1, 0, 1, 2], [-2, -1, 0, 1, 2], [-2, -1, 0, 1, 2]])
 
-grid_search round(minimizer.minimum, 10)
+grid_search = round(minimizer.minimum, 10)
 
 assert minimizer.minimum == [
     0.75, 0.9, 1, -2, -2, -2], 'Grid Search should be [0.75, 0.9, 1, -2, -2, -2] but was {}'.format(grid_search)
