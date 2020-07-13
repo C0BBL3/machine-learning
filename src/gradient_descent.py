@@ -5,14 +5,38 @@ class GradientDescent:
         self.num_vars = f.__code__.co_argcount
 
     def grid_search(self, data):
-        for i in data[0]:
-            for j in data[1]:
-                # dynamic amount of for loops here
-                current_index = [i, j]  # [array of i,j,k,...]
-                if self.function(*current_index) < self.function(*self.minimum):
-                    self.minimum = [i, j]
+        cartesian_product_of_data = self.cartesian_product(data)
+        self.minimum = cartesian_product_of_data[0]
+        if len(cartesian_product_of_data) > 1:
+            for i in range(1, len(cartesian_product_of_data)):
+                if self.function(cartesian_product_of_data[i]) < self.function(self.minimum):
+                    self.minimum = cartesian_product_of_data[i]
 
         return self.minimum
+
+    def next_set_of_combos(self, arr_1, arr_2):
+        result = []
+
+        for i in range(0, len(arr_1)):
+
+            for j in range(0, len(arr_2)):
+
+                temp = [num for num in arr_1[i]]
+                temp.append(arr_2[j])
+                result.append(temp)
+
+        return result
+
+    def cartesian_product(self, arrays):
+        result = []
+        temp = arrays[0]
+        result = [temp]
+
+        for i in range(1, len(arrays)):
+            temp = self.next_set_of_combos(temp, arrays[i])
+            result.append(temp)
+
+        return result[-1]
 
     def compute_gradient(self, delta=0.001):
         return [self.tangent_slope_at_point(delta, i) for i in range(0, self.num_vars)]
