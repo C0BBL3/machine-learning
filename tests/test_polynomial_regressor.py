@@ -2,7 +2,7 @@ from polynomial_regressor import PolynomialRegressor  # halp
 import sys
 sys.path.append('src')
 
-rint('Testing...')
+print('Testing...')
 
 
 def single_variable_function(x):
