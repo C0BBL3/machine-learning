@@ -1,2 +1,2 @@
 language = "bash"
-run = "python tests/test_gradient_descent.py"
+run = "python tests/test_polynomial_regressor.py"

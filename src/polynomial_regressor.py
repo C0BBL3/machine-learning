@@ -7,12 +7,11 @@ from matrix_class import Matrix
 class PolynomialRegressor:
     def __init__(self, degree):
         self.degree = degree
-        self.default_guess = [0]
-        self.coefficients = [0]
+        self.default_guess = []
+        self.coefficients = []
         self.data = []
         for i in range(0, self.degree):
-            self.default_guess.append(0)
-            self.coefficients.append(0)
+            self.default_guess.append()
 
     def ingest_data(self, data):
         self.data = data
@@ -28,9 +27,10 @@ class PolynomialRegressor:
         X_transpose = X_matrix.transpose()  # xT
         X_transpose_times_X = X_transpose @ X_matrix  # xT * x
         result = X_transpose_times_X.inverse() @ X_transpose @ y_matrix
+        print(result.elements)
         for i in result.elements:
             index = result.elements.index(i)
-            self.coefficients[index] = i[0]  # (xT * x)^-1 * xT * y
+            self.coefficients.append(i[0])  # (xT * x)^-1 * xT * y
 
     def sum_squared_error(self):
         return sum([(self.evaluate(x) - y)**2 for x, y in self.data])
