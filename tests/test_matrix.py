@@ -65,7 +65,7 @@ print('RREF #4 Passed!')
 RREF_5 = Matrix(elements=[[1, 1, 2], [0, 1, 3]])
 result = RREF_5.rref()
 
-assert result.elements == [[1, 0, -1], [0, 1, 3], 'RREF #5 was wrong, should be [[1, 0, -1], [0, 1, 3]], but was {}'.format(result.elements)
+assert result.elements == [[1, 0, -1], [0, 1, 3]], 'RREF #5 was wrong, should be [[1, 0, -1], [0, 1, 3]], but was {}'.format(result.elements)
 print('RREF #5 Passed!')
 
 RREF_6 = Matrix(elements=[[1, 2, 3], [4, 5, 6]])
@@ -75,15 +75,15 @@ assert result.elements == [[1, 0, -1], [0, 1, 2]], 'RREF #6 was wrong, should be
 print('RREF #6 Passed!')
 
 inv_1 = Matrix(elements=[[-3, 1], [5, 0]])
-result = inv.inverse()
+result = inv_1.inverse()
 
-assert result.elements == [[[0, 0.2], [1, 0.6]], 'Iverse #1 was wrong, should be [[[0, 0.2], [1, 0.6]], but was {}'.format(result.elements)
+assert result.elements == [[0, 0.2], [1, 0.6]], 'Iverse #1 was wrong, should be [[[0, 0.2], [1, 0.6]], but was {}'.format(result.elements)
 print('Inverse #1 Passed!')
 
 inv_1 = Matrix(elements=[[-3, 1], [5, 0]])
 result = inv_1.inverse()
 
-assert result.elements == [[[0, 0.2], [1, 0.6]], 'Iverse #1 was wrong, should be [[[0, 0.2], [1, 0.6]], but was {}'.format(result.elements)
+assert result.elements == [[0, 0.2], [1, 0.6]], 'Iverse #1 was wrong, should be [[[0, 0.2], [1, 0.6]], but was {}'.format(result.elements)
 print('Inverse #1 Passed!')
 
 inv_2 = Matrix(elements=[[-3, 1, 0], [5, 0, 0]])
@@ -101,7 +101,7 @@ print('Inverse #3 Passed!')
 inv_by_minors_1 = Matrix(elements=[[-3, 1], [5, 0]])
 result = inv_by_minors_1.inverse_by_minors()
 
-assert result.elements == [[[0, 0.2], [1, 0.6]], 'Iverse #1 was wrong, should be [[[0, 0.2], [1, 0.6]], but was {}'.format(result.elements)
+assert result.elements == [[0, 0.2], [1, 0.6]], 'Iverse #1 was wrong, should be [[[0, 0.2], [1, 0.6]], but was {}'.format(result.elements)
 print('Inverse #1 Passed!')
 
 inv_by_minors_2 = Matrix(elements=[[-3, 1, 0], [5, 0, 0]])
