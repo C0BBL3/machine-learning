@@ -29,7 +29,7 @@ mat_mult_1 = Matrix(elements=[[1, 1], [0, 0]])
 mat_mult_2 = Matrix(elements=[[0, 0], [1, 1]])
 result = mat_mult_1 @ mat_mult_2
 
-assert result.elements == [[0, 0], [0, 0]], 'Matrix Multiplication was wrong, should be [[0, 0], [0, 0]], but was {}'.format(result.elements)
+assert result.elements == [[1, 1], [0, 0]], 'Matrix Multiplication was wrong, should be [[1, 1], [0, 0]], but was {}'.format(result.elements)
 print('Matrix Multiplication Passed!')
 
 trans = Matrix(elements=[[1, 1], [0, 1]])
@@ -41,37 +41,37 @@ print('Transpose Passed!')
 RREF_1 = Matrix(elements=[[1, 1], [0, 1]])
 result = RREF_1.rref()
 
-assert result.elements == [[1, 2], [3, 7]], 'RREF #1 was wrong, should be [[1, 0], [0, 1]], but was {}'.format(result.elements)
+assert result.elements == [[1.0, 0.0], [0.0, 1.0]], 'RREF #1 was wrong, should be [[1.0, 0.0], [0.0, 1.0]], but was {}'.format(result.elements)
 print('RREF #1 Passed!')
 
 RREF_2 = Matrix(elements=[[1, 1], [0, 1], [2, 3]])
 result = RREF_2.rref()
 
-assert result.elements == [[1, 0], [0, 1], [0, 0]], 'RREF #2 was wrong, should be [[1, 0], [0, 1], [0, 0]], but was {}'.format(result.elements)
+assert result.elements == [[1.0, 0.0], [0.0, 1.0], [0.0, 0.0]], 'RREF #2 was wrong, should be [[1.0, 0.0], [0.0, 1.0], [0.0, 0.0]], but was {}'.format(result.elements)
 print('RREF #2 Passed!')
 
 RREF_3 = Matrix(elements=[[1, 1, 2], [0, 1, 3]])
 result = RREF_3.rref()
 
-assert result.elements == [[1, 0, -1], [0, 1, 3]], 'RREF #3 was wrong, should be [[1, 0, -1], [0, 1, 3]], but was {}'.format(result.elements)
+assert result.elements == [[1.0, 0.0, -1.0], [0.0, 1.0, 3.0]], 'RREF #3 was wrong, should be [[1, 0, -1], [0, 1, 3]], but was {}'.format(result.elements)
 print('RREF #3 Passed!')
 
 RREF_4 = Matrix(elements=[[3, 1, 2], [0, 2, 3]])
 result = RREF_4.rref()
 
-assert result.elements == [[1, 0, 0.16], [0, 1, 1.5]], 'RREF #4 was wrong, should be [[1, 0, 0.16], [0, 1, 1.5]], but was {}'.format(result.elements)
+assert result.elements == [[1.0, 0.0, 0.2], [0.0, 1.0, 1.5]], 'RREF #4 was wrong, should be [[1, 0, 0.16], [0, 1, 1.5]], but was {}'.format(result.elements)
 print('RREF #4 Passed!')
 
-RREF_5 = Matrix(elements=[[1, 1, 2], [0, 1, 3]])
+RREF_5 = Matrix(elements=[[4, 5, 6], [7, 8, 9]])
 result = RREF_5.rref()
 
-assert result.elements == [[1, 0, -1], [0, 1, 3]], 'RREF #5 was wrong, should be [[1, 0, -1], [0, 1, 3]], but was {}'.format(result.elements)
+assert result.elements == [[1.0, 0.0, -1.0], [0.0, 1.0, 2.0]], 'RREF #5 was wrong, should be [[1.0, 0.0, -1.0], [0.0, 1.0, 3.0]], but was {}'.format(result.elements)
 print('RREF #5 Passed!')
 
 RREF_6 = Matrix(elements=[[1, 2, 3], [4, 5, 6]])
 result = RREF_6.rref()
 
-assert result.elements == [[1, 0, -1], [0, 1, 2]], 'RREF #6 was wrong, should be [[1, 0, -1], [0, 1, 2]], but was {}'.format(result.elements)
+assert result.elements == [[1.0, 0.0, -1.0], [0.0, 1.0, 2.0]], 'RREF #6 was wrong, should be [[1, 0, -1], [0, 1, 2]], but was {}'.format(result.elements)
 print('RREF #6 Passed!')
 
 inv_1 = Matrix(elements=[[-3, 1], [5, 0]])
