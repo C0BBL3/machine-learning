@@ -1,6 +1,6 @@
-from gradient_descent import GradientDescent  # halp
 import sys
 sys.path.append('src')
+from gradient_descent import GradientDescent  # halp
 
 
 print('Testing...')

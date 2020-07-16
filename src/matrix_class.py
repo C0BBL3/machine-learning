@@ -304,6 +304,8 @@ class Matrix():
                     A.elements[i][j] = self.recursive_determinant(
                         small_matrix) / self.recursive_determinant(big_matrix)
                 A.transpose()
+
+            return A
         else:
             return 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
 
