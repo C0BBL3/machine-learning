@@ -19,8 +19,11 @@ class PolynomialRegressor:
     def solve_coefficients(self):
         X_data = []
         y_data = []
-        for i, j in self.data:
-            X_data.append([1, i, i ** 2])
+        polynomial_function = []                    #  error stems
+        for i, j in self.data[:degree]:             #  from here
+            for k in range(0, self.degree):         #  for the
+                polynomial_function.append(i ** k)  #  PolynomialRegressor tests
+            X_data.append(polynomial_function)
             y_data.append([j])
         X_matrix = Matrix(elements=X_data)
         y_matrix = Matrix(elements=y_data)
@@ -28,9 +31,8 @@ class PolynomialRegressor:
         X_transpose_times_X = X_transpose @ X_matrix  # xT * x
         result = X_transpose_times_X.inverse() @ X_transpose @ y_matrix
         print(result.elements)
-        for i in result.elements:
-            index = result.elements.index(i)
-            self.coefficients.append(i[0])  # (xT * x)^-1 * xT * y
+        for i in range(0, self.degree + 1):
+            self.coefficients.append(result.elements[i][0])  # (xT * x)^-1 * xT * y
 
     def sum_squared_error(self):
         return sum([(self.evaluate(x) - y)**2 for x, y in self.data])

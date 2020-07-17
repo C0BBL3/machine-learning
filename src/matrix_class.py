@@ -270,6 +270,7 @@ class Matrix():
 
     def inverse(self):
         A = self.copy(self)
+        #assert self.cols == self.rows, 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
         if self.cols == self.rows:
             for i in range(0, self.rows):        #
                 for j in range(0, self.cols):    #
@@ -292,17 +293,18 @@ class Matrix():
     def inverse_by_minors(self):
         A = self.copy(self)
         big_matrix = self.copy(self)
+        #assert self.cols == self.rows, 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
         if A.cols == A.rows:
             for i in range(0, A.rows):
                 for j in range(0, A.cols):
                     small_matrix = A.shrink_matrix(i, j)
                     small_matrix.cols = len(small_matrix.elements[0])
                     small_matrix.rows = len(small_matrix.elements)
-                    print(small_matrix.elements)
-                    print(self.recursive_determinant(small_matrix))
-                    print(self.recursive_determinant(big_matrix))
-                    A.elements[i][j] = self.recursive_determinant(
-                        small_matrix) / self.recursive_determinant(big_matrix)
+                    #print(small_matrix.elements)
+                    #print(self.recursive_determinant(small_matrix))
+                    #print(self.recursive_determinant(big_matrix))
+                    if isinstance(self.recursive_determinant(small_matrix), str) and isinstance(self.recursive_determinant(big_matrix), str):
+                        A.elements[i][j] = self.recursive_determinant(small_matrix) / self.recursive_determinant(big_matrix)
                 A.transpose()
 
             return A
