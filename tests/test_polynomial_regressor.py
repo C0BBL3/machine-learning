@@ -1,6 +1,6 @@
+from polynomial_regressor import PolynomialRegressor  # halp
 import sys
 sys.path.append('src')
-from polynomial_regressor import PolynomialRegressor  # halp
 
 print('Testing...')
 

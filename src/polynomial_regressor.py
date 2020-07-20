@@ -1,6 +1,6 @@
 import random
-import matplotlib.pyplot as plt
-from matplotlib.ticker import MultipleLocator
+#import matplotlib.pyplot as plt
+#from matplotlib.ticker import MultipleLocator
 from matrix_class import Matrix
 
 
@@ -10,8 +10,8 @@ class PolynomialRegressor:
         self.default_guess = []
         self.coefficients = []
         self.data = []
-        for i in range(0, self.degree):
-            self.default_guess.append()
+        for _ in range(0, self.degree):
+            self.default_guess.append(0)
 
     def ingest_data(self, data):
         self.data = data
@@ -19,30 +19,35 @@ class PolynomialRegressor:
     def solve_coefficients(self):
         X_data = []
         y_data = []
-        polynomial_function = []                    #  error stems
-        for i, j in self.data[:degree]:             #  from here
-            for k in range(0, self.degree):         #  for the
-                polynomial_function.append(i ** k)  #  PolynomialRegressor tests
+        polynomial_function = []  # error stems
+        for i, j in self.data:  # from here
+            polynomial_function = []
+            for k in range(0, self.degree + 1):  # for the
+                polynomial_function.append(i ** k)  # PolynomialRegressor tests
             X_data.append(polynomial_function)
             y_data.append([j])
         X_matrix = Matrix(elements=X_data)
-        y_matrix = Matrix(elements=y_data)
+        print('X_matrix.elements', X_matrix.elements)
+        Y_matrix = Matrix(elements=y_data)
+        print('Y_matrix.elements', Y_matrix.elements)
         X_transpose = X_matrix.transpose()  # xT
         X_transpose_times_X = X_transpose @ X_matrix  # xT * x
-        result = X_transpose_times_X.inverse() @ X_transpose @ y_matrix
+        result = X_transpose_times_X.inverse() @ X_transpose @ Y_matrix
         print(result.elements)
         for i in range(0, self.degree + 1):
-            self.coefficients.append(result.elements[i][0])  # (xT * x)^-1 * xT * y
+            # (xT * x)^-1 * xT * y
+            self.coefficients.append(result.elements[i][0])
 
     def sum_squared_error(self):
+        print('baka')
         return sum([(self.evaluate(x) - y)**2 for x, y in self.data])
 
     def evaluate(self, x):
         if self.coefficients == []:
-            return sum([self.default_guess[i] * x ** (i + 1) for i in range(0, self.degree)])
+            return sum([self.default_guess[i] * (x ** i) for i in range(0, self.degree)])
         else:
-            return sum([self.coefficients[i] * x ** (i + 1) for i in range(0, self.degree)])
-
+            return sum([self.coefficients[i] * (x ** i) for i in range(0, self.degree)])
+'''
     def plot(self, padding=5, num_subintervals=50):
         title = 'y = {}x^2 + {}x + {}'.format(round(self.coefficients[0], 2), round(
             self.coefficients[1], 2), round(self.coefficients[2], 2))
@@ -63,3 +68,4 @@ class PolynomialRegressor:
         plt.ylim(y_min_data-padding, y_max_data+padding)
         plt.title(title)
         plt.show()
+'''

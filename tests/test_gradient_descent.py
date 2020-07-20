@@ -1,6 +1,6 @@
+from gradient_descent import GradientDescent  # halp
 import sys
 sys.path.append('src')
-from gradient_descent import GradientDescent  # halp
 
 
 print('Testing...')
@@ -76,7 +76,7 @@ assert descent == [
 
 
 print('    2 Variable Function')
-minimizer = GradientDescent(two_variable_function)
+minimizer= GradientDescent(two_variable_function)
 
 minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True), 10)
 descent=[round(minimum, 10) for minimum in minimizer.minimum]
@@ -88,7 +88,7 @@ assert descent == [0.0020000000, -
 print('    3 Variable Function')
 minimizer=GradientDescent(three_variable_function)
 
-minimizer.descend(scaling_factor = 0.001, delta = 0.01, num_steps = 1, logging = True), 10)
+minimizer.descend(scaling_factor= 0.001, delta = 0.01, num_steps = 1, logging = True), 10)
 descent=[round(minimum, 10) for minimum in minimizer.minimum]
 
 assert descent == [0.0020000000, -0.0030001000,

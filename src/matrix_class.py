@@ -102,6 +102,8 @@ class Matrix():
             return self
 
     def swap_rows(self, row1Num, row2Num):
+        print('row1Num', row1Num)
+        print('row2Num', row2Num)
         tempRow = self.elements[row1Num]
         self.elements[row1Num] = self.elements[row2Num]
         self.elements[row2Num] = tempRow
