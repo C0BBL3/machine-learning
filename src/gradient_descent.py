@@ -1,8 +1,10 @@
 class GradientDescent:
     def __init__(self, f):
         self.function = f
-        self.minimum = [0, 0]
         self.num_vars = f.__code__.co_argcount
+        self.minimum = [0 for _ in range(0, self.num_vars)]
+        
+
 
     def grid_search(self, data):
         cartesian_product_of_data = self.cartesian_product(data)

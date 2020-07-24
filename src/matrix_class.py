@@ -45,13 +45,13 @@ class Matrix():
 
         return c
 
-    def __matmul__(self, b):
-        c = self.create_matrix(self.rows, b.cols, 0)
+    def __matmul__(self, matrix):
+        c = self.create_matrix(self.rows, matrix.cols, 0)
 
         for i in range(0, self.rows):
-            for j in range(0, b.cols):
+            for j in range(0, matrix.cols):
                 for k in range(0, self.cols):
-                    c.elements[i][j] += self.elements[i][k] * b.elements[k][j]
+                    c.elements[i][j] += self.elements[i][k] * matrix.elements[k][j]
 
         return c
 
@@ -273,7 +273,7 @@ class Matrix():
         if self.rows != self.cols:
             return False
 
-        elif self.determinant_function() == 0:
+        elif self.recursive_determinant(self) == 0:
             return False
 
         else:
@@ -283,16 +283,16 @@ class Matrix():
         A = self.copy(self)
         #assert self.cols == self.rows, 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
         if self.check_if_matrix_is_invertable():
-            if len(self.elements) == 2:
-                return [[self.elements[1][1]/determinant, -1*self.elements[0][1]/determinant],
-                        [-1*self.elements[1][0] / determinant, self.elements[0][0] / determinant]]
-
             determinant = self.recursive_determinant(self)
+            if len(self.elements) == 2:
+                return [[self.elements[1][1], -1 * self.elements[0][1]],
+                        [-1 * self.elements[1][0], self.elements[0][0]]]
+
             cofactors = []
             for row in range(0, self.rows):
                 cofactorRow = []
                 for col in range(0, self.cols):
-                    minor = A.shrink_matrix(row, col)
+                    minor = A.compute_minor(row, col)
                     cofactorRow.append(
                         ((-1) ** (row + col)) * self.recursive_determinant(minor))
                 cofactors.append(cofactorRow)
@@ -311,7 +311,7 @@ class Matrix():
         if self.check_if_matrix_is_invertable():
             for i in range(0, A.rows):
                 for j in range(0, A.cols):
-                    small_matrix = A.shrink_matrix(i, j)
+                    small_matrix = A.compute_minor(i, j)
                     small_matrix.cols = len(small_matrix.elements[0])
                     small_matrix.rows = len(small_matrix.elements)
                     # print(small_matrix.elements)
@@ -340,10 +340,10 @@ class Matrix():
 
         return b
 
-    def determinant_function(self):
+    def determinant_function(self):#<-- use recursive determinant its more accurate
         return self.rref(return_determinant=True)
 
-    def recursive_determinant(self, matrix):
+    def recursive_determinant(self, matrix): #correct way of doing a determinant
         #print('matrix.elements', matrix.elements)
         if matrix.rows == matrix.cols:
             if len(matrix.elements) == 2:
@@ -352,17 +352,21 @@ class Matrix():
                 determinant = 0
 
                 for c in range(len(matrix.elements)):
-                    determinant += ((-1.0) ** c) * matrix.elements[0][c] * self.recursive_determinant(matrix.shrink_matrix(0, c))
+                    determinant += ((-1.0) ** c) * matrix.elements[0][c] * self.recursive_determinant(
+                        matrix.compute_minor(0, c))
 
                 return determinant
 
         else:
             return 'Matrix not square, please give a square matrix'
 
-    def shrink_matrix(self, i, j):
+    def compute_minor(self, i, j):
         return Matrix(elements=[row[:j] + row[j + 1:] for row in (self.elements[:i] + self.elements[i + 1:])])
         
-    def round(self, num_of_decimals):  #for tests
-        for row in self.elements:
-            for index in row:
-                index = round(index, num_of_decimals)
+    def round(self, num_of_decimals=0):  #for tests
+        A = self.copy(self)
+        for row in range(0, self.rows):
+            for col in range(0, self.cols):
+                A.elements[row][col] = int(round(self.elements[row][col], num_of_decimals))
+
+        return A
