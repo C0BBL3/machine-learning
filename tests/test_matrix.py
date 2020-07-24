@@ -1,6 +1,6 @@
-from matrix_class import Matrix
 import sys
 sys.path.append('src')
+from matrix_class import Matrix
 
 print('Testing...')
 
@@ -84,46 +84,88 @@ assert result.elements == [[1.0, 0.0, -1.0], [0.0, 1.0, 2.0]
                            ], 'RREF #6 was wrong, should be [[1, 0, -1], [0, 1, 2]], but was {}'.format(result.elements)
 print('RREF #6 Passed!')
 
+round_1 = Matrix(elements=[[1.34, 3.23], [2.12, 5.43]])
+result = round_1.round()
 
-inv_1 = Matrix(elements=[[-3, 1], [5, 0]])
-result = inv_1.inverse()
+assert result.elements == [[1, 3], [2, 5]
+                           ], 'Round #1 doesnt work should be [[1, 3], [2, 5]], but was {}'.format(result.elements)
+print('Round #1 Passed!')
 
-assert result.elements == [[0, 0.2], [
-    1, 0.6]], 'Iverse #1 was wrong, should be [[[0, 0.2], [1, 0.6]], but was {}'.format(result.elements)
+round_2 = Matrix(elements=[[4.34, 3.23, 5.69], [2.12, 5.43, 9.72], [5.53, 4.65, 6.32]])
+result = round_2.round()
+
+assert result.elements == [[1, 3], [2, 5]
+                           ], 'Round #1 doesnt work should be [[4, 3, 6], [2, 5, 10], [6, 5, 6]], but was {}'.format(result.elements)
+print('Round #2 Passed!')
+
+round_3 = Matrix(elements=[[1.34, 3.23], [2.12, 5.43]])
+result = round_3.round()
+
+assert result.elements == [[1, 3], [2, 5]
+                           ], 'Round #1 doesnt work should be [[1, 3], [2, 5]], but was {}'.format(result.elements)
+print('Round #3 Passed!')
+
+inv_1 = Matrix(elements=[[1, 2, 3, 4], [5, 0, 6, 0],
+                         [0, 7, 0, 8], [9, 0, 0, 10]])
+result = inv_1 @ inv_1.inverse()
+result.round(1)
+
+identity = Matrix(shape=(4, 4), fill='diag')
+
+assert result.elements == identity.elements, "Inverse #1 wasn't inverted correctly, but was {}".format(
+    result.elements)
 print('Inverse #1 Passed!')
 
-inv_2 = Matrix(elements=[[-3, 1, 0], [5, 0, 0]])
-result = inv_2.inverse()
+inv_2 = Matrix(elements=[[1.2, 5.3, 8.9, -10.3, -15], [3.14, 0, -6.28, 0, 2.71], [0, 1, 1, 2, 3], [5, 8, 13, 21, 34],[1, 0, 0.5, 0, 0.1]])
+result = inv_2 @ inv_2.inverse()
+result.round(1)
 
-assert result == 'ERROR: Matrix is not Invertible. Please give a Invertible matrix', "Inverse #2 was inverted, but it shouldn't be inverted, but was {}".format(
-    result)
+identity = Matrix(shape=(5, 5), fill='diag')
+
+assert result.elements == identity.elements, "Inverse #2 wasn't inverted correctly, but was {}".format(
+    result.elements)
 print('Inverse #2 Passed!')
 
-# inv_3 = Matrix(elements=[[1, 2], [2, 4]]) dependent rows give error
-#result = inv_3.inverse()
+inv_3 = Matrix(elements=[[1, 2], [2, 4]])# dependent rows give error
+result = inv_3 @ inv_3.inverse()
+result.round(1)
 
-# assert result == 'ERROR: Matrix is not Invertible. Please give a Invertible matrix', "Inverse #3 was inverted, but it shouldn't be inverted, but was {}".format(result)
-# print('Inverse #3 Passed!')
+identity = Matrix(shape=(2, 2), fill='diag')
 
-inv_by_minors_1 = Matrix(elements=[[-3, 1], [5, 0]])
-result = inv_by_minors_1.inverse_by_minors()
+assert result.elements == identity.elements, "Inverse #2 wasn't inverted correctly, but was {}".format(
+    result.elements)
+print('Inverse #3 Passed!')
 
-assert result.elements == [[0, 0.2], [
-    1, 0.6]], 'Inverse by minors #1 was wrong, should be [[[0, 0.2], [1, 0.6]], but was {}'.format(result.elements)
+inv_by_minors_1 = Matrix(elements=[[1, 2, 3, 4], [5, 0, 6, 0],
+                         [0, 7, 0, 8], [9, 0, 0, 10]])
+result = inv_by_minors_1 @ inv_by_minors_1.inverse()
+result.round(1)
+
+identity = Matrix(shape=(4, 4), fill='diag')
+
+assert result.elements == identity.elements, "Inverse #1 wasn't inverted correctly, but was {}".format(
+    result.elements)
 print('Inverse #1 Passed!')
 
-inv_by_minors_2 = Matrix(elements=[[-3, 1, 0], [5, 0, 0]])
-result = inv_by_minors_2.inverse_by_minors()
+inv_by_minors_2 = Matrix(elements=[[1.2, 5.3, 8.9, -10.3, -15], [3.14, 0, -6.28,
+                                                       0, 2.71], [0, 1, 1, 2, 3], [5, 8, 13, 21, 34], [1, 0, 0.5, 0, 0.1]])
+result = inv_by_minors_1 @ inv_by_minors_1.inverse()
+result.round(1)
 
-assert result == 'ERROR: Matrix is not Invertible. Please give a Invertible matrix', "Inverse #2 was inverted, but it shouldn't be inverted, but was {}".format(
-    result)
+identity = Matrix(shape=(5, 5), fill='diag')
+
+assert result.elements == identity.elements, "Inverse #2 wasn't inverted correctly, but was {}".format(
+    result.elements)
 print('Inverse #2 Passed!')
 
-inv_by_minors_3 = Matrix(elements=[[1, 2], [2, 4]])
-result = inv_by_minors_3.inverse_by_minors()
+inv_by_minors_3 = Matrix(elements=[[1, 2], [2, 4]])  # dependent rows give error
+result = inv_by_minors_3 @ inv_by_minors_3.inverse()
+result.round(1)
 
-assert result == 'ERROR: Matrix is not Invertible. Please give a Invertible matrix', "Inverse #3 was inverted, but it shouldn't be inverted, but was {}".format(
-    result)
+identity = Matrix(shape=(2, 2), fill='diag')
+
+assert result.elements == identity.elements, "Inverse #2 wasn't inverted correctly, but was {}".format(
+    result.elements)
 print('Inverse #3 Passed!')
 
 det_1 = Matrix(elements=[[-3, 1], [5, 1]])

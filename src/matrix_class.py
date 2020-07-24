@@ -56,9 +56,9 @@ class Matrix():
         return c
 
     def __eq__(self, b):
-        return self.isEqual(b)
+        return self.is_equal(b)
 
-    def isEqual(self, b):
+    def is_equal(self, b):
         if self.rows == len(b) and self.cols == len(b):
             for i in range(0, self.cols):
                 for j in range(0, self.rows):
@@ -111,91 +111,90 @@ class Matrix():
 
         return self
 
-    def scale_row(self, rowNum):
-        scalarCol = self.find_col_num_of_first_nonzero_element_in_row(rowNum)
+    def scale_row(self, row_num):
+        scalar_col = self.find_col_num_of_first_nonzero_element_in_row(row_num)
 
-        if scalarCol == None:
+        if scalar_col == None:
             self.determinant_number *= 0
             return self
         else:
-            scalar = self.get_scalar(rowNum)
-            for colNum in range(0, self.cols):
-                self.elements[rowNum][colNum] /= scalar
+            scalar = self.get_scalar(row_num)
+            for col_num in range(0, self.cols):
+                self.elements[row_num][col_num] /= scalar
 
             self.determinant_number *= scalar
             return self
 
-    def get_scalar(self, rowNum):
-        scalarCol = self.find_col_num_of_first_nonzero_element_in_row(rowNum)
-        return self.elements[rowNum][scalarCol]
+    def get_scalar(self, row_num):
+        scalar_col = self.find_col_num_of_first_nonzero_element_in_row(row_num)
+        return self.elements[row_num][scalar_col]
 
-    def find_col_num_of_first_nonzero_element_in_row(self, rowNum):
-        for colNum in range(0, self.cols):
-            element = self.elements[rowNum][colNum]
+    def find_col_num_of_first_nonzero_element_in_row(self, row_num):
+        for col_num in range(0, self.cols):
+            element = self.elements[row_num][col_num]
             if element != 0:
-                return colNum
+                return col_num
 
         return None
 
-    def clear_above(self, rowNum):
-        colNum = self.find_col_num_of_first_nonzero_element_in_row(rowNum)
-        if colNum == None:
+    def clear_above(self, row_num):
+        col_num = self.find_col_num_of_first_nonzero_element_in_row(row_num)
+        if col_num == None:
             return self
         else:
-            divisor = self.elements[rowNum][colNum]
-            for i in range(rowNum - 1, -1, -1):
-                element = self.elements[i][colNum]
+            divisor = self.elements[row_num][col_num]
+            for i in range(row_num - 1, -1, -1):
+                element = self.elements[i][col_num]
                 if element != 0:
                     scalar = element / divisor
-                    for j in range(colNum, self.cols):
+                    for j in range(col_num, self.cols):
                         self.elements[i][j] -= scalar * \
-                            self.elements[rowNum][j]
+                            self.elements[row_num][j]
 
             return self
 
-    def clear_below(self, rowNum):
-        colNum = self.find_col_num_of_first_nonzero_element_in_row(rowNum)
-        for i in range(rowNum + 1, self.rows):
-            if self.elements[i][colNum] != 0:
-                scalar = self.elements[i][colNum] / self.elements[rowNum][
-                    colNum]
-                for j in range(colNum, self.cols):
-                    self.elements[i][j] -= scalar * self.elements[rowNum][j]
+    def clear_below(self, row_num):
+        col_num = self.find_col_num_of_first_nonzero_element_in_row(row_num)
+        for i in range(row_num + 1, self.rows):
+            if self.elements[i][col_num] != 0:
+                scalar = self.elements[i][col_num] / self.elements[row_num][
+                    col_num]
+                for j in range(col_num, self.cols):
+                    self.elements[i][j] -= scalar * self.elements[row_num][j]
 
         return self
 
-    def get_pivot_row(self, colNum):
+    def get_pivot_row(self, col_num):
         for i in self.elements:
             j = self.find_col_num_of_first_nonzero_element_in_row(
                 self.elements.index(i))
-            if colNum == j:
+            if col_num == j:
                 return self.elements.index(i)
         return None
 
     def min(self):
-        minVal = self.elements[0][0]
+        min_val = self.elements[0][0]
         for i in range(0, self.cols):
             for j in range(0, self.rows):
-                if self.elements[i][j] < minVal:
-                    minVal = self.elements[i][j]
+                if self.elements[i][j] < min_val:
+                    min_val = self.elements[i][j]
 
-        return minVal
+        return min_val
 
     def max(self):
-        maxVal = self.elements[0][0]
+        max_val = self.elements[0][0]
         for i in range(0, self.cols):
             for j in range(0, self.rows):
-                if self.elements[i][j] > maxVal:
-                    maxVal = self.elements[i][j]
+                if self.elements[i][j] > max_val:
+                    max_val = self.elements[i][j]
 
-        return maxVal
+        return max_val
 
-    def transpose(self):
-        C = [[] for _ in range(len(self.elements[0]))]
-        for x, row in enumerate(self.elements):
-            for y, val in enumerate(row):
-                C[y].insert(x, val)
-        return Matrix(C)
+    def transpose(self, arr=None):
+        if arr == None:
+            return Matrix(elements=[[row[i] for row in self.elements] for i in range(len(self.elements[0]))])
+        else:
+            return Matrix(elements=[[row[i] for row in arr] for i in range(len(arr[0]))])
 
     def exponent(self, exp):
         if exp == 0:
@@ -216,7 +215,7 @@ class Matrix():
             elements.append([])
             for _ in range(0, y):
                 elements[i].append(fill)
-        return Matrix(elements, (x, y))
+        return Matrix(elements=elements)
 
     def create_matrix_elements(self, x, y, fill):
         elements = []
@@ -229,7 +228,7 @@ class Matrix():
 
     def create_identity(self, x, y):  # x is col and y is row
         elements = self.create_identity_elements(x, y)
-        return Matrix(elements, (x, y))
+        return Matrix(elements=elements)
 
     def create_identity_elements(self, x, y):
         elements = []
@@ -270,48 +269,62 @@ class Matrix():
             return self.determinant_number
         return A
 
+    def check_if_matrix_is_invertable(self):
+        if self.rows != self.cols:
+            return False
+
+        elif self.determinant_function() == 0:
+            return False
+
+        else:
+            return True
+
     def inverse(self):
         A = self.copy(self)
         #assert self.cols == self.rows, 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
-        if self.cols == self.rows:
-            for i in range(0, self.rows):        #
-                for j in range(0, self.cols):    #
-                    if i == j:                   # adding the identity as the
-                        A.elements[j].append(1)  # augmented part of the matrix
-                    else:                        #
-                        A.elements[j].append(0)  #
-            A.rows = len(A.elements)
-            A.cols = len(A.elements[0])
-            b = self.create_matrix(self.cols, self.rows, 0)
-            A2 = A.rref()
-            for i in range(0, self.rows):                   #
-                # get the augmented part of the matrix
-                for j in range(self.cols, 2 * self.cols):
-                    b[i, j - self.cols] = round(A2[i, j], 3)
-            return b
+        if self.check_if_matrix_is_invertable():
+            if len(self.elements) == 2:
+                return [[self.elements[1][1]/determinant, -1*self.elements[0][1]/determinant],
+                        [-1*self.elements[1][0] / determinant, self.elements[0][0] / determinant]]
+
+            determinant = self.recursive_determinant(self)
+            cofactors = []
+            for row in range(0, self.rows):
+                cofactorRow = []
+                for col in range(0, self.cols):
+                    minor = A.shrink_matrix(row, col)
+                    cofactorRow.append(
+                        ((-1) ** (row + col)) * self.recursive_determinant(minor))
+                cofactors.append(cofactorRow)
+            cofactors = self.transpose(cofactors)
+            for row in range(0, cofactors.rows):
+                for col in range(0, cofactors.cols):
+                    cofactors[row, col] /= determinant
+            return cofactors
         else:
-            return 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
+            print('ERROR: Matrix is not Invertible. Please give a Invertible matrix')
 
     def inverse_by_minors(self):
         A = self.copy(self)
         big_matrix = self.copy(self)
         #assert self.cols == self.rows, 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
-        if A.cols == A.rows:
+        if self.check_if_matrix_is_invertable():
             for i in range(0, A.rows):
                 for j in range(0, A.cols):
                     small_matrix = A.shrink_matrix(i, j)
                     small_matrix.cols = len(small_matrix.elements[0])
                     small_matrix.rows = len(small_matrix.elements)
-                    #print(small_matrix.elements)
-                    #print(self.recursive_determinant(small_matrix))
-                    #print(self.recursive_determinant(big_matrix))
+                    # print(small_matrix.elements)
+                    # print(self.recursive_determinant(small_matrix))
+                    # print(self.recursive_determinant(big_matrix))
                     if isinstance(self.recursive_determinant(small_matrix), str) and isinstance(self.recursive_determinant(big_matrix), str):
-                        A.elements[i][j] = self.recursive_determinant(small_matrix) / self.recursive_determinant(big_matrix)
+                        A.elements[i][j] = self.recursive_determinant(
+                            small_matrix) / self.recursive_determinant(big_matrix)
                 A.transpose()
 
             return A
         else:
-            return 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
+            print('ERROR: Matrix is not Invertible. Please give a Invertible matrix')
 
     def solve(self, b):
         A = self
@@ -331,44 +344,25 @@ class Matrix():
         return self.rref(return_determinant=True)
 
     def recursive_determinant(self, matrix):
+        #print('matrix.elements', matrix.elements)
         if matrix.rows == matrix.cols:
-            if matrix.rows == 2 and matrix.cols == 2:
-                return (matrix[0, 0] * matrix[1, 1]) - (matrix[1, 0] * matrix[0, 1])
-            elif matrix.rows == 1 and matrix.cols == 1:
-                return matrix[0, 0]
-            else:
-                for i in range(0, matrix.rows):
-                    small_matrix = matrix
-                    small_matrix = small_matrix.shrink_matrix(i, 0)
-                    small_matrix.cols = len(small_matrix.elements[0])
-                    small_matrix.rows = len(small_matrix.elements)
-                    print('smol matrix', small_matrix.elements)
-                    print('smol determinant',
-                          self.recursive_determinant(small_matrix))
-                    print(
-                        'determinant', matrix[i, 0] * self.recursive_determinant(small_matrix))
-                    if i % 2 != 0:
-                        self.determinant_number_recursive -= matrix[i, 0] * self.recursive_determinant(
-                            small_matrix)
-                    else:
-                        self.determinant_number_recursive += matrix[i, 0] * self.recursive_determinant(
-                            small_matrix)
-                return self.determinant_number_recursive
+            if len(matrix.elements) == 2:
+                return (matrix.elements[0][0] * matrix.elements[1][1] - matrix.elements[0][1] * matrix.elements[1][0])
+            elif len(matrix.elements) > 2:
+                determinant = 0
+
+                for c in range(len(matrix.elements)):
+                    determinant += ((-1.0) ** c) * matrix.elements[0][c] * self.recursive_determinant(matrix.shrink_matrix(0, c))
+
+                return determinant
 
         else:
             return 'Matrix not square, please give a square matrix'
 
-    def shrink_matrix(self, row_num, col_num):
-        small_matrix = self.copy(self)
-        small_matrix.elements = small_matrix.elements[:row_num] + \
-            small_matrix.elements[row_num+1:]
-        small_matrix.rows = len(small_matrix.elements)
-        if col_num >= 1:
-            for i in range(0, small_matrix.rows):
-                small_matrix.elements[i] = small_matrix.elements[i][:col_num] + \
-                    small_matrix.elements[i][row_num+1:]
-        elif col_num == 0:
-            for i in range(0, small_matrix.rows):
-                small_matrix.elements[i] = small_matrix.elements[i][row_num+1:]
-
-        return small_matrix
+    def shrink_matrix(self, i, j):
+        return Matrix(elements=[row[:j] + row[j + 1:] for row in (self.elements[:i] + self.elements[i + 1:])])
+        
+    def round(self, num_of_decimals):  #for tests
+        for row in self.elements:
+            for index in row:
+                index = round(index, num_of_decimals)
