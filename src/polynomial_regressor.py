@@ -5,7 +5,7 @@ from matrix_class import Matrix
 
 
 class PolynomialRegressor:
-    def __init__(self, degree):
+    def __init__(self, degree = 1):
         self.degree = degree
         self.default_guess = []
         self.coefficients = []
@@ -16,28 +16,33 @@ class PolynomialRegressor:
     def ingest_data(self, data):
         self.data = data
 
-    def solve_coefficients(self):
+    def solve_coefficients(self, sandwich_situation = False):
         X_data = []
         y_data = []
-        polynomial_function = []  # error stems
-        for i, j in self.data:  # from here
-            polynomial_function = []
-            for k in range(0, self.degree + 1):  # for the
-                polynomial_function.append(i ** k)  # PolynomialRegressor tests
-            X_data.append(polynomial_function)
-            y_data.append([j])
+        polynomial_function = []
+        for arr in self.data:
+            if sandwich_situation:
+                X_data.append(arr[:-1])
+                y_data.append([arr[-1]])
+            else:
+                polynomial_function = []
+                for k in range(0, self.degree + 1):
+                    polynomial_function.append(arr[0] ** k)
+                    X_data.append(polynomial_function)
+                    y_data.append([arr[1]])
         X_matrix = Matrix(elements=X_data)
-        print('X_matrix.elements', X_matrix.elements)
+        print('\nX_matrix.elements', X_matrix.elements, '\n')
         Y_matrix = Matrix(elements=y_data)
-        print('Y_matrix.elements', Y_matrix.elements)
+        print('Y_matrix.elements', Y_matrix.elements, '\n')
         X_transpose = X_matrix.transpose()  # xT
         X_transpose_times_X = X_transpose @ X_matrix  # xT * x
-        result = X_transpose_times_X.inverse() @ X_transpose @ Y_matrix
-        print(result.elements)
-        for i in range(0, self.degree + 1):
-            # (xT * x)^-1 * xT * y
-            self.coefficients.append(result.elements[i][0])
+        result = X_transpose_times_X.inverse() @ X_transpose @ Y_matrix  # (xT * x)^-1 * xT * y
+        for results in result.elements:
+            if results != result.elements:
+                self.coefficients.append(results[0])
 
+        print('Coeffs', self.coefficients, '\n')
+        
     def sum_squared_error(self):
         print('baka')
         return sum([(self.evaluate(x) - y)**2 for x, y in self.data])
