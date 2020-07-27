@@ -47,8 +47,7 @@ class GradientDescent:
         self.minimum = self.gradient_descent(
             num_steps=num_steps, delta=delta, alpha=scaling_factor)
 
-        print('descending function: y = {}x + {}'.format(*[str(round(minimum, 5)) + 'x^' + str(
-            self.minimum.index(minimum) + 1) + ' + ' for minimum in self.minimum]))
+        print('descending function: y = {}'.format(*[str(round(minimum, 5)) + 'x^' + str(self.minimum.index(minimum) + 1) + ' + ' for minimum in self.minimum]))
 
         return self.minimum
 
@@ -59,11 +58,8 @@ class GradientDescent:
             for i in range(0, len(self.minimum)):
                 self.minimum[i] -= alpha * self.minimum_gradient[i]
 
-            def function(x):
-                return sum([self.minimum[i] * x ** (i + 1) for i in range(0, self.minimum)])
-
-            # if logging: #<--- is commented out because i dont want 100 lines of numbers
-                # print('y = {}x + {}'.format(round(y1,2), round(x1,2)))
+            if logging: #<--- is commented out because i dont want 100 lines of numbers
+                print('y = {}'.format(*[str(round(minimum, 5)) + 'x^' + str(self.minimum.index(minimum) + 1) + ' + ' for minimum in self.minimum]))
 
             step += 1
             return self.gradient_descent(prev_terms=value_nots, num_steps=num_steps, step=step)
@@ -72,8 +68,8 @@ class GradientDescent:
             return self.minimum
 
     def tangent_slope_at_point(self, h, derivative):
-        positive_delta = [self.minimum[i] if i !=
+        positive_delta_args = [self.minimum[i] if i !=
                           derivative else self.minimum[i] + h for i in range(0, self.num_vars)]
-        negative_delta = [self.minimum[i] if i !=
+        negative_delta_args = [self.minimum[i] if i !=
                           derivative else self.minimum[i] - h for i in range(0, self.num_vars)]
-        return (self.function(*positive_delta) - self.function(*negative_delta)) / (2 * h)
+        return (self.function(*positive_delta_args) - self.function(*negative_delta_args)) / (2 * h)

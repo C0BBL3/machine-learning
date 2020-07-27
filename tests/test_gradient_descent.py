@@ -23,133 +23,61 @@ def six_variable_function(x1, x2, x3, x4, x5, x6):
 
 
 print('Gradient')
-print('    1 Variable Function')
-minimizer = GradientDescent(single_variable_function)
 
-minimizer.compute_gradient(delta=0.01)
-gradient = [round(minimum, 10) for minimum in minimizer.minimum]
+classes = []
 
-assert gradient == [
-    -2.0000000000], 'Gradient should be [-2.0000000000] but was actually {}'.format(gradient)
+functions = [single_variable_function,
+             two_variable_function, three_variable_function,
+             six_variable_function]
 
+answers = [[-2.0000000000], [-2.0000000000, 3.0001000000],
+           [-2.0000000000, 3.0001000000, -4.0004000000],
+           [-2.0000000000, 3.0001000000, -4.0004000000,
+             1.0000000000, 2.0000000000, 3.0000000000]]
 
-print('    2 Variable Function')
-minimizer = GradientDescent(two_variable_function)
+for i in range(1, 7):
+    if i != 4 and i != 5:
+        print('    {} Variable Function').format(i)
+        classes.append(GradientDescent(functions[i]))
+        classes[i].compute_gradient(delta=0.01)
+        gradient = [round(minimum, 10) for minimum in classes[i].minimum]
 
-minimizer.compute_gradient(delta=0.01)
-gradient = [round(minimum, 10) for minimum in minimizer.minimum]
+        assert gradient == answers[i], 'Gradient should be ' + str(answers[i]) + ' but was actually {}'.format(gradient)
 
-assert gradient == [-2.0000000000,
-                             3.0001000000], 'Gradient should be [-2.0000000000, 3.0001000000] but was actually {}'.format(gradient)
-
-
-print('    3 Variable Function')
-minimizer = GradientDescent(three_variable_function)
-
-minimizer.compute_gradient(delta=0.01)
-gradient = [round(minimum, 10) for minimum in minimizer.minimum]
-
-assert gradient == [-2.0000000000, 3.0001000000, -
-                             4.0004000000], 'Gradient should be [-2.0000000000, 3.0001000000, -4.0004000000] but was actually {}'.format(gradient)
-
-
-print('    6 Variable Function')
-minimizer = GradientDescent(six_variable_function)
-
-minimizer.compute_gradient(delta=0.01)
-gradient = [round(minimum, 10) for minimum in minimizer.minimum]
-
-assert gradient == [-2.0000000000, 3.0001000000, -4.0004000000, 1.0000000000, 2.0000000000,
-                             3.0000000000], 'Gradient should be [-2.0000000000, 3.0001000000, -4.0004000000, 1.0000000000, 2.0000000000, 3.0000000000] but was actually {}'.format(gradient)
 
 
 print('Descend')
-print('    1 Variable Function')
-minimizer = GradientDescent(single_variable_function)
 
-minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True), 10)
-descent=[round(minimum, 10) for minimum in minimizer.minimum]
+classes = []
 
+answers = [[0.0020000000], [0.0020000000, -0.0030001000],
+           [0.0020000000, -0.0030001000, 0.0040004000],
+           [0.0020000000, -0.0030001000, 0.0040004000,
+            -0.0010000000, -0.0020000000, -0.0030000000]]
 
-assert descent == [
-    0.0020000000], 'Descent should be [0.0020000000] but was actually {}'.format(descent)
+for i in range(1, 7):
+    if i != 4 and i != 5:
+        print('    {} Variable Function').format(i)
+        functions.append(GradientDescent(functions[i]))
+        functions[i].descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True), 10)
+        descent=[round(minimum, 10) for minimum in functions[i].minimum]
 
-
-print('    2 Variable Function')
-minimizer= GradientDescent(two_variable_function)
-
-minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True), 10)
-descent=[round(minimum, 10) for minimum in minimizer.minimum]
-
-assert descent == [0.0020000000, -
-                             0.0030001000], 'Descent should be [0.0020000000, -0.0030001000] but was actually {}'.format(descent)
-
-
-print('    3 Variable Function')
-minimizer=GradientDescent(three_variable_function)
-
-minimizer.descend(scaling_factor= 0.001, delta = 0.01, num_steps = 1, logging = True), 10)
-descent=[round(minimum, 10) for minimum in minimizer.minimum]
-
-assert descent == [0.0020000000, -0.0030001000,
-                             0.0040004000], 'Descent should be [0.0020000000, -0.0030001000, 0.0040004000] but was actually {}'.format(descent)
-
-
-print('    6 Variable Function')
-minimizer=GradientDescent(six_variable_function)
-
-minimizer.descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True), 10)
-descent=[round(minimum, 10) for minimum in minimizer.minimum]
-
-assert descent == [0.0020000000, -0.0030001000, 0.0040004000, -0.0010000000, -0.0020000000, -
-                             0.0030000000], 'Descent should be [0.0020000000, -0.0030001000, 0.0040004000, -0.0010000000, -0.0020000000, -0.0030000000] but was actually {}'.format(descent)
-
+            assert descent == answers[i], 'Descent should be ' +
+            str(answers[i]) + ' but was actually {}'.format(gradient)
 
 print('Grid Search')
-print('    Two Variable Function')
-minimizer=GradientDescent(single_variable_function)
 
-minimizer.grid_search([[0, 0.25, 0.75]])
+classes = []
 
-grid_search=[round(minimum, 10) for minimum in minimizer.minimum]
+answers = [[0.75], [0.75, 0.9], [0.75, 0.9, 1], [0.75, 0.9, 1, -2, -2, -2]]
 
-assert grid_search == [
-    0.75], 'Grid Search should be [0.75] but was {}'.format(grid_search)
+for i in range(1, 7):
+    if i != 4 and i != 5:
+        print('    {} Variable Function').format(i)
+        functions.append(GradientDescent(functions[i]))
+        functions[i].descend(scaling_factor=0.001, delta=0.01, num_steps=1, logging=True), 10)
+        grid_search=[round(minimum, 10) for minimum in functions[i].minimum]
 
-
-print('    2 Variable Function')
-minimizer=GradientDescent(two_variable_function)
-
-minimizer.grid_search([[0, 0.25, 0.75], [0.9, 1, 1.1]])
-
-grid_search=[round(minimum, 10) for minimum in minimizer.minimum]
-
-assert grid_search == [
-    0.75, 0.9], 'Grid Search should be [0.75, 0.9] but was {}'.format(grid_search)
-
-
-print('    3 Variable Function')
-minimizer=GradientDescent(three_variable_function)
-
-minimizer.grid_search(
-    [[0, 0.25, 0.75], [0.9, 1, 1.1], [0, 1, 2, 3]])
-
-grid_search=[round(minimum, 10) for minimum in minimizer.minimum]
-
-assert grid_search == [
-    0.75, 0.9, 1], 'Grid Search should be [0.75, 0.9, 1] but was {}'.format(grid_search)
-
-
-print('    6 Variable Function')
-minimizer=GradientDescent(six_variable_function)
-
-minimizer.grid_search([[0, 0.25, 0.75], [0.9, 1, 1.1], [0, 1, 2, 3],
-                       [-2, -1, 0, 1, 2], [-2, -1, 0, 1, 2], [-2, -1, 0, 1, 2]])
-
-grid_search=[round(minimum, 10) for minimum in minimizer.minimum]
-
-assert grid_search == [
-    0.75, 0.9, 1, -2, -2, -2], 'Grid Search should be [0.75, 0.9, 1, -2, -2, -2] but was {}'.format(grid_search)
-
+        assert grid_search == answers[i], 'Grid Search should be ' + str(answers[i]) + ' but was actually {}'.format(gradient)
 
 print('All Tests Passed!! 😊')

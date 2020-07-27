@@ -285,8 +285,8 @@ class Matrix():
         if self.check_if_matrix_is_invertable():
             determinant = self.recursive_determinant(self)
             if len(self.elements) == 2:
-                return [[self.elements[1][1], -1 * self.elements[0][1]],
-                        [-1 * self.elements[1][0], self.elements[0][0]]]
+                return Matrix(elements=[[self.elements[1][1], -1 * self.elements[0][1]],
+                        [-1 * self.elements[1][0], self.elements[0][0]]])
 
             cofactors = []
             for row in range(0, self.rows):
@@ -300,7 +300,7 @@ class Matrix():
             for row in range(0, cofactors.rows):
                 for col in range(0, cofactors.cols):
                     cofactors[row, col] /= determinant
-            return cofactors
+            return Matrix(elements = cofactors)
         else:
             print('ERROR: Matrix is not Invertible. Please give a Invertible matrix')
 
@@ -361,6 +361,7 @@ class Matrix():
             return 'Matrix not square, please give a square matrix'
 
     def compute_minor(self, i, j):
+        #print('minor', [row[:j] + row[j + 1:] for row in (self.elements[:i] + self.elements[i + 1:])])
         return Matrix(elements=[row[:j] + row[j + 1:] for row in (self.elements[:i] + self.elements[i + 1:])])
         
     def round(self, num_of_decimals=0):  #for tests

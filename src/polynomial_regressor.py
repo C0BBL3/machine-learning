@@ -18,24 +18,29 @@ class PolynomialRegressor:
 
     def solve_coefficients(self, sandwich_situation = False):
         X_data = []
-        y_data = []
+        Y_data = []
         polynomial_function = []
         for arr in self.data:
             if sandwich_situation:
                 X_data.append(arr[:-1])
-                y_data.append([arr[-1]])
+                Y_data.append([arr[-1]])
             else:
                 polynomial_function = []
-                for k in range(0, self.degree + 1):
-                    polynomial_function.append(arr[0] ** k)
+                if self.degree > 0:
+                    for k in range(0, self.degree + 1):
+                        polynomial_function.append(arr[0] ** k)
                     X_data.append(polynomial_function)
-                    y_data.append([arr[1]])
+
+                else:
+                    X_data.append([arr[0]])
+                Y_data.append([arr[1]])
         X_matrix = Matrix(elements=X_data)
         print('\nX_matrix.elements', X_matrix.elements, '\n')
-        Y_matrix = Matrix(elements=y_data)
+        Y_matrix = Matrix(elements=Y_data)
         print('Y_matrix.elements', Y_matrix.elements, '\n')
         X_transpose = X_matrix.transpose()  # xT
         X_transpose_times_X = X_transpose @ X_matrix  # xT * x
+        print('X_transpose_times_X.inverse()', X_transpose_times_X.inverse())
         result = X_transpose_times_X.inverse() @ X_transpose @ Y_matrix  # (xT * x)^-1 * xT * y
         for results in result.elements:
             if results != result.elements:
