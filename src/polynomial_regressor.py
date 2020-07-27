@@ -5,7 +5,7 @@ from matrix_class import Matrix
 
 
 class PolynomialRegressor:
-    def __init__(self, degree = 1):
+    def __init__(self, degree=1):
         self.degree = degree
         self.default_guess = []
         self.coefficients = []
@@ -16,12 +16,12 @@ class PolynomialRegressor:
     def ingest_data(self, data):
         self.data = data
 
-    def solve_coefficients(self, sandwich_situation = False):
+    def solve_coefficients(self):
         X_data = []
         Y_data = []
         polynomial_function = []
         for arr in self.data:
-            if sandwich_situation:
+            if len(arr) > 2: 
                 X_data.append(arr[:-1])
                 Y_data.append([arr[-1]])
             else:
@@ -47,7 +47,7 @@ class PolynomialRegressor:
                 self.coefficients.append(results[0])
 
         print('Coeffs', self.coefficients, '\n')
-        
+
     def sum_squared_error(self):
         print('baka')
         return sum([(self.evaluate(x) - y)**2 for x, y in self.data])
@@ -57,6 +57,8 @@ class PolynomialRegressor:
             return sum([self.default_guess[i] * (x ** i) for i in range(0, self.degree)])
         else:
             return sum([self.coefficients[i] * (x ** i) for i in range(0, self.degree)])
+
+
 '''
     def plot(self, padding=5, num_subintervals=50):
         title = 'y = {}x^2 + {}x + {}'.format(round(self.coefficients[0], 2), round(

@@ -26,10 +26,12 @@ sandwiches = [[1, 0, 0, 1], [1, 1, 0, 2], [1, 2, 0, 4], [1, 4, 0, 8], [1, 6, 0, 
 
 poly_regress = PolynomialRegressor()
 poly_regress.ingest_data(sandwiches)
-poly_regress.solve_coefficients(sandwich_situation = True)
+poly_regress.solve_coefficients()
+
+print('5 roast beef + 5 tbsp of peanut butter =', (poly_regress.coefficients[1] + poly_regress.coefficients[2] * 5 + poly_regress.coefficients[2] * 5))
 
 #rating = 1.1493506493506493 + 1.4220779220779225 * (slices of beef) + 0.7584415584415587 * (tbsp peanut butter)
 
-# No, because sandwiches with slices of beef and peanut butter doesnt sound good, just stick with 1 or the other, dont risk it for hte biscut
+# Yes, you should belive that 5 roast beef + 5 tbsp of peanut butter has a high rating because computers don't lie and the conputer said it had a high rating
 
 
