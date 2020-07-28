@@ -40,7 +40,6 @@ class PolynomialRegressor:
         print('Y_matrix.elements', Y_matrix.elements, '\n')
         X_transpose = X_matrix.transpose()  # xT
         X_transpose_times_X = X_transpose @ X_matrix  # xT * x
-        print('X_transpose_times_X.inverse()', X_transpose_times_X.inverse())
         result = X_transpose_times_X.inverse() @ X_transpose @ Y_matrix  # (xT * x)^-1 * xT * y
         for results in result.elements:
             if results != result.elements:

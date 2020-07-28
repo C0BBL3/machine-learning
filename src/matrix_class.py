@@ -55,8 +55,12 @@ class Matrix():
 
         return c
 
-    def __eq__(self, b):
-        return self.is_equal(b)
+    def __eq__(self, matrix):
+        if self.rows == matrix.rows and self.cols == matrix.cols:
+            for i in range(0, self.cols):
+                for j in range(0, self.rows):
+                    if self.elements[i][j] != matrix.elements[i][j]:
+                        return False
 
     def is_equal(self, b):
         if self.rows == len(b) and self.cols == len(b):
@@ -300,7 +304,7 @@ class Matrix():
             for row in range(0, cofactors.rows):
                 for col in range(0, cofactors.cols):
                     cofactors[row, col] /= determinant
-            return Matrix(elements = cofactors)
+            return cofactors
         else:
             print('ERROR: Matrix is not Invertible. Please give a Invertible matrix')
 
