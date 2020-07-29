@@ -20,13 +20,13 @@ print('5 roast beef + 5 tbsp of peanut butter = {}'.format(rating))
 # QUESTION 1
 # What is the model?
 
-#    rating = 1.5873900293255128 + 0.8671554252199409 * (slices beef) + 0.42038123167155433 * (tbsp peanut butter)
+#    rating = 1.5873900293255128 + 0.8671554252199409 * 5 + 0.42038123167155433 * 5
 
 # QUESTION 2
 # What is the predicted rating of a sandwich with 5 slices of roast beef AND
 # 5 tablespoons of peanut butter (on the same sandwich)?
 
-#    rating = 5.070967741935485
+#    rating = 8.02507331378
 
 # QUESTION 3
 # How does this prediction compare to that from the previous assignment? Did
@@ -97,13 +97,13 @@ print('5 roast beef + 5 tbsp of peanut butter + roast beef * peanut butter = {}'
 # QUESTION 7
 # What is the model?
 
-#    rating = 0.8707473221980557 + 1.4452948660073053 * (slices beef) + 0.792106127139164 * (tbsp peanut butter) + -0.7617679648705216 * (slices beef)(tbsp peanut butter)
+#    rating = 0.8707473221980557 + 1.4452948660073053 * 5 + 0.792106127139164 * 5 + -0.7617679648705216 * 25
 
 # QUESTION 8
 # What is the predicted rating of a sandwich with 5 slices of roast beef AND
 # 5 tablespoons of peanut butter (on the same sandwich)?
 
-#    rating = 9.366356137398945
+#    rating = -6.98644683383
 
 # QUESTION 9
 # How does this prediction compare to that from the previous assignment? Did
