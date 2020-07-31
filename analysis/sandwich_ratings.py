@@ -78,11 +78,11 @@ print('5 roast beef + 5 tbsp of peanut butter = {}'.format(rating))
 #    [1, 4, 0, 0],    [[beta_0],      [8],
 #    [1, 6, 0, 0],     [beta_1],  =   [9],
 #    [1, 0, 2, 0],     [beta_2]]      [2],
-#    [1, 0, 4, 0],                    [5],
+#    [1, 0, 4, 0],     [beta_3]]      [5],
 #    [1, 0, 6, 0],                    [7],
 #    [1, 0, 8, 0]]                    [6]]
 #    [1, 2, 2, 4],                    [0],
-#    [1, 3, 4, 12]]                    [0]]
+#    [1, 3, 4, 12]]                   [0]]
 
 sandwiches_2 = [[1, 0, 0, 0, 1], [1, 1, 0, 0, 2], [1, 2, 0, 0, 4], [1, 4, 0, 0, 8], [1, 6, 0, 0, 9], [
     1, 0, 2, 0, 2], [1, 0, 4, 0, 5], [1, 0, 6, 0, 7], [1, 0, 8, 0, 6],  [1, 2, 2, 4, 0], [1, 3, 4, 12, 0]]
@@ -91,7 +91,8 @@ poly_regress_2 = PolynomialRegressor()
 poly_regress_2.ingest_data(sandwiches_2)
 poly_regress_2.solve_coefficients()
 
-rating = poly_regress_2.coefficients[1] + poly_regress_2.coefficients[2] * 5 + poly_regress_2.coefficients[2] * 5 + poly_regress_2.coefficients[3]
+rating = poly_regress_2.coefficients[1] + poly_regress_2.coefficients[2] * \
+    5 + poly_regress_2.coefficients[2] * 5 + poly_regress_2.coefficients[3]
 print('5 roast beef + 5 tbsp of peanut butter + roast beef * peanut butter = {}'.format(rating))
 
 # QUESTION 7
@@ -115,3 +116,73 @@ print('5 roast beef + 5 tbsp of peanut butter + roast beef * peanut butter = {}'
 
 #    For Current Assignment #1 the code gave us a lower value, seeing that when peanut butter and roast beef are mixed, it'll be pretty bad, which makes the data more trustworthy
 #    Later for Current Assignment #2 the code gave us a little higher value because when their together there is another value (slices beef) * (tbsp peanut butter) which inflates the value a little
+
+# [[0, 0, 0, 0],                  [[1]
+#  [0, 0, 1, 0],                   [1]
+#  [0, 0, 0, 1],                   [4]
+#  [0, 0, 1, 1],     [[beta_1],    [0]
+#  [5, 0, 0, 0],     [beta_2],     [4]
+#  [5, 0, 1, 0],     [beta_3],     [8]
+#  [5, 0, 0, 1],     [beta_4],     [1]
+#  [5, 0, 1, 1],     [beta_5],     [0]
+#  [0, 5, 0, 0],     [beta_6], =   [5]
+#  [0, 5, 1, 0],     [beta_7],     [0]
+#  [0, 5, 0, 1],     [beta_8],     [9]
+#  [0, 5, 1, 1],     [beta_9],     [0]
+#  [5, 5, 0, 0],     [beta_10]]    [0]
+#  [5, 5, 1, 0],                   [0]
+#  [5, 5, 0, 1],                   [0]
+#  [5, 5, 1, 1]]                   [0]]
+
+bad_sandwich_1 = [[1, 0, 0, 0, 0, 1],
+                  [1, 0, 0, 1, 0, 1],
+                  [1, 0, 0, 0, 1, 4],
+                  [1, 0, 0, 1, 1, 0],
+                  [1, 5, 0, 0, 0, 4],
+                  [1, 5, 0, 1, 0, 8],
+                  [1, 5, 0, 0, 1, 1],
+                  [1, 5, 0, 1, 1, 0],
+                  [1, 0, 5, 0, 0, 5],
+                  [1, 0, 5, 1, 0, 0],
+                  [1, 0, 5, 0, 1, 9],
+                  [1, 0, 5, 1, 1, 0],
+                  [1, 5, 5, 0, 0, 0],
+                  [1, 5, 5, 1, 0, 0],
+                  [1, 5, 5, 0, 1, 0],
+                  [1, 5, 5, 1, 1, 0]]
+
+poly_regress_3 = PolynomialRegressor()
+poly_regress_3.ingest_data(bad_sandwich_1)
+poly_regress_3.solve_coefficients()
+print('COEFFICIENTS')
+print('    bias term:', poly_regress_3.coefficients[0])
+print('    beef:', poly_regress_3.coefficients[1])
+print('    peanut butter:', poly_regress_3.coefficients[2])
+print('    mayo', poly_regress_3.coefficients[3])
+print('    jelly:', poly_regress_3.coefficients[4])
+print('    beef & peanut butter:',
+      poly_regress_3.coefficients[1] * poly_regress_3.coefficients[2])
+print('    beef & mayo:',
+      poly_regress_3.coefficients[1] * poly_regress_3.coefficients[3])
+print('    beef & jelly:',
+      poly_regress_3.coefficients[1] * poly_regress_3.coefficients[4])
+print('    peanut butter & mayo:',
+      poly_regress_3.coefficients[2] * poly_regress_3.coefficients[3])
+print('    peanut butter & jelly:',
+      poly_regress_3.coefficients[2] * poly_regress_3.coefficients[4])
+print('    mayo & jelly:',
+      poly_regress_3.coefficients[3]*poly_regress_3.coefficients[4])
+
+print('PREDICTED RATINGS')
+print('    2 slices beef + mayo:', 2 * poly_regress_3.coefficients[1] + poly_regress_3.coefficients[3])
+print('    2 slices beef + jelly:', 2 *
+      poly_regress_3.coefficients[1] + poly_regress_3.coefficients[4])
+print('    3 tbsp peanut butter + jelly:', 3 *
+      poly_regress_3.coefficients[2] + poly_regress_3.coefficients[4])
+print('    3 tbsp peanut butter + jelly + mayo:', 2 *
+      poly_regress_3.coefficients[1] + poly_regress_3.coefficients[3])
+print('    2 slices beef + 3 tbsp peanut butter + jelly + mayo:', 2 *
+      poly_regress_3.coefficients[1] + poly_regress_3.coefficients[3])
+      3 tbsp peanut butter + jelly: __
+      3 tbsp peanut butter + jelly + mayo: ___
+      2 slices beef + 3 tbsp peanut butter + jelly + mayo: ___')
