@@ -1,2 +1,2 @@
 language = "bash"
-run = "python analysis/sandwich_ratings.py"
+run = "python analysis/logistic_regression.py"
