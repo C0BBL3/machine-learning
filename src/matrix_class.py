@@ -289,8 +289,8 @@ class Matrix():
         if self.check_if_matrix_is_invertable():
             determinant = self.recursive_determinant(self)
             if len(self.elements) == 2:
-                return Matrix(elements=[[self.elements[1][1], -1 * self.elements[0][1]],
-                        [-1 * self.elements[1][0], self.elements[0][0]]])
+                return Matrix(elements=[[self.elements[1][1] / determinant, -1 * self.elements[0][1] / determinant],
+                        [-1 * self.elements[1][0] / determinant, self.elements[0][0] / determinant]])
 
             cofactors = []
             for row in range(0, self.rows):
