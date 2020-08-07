@@ -35,12 +35,19 @@ class PolynomialRegressor:
                     X_data.append([arr[0]])
                 Y_data.append([arr[1]])
         X_matrix = Matrix(elements=X_data)
-        print('\nX_matrix.elements', X_matrix.elements, '\n')
+        print('\nX_matrix.elements', X_matrix.elements,)
         Y_matrix = Matrix(elements=Y_data)
-        print('Y_matrix.elements', Y_matrix.elements, '\n')
+        print('Y_matrix.elements', Y_matrix.elements)
         X_transpose = X_matrix.transpose()  # xT
+        print('xT', X_transpose.elements)
         X_transpose_times_X = X_transpose @ X_matrix  # xT * x
-        result = X_transpose_times_X.inverse() @ X_transpose @ Y_matrix  # (xT * x)^-1 * xT * y
+        print('(xT * x)', X_transpose_times_X.elements)
+        X_transpose_times_X_inverse = X_transpose_times_X.inverse()
+        print('(xT * x)^-1', X_transpose_times_X_inverse.elements)
+        X_transpose_times_X_inverse_times_X_transpose = X_transpose_times_X_inverse @ X_transpose
+        print('(xT * x)^-1 * xT', X_transpose_times_X_inverse_times_X_transpose.elements)
+        result = X_transpose_times_X_inverse_times_X_transpose @ Y_matrix
+        print('(xT * x)^-1 * xT * y', result.elements, '\n')  # (xT * x)^-1 * xT * y
         for results in result.elements:
             if results != result.elements:
                 self.coefficients.append(results[0])

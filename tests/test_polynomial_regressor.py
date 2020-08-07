@@ -1,6 +1,6 @@
-from polynomial_regressor import PolynomialRegressor  # halp
 import sys
 sys.path.append('src')
+from polynomial_regressor import PolynomialRegressor  # halp
 
 print('Testing...')
 
@@ -29,7 +29,7 @@ answers = [[11.3333333333], [-3.2380952380, 5.8285714285],[1.1071428571, -0.6892
 
 for i in range(0, 7):
     if i != 4 and i != 5:
-        print('    {} Variable Function').format(i)
+        print('    {} Variable Function'.format(i))
         functions.append(PolynomialRegressor(degree=i))
         functions[i].ingest_data(data)
         functions[i].solve_coefficients()
@@ -44,7 +44,7 @@ answers = [11.3333333333, 8.419047619,
            4.9428571428, 4.9206349206, 4.9999999901]
 for i in range(0, 7):
     if i != 4 and i != 5:
-        print('    {} Variable Function').format(i)
+        print('    {} Variable Function'.format(i))
         functions.append(PolynomialRegressor(degree=i))
         functions[i].ingest_data(data)
         evaluations.append(functions[i].constant_regressor.evaluate(2))
