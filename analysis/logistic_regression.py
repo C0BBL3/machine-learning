@@ -20,7 +20,7 @@ def logistic_regression_function(x, beta_0, beta_1):  #for testing
 #  [1, 100], *   [beta_1]] =  [ln(1/0.35 - 1)]
 #  [1, 1000]]                 [ln(1/0.95 - 1)]]
 
-print('new_poly_regress')
+print('poly_regress')
 new_data = [[1, 10, math.log(1/0.05 - 1)], [1, 100, math.log(1/0.35 - 1)], [1, 1000, math.log(1/0.95 - 1)]]
 
 poly_regress = PolynomialRegressor()
