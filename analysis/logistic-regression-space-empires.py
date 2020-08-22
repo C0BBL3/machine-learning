@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import math
 import sys
 sys.path.append('src')
@@ -27,5 +28,11 @@ poly_regress.solve_coefficients()
 print('\nprobability of a player who has played 300 hours:', logistic_regression_function(
     300, poly_regress.coefficients[0], poly_regress.coefficients[1]))
 
-print('\nhow long an average player practices:', (math.log(1/0.5 - 1) -
-                                                  poly_regress.coefficients[0]) / poly_regress.coefficients[1])
+plt.style.use('bmh')
+plt.plot([logistic_regression_function(x, poly_regress.coefficients[0], poly_regress.coefficients[1]) for x in range(0, 751)])
+plt.legend(['Predicted y-values'])
+plt.ylabel('Probability')
+plt.xlabel('Number of hours')
+plt.title('Predicted probability of winning vs number of hours played')
+plt.savefig('plot.png')
+plt.show()
