@@ -1,2 +1,2 @@
 language = "bash"
-run = "python analysis/logistic_regression.py"
+run = "python analysis/logistic-regression-space-empires.py"
