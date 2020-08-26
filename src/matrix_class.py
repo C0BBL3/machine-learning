@@ -274,45 +274,45 @@ class Matrix():
         return A
 
     def check_if_matrix_is_invertable(self):
-        print('1.01')
+        #print('1.01')
         self.determinant = self.recursive_determinant(self)
         if self.rows != self.cols:
-            print('1.02')
+            #print('1.02')
             return False
         
         elif self.determinant == 0:
-            print('1.03')
+            #print('1.03')
             return False
         
         else:
-            print('1.04')
+            #print('1.04')
             return True
 
     def inverse(self):
         A = self.copy(self)
-        print('1')
+        #print('1')
         if self.check_if_matrix_is_invertable():
-            print('1.1')
+            #print('1.1')
             if len(self.elements) == 2:
                 return Matrix(elements=[[self.elements[1][1] / self.determinant, -1 * self.elements[0][1] / self.determinant],
                                         [-1 * self.elements[1][0] / self.determinant, self.elements[0][0] / self.determinant]])
-            print('2')
+            #print('2')
             cofactors = []
             for row in range(0, self.rows):
-                print('3', row)
+                #print('3', row)
                 cofactorRow = []
                 for col in range(0, self.cols):
-                    print('4', col)
+                    #print('4', col)
                     minor = A.compute_minor(row, col)
                     cofactorRow.append(
                         ((-1) ** (row + col)) * self.recursive_determinant(minor))
                 cofactors.append(cofactorRow)
             cofactors = self.transpose(cofactors)
-            print('5')
+           # print('5')
             for row in range(0, cofactors.rows):
-                print('5', row)
+                #print('5', row)
                 for col in range(0, cofactors.cols):
-                    print('6', col)
+                    #print('6', col)
                     cofactors[row, col] /= self.determinant
             return cofactors
         else:
