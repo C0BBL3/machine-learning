@@ -3,7 +3,7 @@ class Matrix():
     def __init__(self, elements=None, shape=None, fill=0):
         self.elements = elements
         self.determinant_number = 1
-        self.determinant_number_recursive = 0
+        self.determinant = 0
         if self.elements == None and shape != None:
             if fill == 'diag':
                 self.elements = self.create_identity_elements(
@@ -274,36 +274,46 @@ class Matrix():
         return A
 
     def check_if_matrix_is_invertable(self):
+        print('1.01')
+        self.determinant = self.recursive_determinant(self)
         if self.rows != self.cols:
+            print('1.02')
             return False
-
-        elif self.recursive_determinant(self) == 0:
+        
+        elif self.determinant == 0:
+            print('1.03')
             return False
-
+        
         else:
+            print('1.04')
             return True
 
     def inverse(self):
         A = self.copy(self)
-        #assert self.cols == self.rows, 'ERROR: Matrix is not Invertible. Please give a Invertible matrix'
+        print('1')
         if self.check_if_matrix_is_invertable():
-            determinant = self.recursive_determinant(self)
+            print('1.1')
             if len(self.elements) == 2:
-                return Matrix(elements=[[self.elements[1][1] / determinant, -1 * self.elements[0][1] / determinant],
-                                        [-1 * self.elements[1][0] / determinant, self.elements[0][0] / determinant]])
-
+                return Matrix(elements=[[self.elements[1][1] / self.determinant, -1 * self.elements[0][1] / self.determinant],
+                                        [-1 * self.elements[1][0] / self.determinant, self.elements[0][0] / self.determinant]])
+            print('2')
             cofactors = []
             for row in range(0, self.rows):
+                print('3', row)
                 cofactorRow = []
                 for col in range(0, self.cols):
+                    print('4', col)
                     minor = A.compute_minor(row, col)
                     cofactorRow.append(
                         ((-1) ** (row + col)) * self.recursive_determinant(minor))
                 cofactors.append(cofactorRow)
             cofactors = self.transpose(cofactors)
+            print('5')
             for row in range(0, cofactors.rows):
+                print('5', row)
                 for col in range(0, cofactors.cols):
-                    cofactors[row, col] /= determinant
+                    print('6', col)
+                    cofactors[row, col] /= self.determinant
             return cofactors
         else:
             print('ERROR: Matrix is not Invertible. Please give a Invertible matrix')

@@ -39,7 +39,10 @@ data = [[1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 1],
 
 
 def logistic_regression_function(x, betas):  # for testing
-      return 1 / (1 + math.e ** sum([beta * x for beta in betas]))
+      return 10 / (1 + math.e ** sum([beta * x for beta in betas]))
+
+def new_data_array_generator(data):
+    return [(x, math.log(1 / y - 1)) for (x, y) in data]
 
 
 def solve_coefficients(data):
@@ -47,23 +50,23 @@ def solve_coefficients(data):
       Y_data = []
       for arr in data:
             X_data.append(arr[:-1])
-            Y_data.append([arr[-1]])
+            print(arr[-1])
+            Y_data.append([math.log((10 / arr[-1]) - 1)])
       X_matrix = Matrix(elements=X_data)
       print('\nX_matrix.elements', X_matrix.elements,)
       Y_matrix = Matrix(elements=Y_data)
       print('Y_matrix.elements', Y_matrix.elements)
       X_transpose = X_matrix.transpose()  # xT
-      #print('xT', X_transpose.elements)
+      print('xT', X_transpose.elements)
       X_transpose_times_X = X_transpose @ X_matrix  # xT * x
-      #print('(xT * x)', X_transpose_times_X.elements)
+      print('(xT * x)', X_transpose_times_X.elements)
       X_transpose_times_X_inverse = X_transpose_times_X.inverse()
-      #print('(xT * x)^-1', X_transpose_times_X_inverse.elements)
+      print('(xT * x)^-1', X_transpose_times_X_inverse.elements)
       X_transpose_times_X_inverse_times_X_transpose = X_transpose_times_X_inverse @ X_transpose
-      #print('(xT * x)^-1 * xT',
-           # X_transpose_times_X_inverse_times_X_transpose.elements)
+      print('(xT * x)^-1 * xT', X_transpose_times_X_inverse_times_X_transpose.elements)
       result = X_transpose_times_X_inverse_times_X_transpose @ Y_matrix
       # (xT * x)^-1 * xT * y
-      #print('(xT * x)^-1 * xT * y', result.elements, '\n')
+      print('(xT * x)^-1 * xT * y', result.elements, '\n')
       coefficients = []
       for results in result.elements:
             if results != result.elements:
