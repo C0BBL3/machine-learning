@@ -66,10 +66,10 @@ class Matrix():
 
     #------------------------------------------------------create matrices-------------------------------------------------------
 
-    def create_matrix(self, x, y, fill_value):
+    def create_matrix(self, x, y, fill_value = 0):
         return Matrix(elements=self.create_matrix_elements(x, y, fill_value))
 
-    def create_matrix_elements(self, x, y, fill_value):
+    def create_matrix_elements(self, x, y, fill_value = 0):
         return [[fill_value for j in range(0, y)] for i in range(0, x)]
 
     def create_identity(self, x, y):  # x is col and y is row
