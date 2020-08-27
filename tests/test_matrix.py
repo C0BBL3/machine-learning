@@ -3,7 +3,7 @@ sys.path.append('src')
 from matrix_class import Matrix
 
 print('Testing...')
-
+'''
 add_1 = Matrix(elements=[[1, 1], [0, 1]])
 add_2 = Matrix(elements=[[1, 1], [0, 1]])
 result = add_1 + add_2
@@ -83,7 +83,7 @@ result = RREF_6.rref()
 assert result.elements == [[1.0, 0.0, -1.0], [0.0, 1.0, 2.0]
                            ], 'RREF #6 was wrong, should be [[1, 0, -1], [0, 1, 2]], but was {}'.format(result.elements)
 print('RREF #6 Passed!')
-
+'''
 inv_1 = Matrix(elements=[[1, 2, 3, 4], [5, 0, 6, 0],
                          [0, 7, 0, 8], [9, 0, 0, 10]])
 result = inv_1 @ inv_1.inverse()
@@ -111,7 +111,7 @@ result = inv_3.inverse()
 assert result == None, "Inverse #3 isnt invertable, but was {}".format(
     result)
 print('Inverse #3 Passed! *NOTE if there is an error for matrix not invertable, then its ok the test passed')
-
+'''
 inv_by_minors_1 = Matrix(elements=[[1, 2, 3, 4], [5, 0, 6, 0],
                          [0, 7, 0, 8], [9, 0, 0, 10]])
 result = inv_by_minors_1 @ inv_by_minors_1.inverse()
@@ -139,28 +139,26 @@ result = inv_by_minors_3.inverse()
 assert result == None, "Inverse #3 isnt invertable, but was {}".format(
     result)
 print('Inverse by Minors #3 Passed! *NOTE if there is an error for matrix not invertable, then its ok the test passed')
-
+'''
 det_1 = Matrix(elements=[[-3, 1], [5, 1]])
 result = det_1.determinant_function()
 
 assert result == -8, 'Determinant was wrong, should be -8, but was {}'.format(result)
 print('Determinant #1 Passed!')
 
-det_2 = Matrix(elements=[[-3, 1], [5, 0]])
+det_2 = Matrix(elements=[[1, 1, 1, 1, 1], [1, 2, 3, 4, 5], [1, 3, 6, 10 ,15], [1, 4, 10, 20, 35], [1, 5, 15, 35, 70]])
 result = det_2.determinant_function()
 
-assert result == - \
-    5, 'Determinant was wrong, should be -5, but was {}'.format(result)
+assert result == 1, 'Determinant was wrong, should be 1, but was {}'.format(result)
 print('Determinant #2 Passed!')
-'''
-det_3 = Matrix(elements=[[1, 2], [2, 4]])
+
+det_3 = Matrix(elements=[[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 result = det_3.determinant_function()
 
 assert result == 0, 'Determinant was wrong, should be 0, but was {}'.format(
     result)
 print('Determinant #3 Passed!')
-'''
-print('No Determinant #3 because determinant function cant find determinant of linearly dependent matrices')
+
 recur_det_1 = Matrix(elements=[[-3, 1], [5, 1]])
 result = recur_det_1.recursive_determinant(recur_det_1)
 

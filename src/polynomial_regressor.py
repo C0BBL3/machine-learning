@@ -42,7 +42,7 @@ class PolynomialRegressor:
         print('xT', X_transpose.elements)
         X_transpose_times_X = X_transpose @ X_matrix  # xT * x
         print('(xT * x)', X_transpose_times_X.elements)
-        X_transpose_times_X_inverse = X_transpose_times_X.inverse()
+        X_transpose_times_X_inverse = X_transpose_times_X.inverse_by_minors()
         print('(xT * x)^-1', X_transpose_times_X_inverse.elements)
         X_transpose_times_X_inverse_times_X_transpose = X_transpose_times_X_inverse @ X_transpose
         print('(xT * x)^-1 * xT', X_transpose_times_X_inverse_times_X_transpose.elements)
