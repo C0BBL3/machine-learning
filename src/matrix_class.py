@@ -256,7 +256,6 @@ class Matrix():
 
     def rref(self, return_determinant=False):
         A = self.copy(self)  # creates a new copy matrix
-        print('A', A.elements)
         for i in range(0, A.cols):  # i in range of the columns
             pivot_row = A.get_pivot_row(i)
             if pivot_row != None:
@@ -273,31 +272,23 @@ class Matrix():
                 if return_determinant: return 0
         self.determinant_number = A.determinant_number
         if return_determinant:
-            print('A.elements', A.elements)
             return self.determinant_number
         return A
 
     def check_if_matrix_is_invertable(self):
-        print('1.01')
         self.determinant = self.determinant_function()
         if self.rows != self.cols:
-            print('1.02')
             return False
         
         elif self.determinant == 0:
-            print('1.03')
             return False
         
         else:
-            print('1.04')
             return True
 
     def inverse_with_cofactors(self):
         A = self.copy(self)
-        print('1')
         if self.check_if_matrix_is_invertable():
-            print('1.1')
-            print('self.determinant', self.determinant)
             if len(self.elements) == 2:
                 return Matrix(elements=[[self.elements[1][1] / self.determinant, -1 * self.elements[0][1] / self.determinant],
                                         [-1 * self.elements[1][0] / self.determinant, self.elements[0][0] / self.determinant]])
