@@ -256,6 +256,7 @@ class Matrix():
 
     def rref(self, return_determinant=False):
         A = self.copy(self)  # creates a new copy matrix
+        print('A', A.elements)
         for i in range(0, A.cols):  # i in range of the columns
             pivot_row = A.get_pivot_row(i)
             if pivot_row != None:
@@ -291,7 +292,7 @@ class Matrix():
             print('1.04')
             return True
 
-    def inverse(self):
+    def inverse_with_cofactors(self):
         A = self.copy(self)
         print('1')
         if self.check_if_matrix_is_invertable():
@@ -333,30 +334,29 @@ class Matrix():
                     small_matrix.cols = len(small_matrix.elements[0])
                     small_matrix.rows = len(small_matrix.elements)
                     # print(small_matrix.elements)
-                    # print(self.cofactor_determinant(small_matrix))
-                    # print(self.cofactor_determinant(big_matrix))
-                    if isinstance(self.cofactor_determinant(small_matrix), str) and isinstance(self.cofactor_determinant(big_matrix), str):
-                        A.elements[i][j] = self.cofactor_determinant(
-                            small_matrix) / self.cofactor_determinant(big_matrix)
+                    # print(self.recursive_determinant(small_matrix))
+                    # print(self.recursive_determinant(big_matrix))
+                    if isinstance(self.recursive_determinant(small_matrix), str) and isinstance(self.recursive_determinant(big_matrix), str):
+                        A.elements[i][j] = self.recursive_determinant(
+                            small_matrix) / self.recursive_determinant(big_matrix)
                 A.transpose()
 
             return A
         else:
             print('ERROR: Matrix is not Invertible. Please give a Invertible matrix')
 
-    def solve(self, b):
-        A = self
-        for i in range(0, self.rows):  # adding the matrix b
-            A.elements[i].append(b[i])  # to the end of A
+    def inverse(self):
+        copy_matrix = self.copy(self)
+        identity_elements = self.create_identity_elements(self.cols, self.rows)
+        for i, row in enumerate(copy_matrix.elements):  # adding the matrix b
+            for value in identity_elements[i]:
+                row.append(value)  # to the end of A
 
-        A.rref()
+        copy_matrix.rows = len(copy_matrix.elements)
+        copy_matrix.cols = len(copy_matrix.elements[0])
+        solved_aug_matrix = copy_matrix.rref()
 
-        for i in range(0, self.rows):  #
-            # get the augmented part of the matrix and replace b with it
-            for j in range(self.cols - 1, self.cols + 1):
-                b[i] = A.elements[i][j]  #
-
-        return b
+        return Matrix(elements=[row[solved_aug_matrix.cols // 2:] for row in solved_aug_matrix.elements])
 
     def determinant_function(self):
         if self.rows == self.cols:
@@ -384,55 +384,6 @@ class Matrix():
 
         else:
             return 'Matrix not square, please give a square matrix'
-
-    def cofactor_determinant(self, matrice):
-        if matrice.rows == matrice.cols:
-            if len(matrice.elements) == 2:
-                return (matrice.elements[0][0] * matrice.elements[1][1] - matrice.elements[0][1] * matrice.elements[1][0])
-            best_row = matrice.find_best_row()
-            best_column = matrice.find_best_column()
-
-            if best_column[1] >= best_row[1]:
-                determinant = 0
-                for i, row in enumerate(matrice.elements):
-                    inner_determinant = (-1 ** i) * row[best_column[0]] * self.cofactor_determinant(matrice=matrice.compute_minor(i, best_column[0]))
-                    determinant += inner_determinant
-                    
-                return determinant
-
-            else:
-                determinant = 0
-                for i, value in enumerate(matrice.elements[best_row[0]]):
-                    inner_determinant = (-1 ** i) * value * self.cofactor_determinant(matrice=matrice.compute_minor(best_column[0], i))
-                    print('inner_determinant', inner_determinant)
-                    determinant += inner_determinant
-                    
-                return determinant
-
-    def find_best_row(self, count_num = 0):
-        best_row = (0,0) #(row_num, num_of_zeros)
-        for i, row in enumerate(self.elements):
-            if best_row[1] < row.count(count_num):
-                best_row = (i, row.count(count_num))
-
-        return best_row
-
-    def find_best_column(self, count_num = 0):
-        best_column = (0, 0)  # (column_num, num_of_zeros)
-        for i in range(0, len(self.elements[0])):
-            counted_zeros_in_column = self.count_zeros_in_column(i, count_num)
-            if best_column[1] < counted_zeros_in_column:
-                best_column = (self.elements.index(), counted_zeros_in_column)
-
-        return best_column
-
-    def count_zeros_in_column(self, column_num, count_num = 0):
-        count = 0
-        for row in self.elements:
-            if row[column_num] == count_num:
-                count += 1
-
-        return count
 
     def compute_minor(self, i, j):
         #print('minor', [row[:j] + row[j + 1:] for row in (self.elements[:i] + self.elements[i + 1:])])
