@@ -76,9 +76,9 @@ def solve_coefficients(data):
 
 #print('poly_regress')
 coefficients = solve_coefficients(data)
-print('No ingredients:', logistic_regression_function([1], [coefficients[0]]))  # 2.66
-print('mayo only:', logistic_regression_function([1,1], [coefficients[0],  coefficients[3]]))  # 0.59
-print('mayo and jelly:', logistic_regression_function([1,1,1], [coefficients[0], coefficients[3], coefficients[4]]))  # 0.07
-print('5 slices beef + mayo:', logistic_regression_function([1,5,1], [coefficients[0], coefficients[1], coefficients[3]]))  # 7.64
-print('5 tbsp pb + jelly:', logistic_regression_function([1, 5, 1], [coefficients[0], coefficients[1], coefficients[4]]))  # 8.94
-print('5 slices beef + 5 tbsp pb + mayo + jelly:', logistic_regression_function([1,5,5,1,1], [coefficients[0], coefficients[1], coefficients[2], coefficients[3], coefficients[4]]))  # 0.02
+print('No ingredients:', logistic_regression_function([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [coeff for coeff in coefficients]))  # 2.66
+print('mayo only:', logistic_regression_function([1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [coeff for coeff in coefficients]))  # 0.59
+print('mayo and jelly:', logistic_regression_function([1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1], [coeff for coeff in coefficients]))  # 0.07
+print('5 slices beef + mayo:', logistic_regression_function([1, 5, 0, 1, 0, 0, 5, 0, 0, 0, 0], [coeff for coeff in coefficients]))  # 7.64
+print('5 tbsp pb + jelly:', logistic_regression_function([1, 0, 5, 0, 1, 0, 0, 0, 0, 5, 0], [coeff for coeff in coefficients]))  # 8.94
+print('5 slices beef + 5 tbsp pb + mayo + jelly:', logistic_regression_function([1, 5, 5, 1, 1, 25, 5, 5, 5, 5, 1],[coeff for coeff in coefficients]))  # 0.02
