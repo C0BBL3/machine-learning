@@ -46,7 +46,7 @@ class Matrix():
         identity_elements = self.create_identity_elements(self.cols, self.rows)
         for i, row in enumerate(copy_matrix.elements):
             for value in identity_elements[i]:
-                row.append(value)
+                row.append(value) 
 
         copy_matrix.rows = len(copy_matrix.elements)
         copy_matrix.cols = len(copy_matrix.elements[0])
@@ -65,17 +65,38 @@ class Matrix():
 
     #------------------------------------------------------create matrices-------------------------------------------------------
 
-    def create_matrix(self, x, y, fill_value):
-        return Matrix(elements=self.create_matrix_elements(x, y, fill_value))
+    def create_matrix(self, x, y, fill):
+        elements = []
+        for i in range(0, x):
+            elements.append([])
+            for _ in range(0, y):
+                elements[i].append(fill)
+        return Matrix(elements=elements)
 
-    def create_matrix_elements(self, x, y, fill_value):
-        return [[fill_value for j in range(0, y)] for i in range(0, x)]
+    def create_matrix_elements(self, x, y, fill):
+        elements = []
+        for i in range(0, x):
+            elements.append([])
+            for _ in range(0, y):
+                elements[i].append(fill)
+
+        return elements
 
     def create_identity(self, x, y):  # x is col and y is row
-        return Matrix(elements=self.create_identity_elements(x, y))
+        elements = self.create_identity_elements(x, y)
+        return Matrix(elements=elements)
 
     def create_identity_elements(self, x, y):
-        return [[1 if i == j else 0 for j in range(0, y)] for i in range(0, x)]
+        elements = []
+        for i in range(0, x):
+            elements.append([])
+            for j in range(0, y):
+                if i == j:
+                    elements[i].append(1)
+                else:
+                    elements[i].append(0)
+
+        return elements
         
     #-----------------------------------------------------Overload functions-----------------------------------------------------
 
@@ -208,32 +229,32 @@ class Matrix():
         if col_num == None:
             return self
         else:
-            copy_matrix = self.copy(self)
-            divisor = copy_matrix.elements[row_num][col_num]
+            divisor = self.elements[row_num][col_num]
             for i in range(row_num - 1, -1, -1):
-                element = copy_matrix.elements[i][col_num]
+                element = self.elements[i][col_num]
                 if element != 0:
                     scalar = element / divisor
                     for j in range(col_num, self.cols):
-                        copy_matrix.elements[i][j] -= scalar * copy_matrix.elements[row_num][j]
+                        self.elements[i][j] -= scalar * \
+                            self.elements[row_num][j]
 
-            return copy_matrix
+            return self
 
     def clear_below(self, row_num):
         col_num = self.find_col_num_of_first_nonzero_element_in_row(row_num)
-        copy_matrix = self.copy(self)
-        for i in range(row_num + 1, copy_matrix.rows):
-            if copy_matrix.elements[i][col_num] != 0:
-                scalar = copy_matrix.elements[i][col_num] / copy_matrix.elements[row_num][
+        for i in range(row_num + 1, self.rows):
+            if self.elements[i][col_num] != 0:
+                scalar = self.elements[i][col_num] / self.elements[row_num][
                     col_num]
-                for j in range(col_num, copy_matrix.cols):
-                    copy_matrix.elements[i][j] -= scalar * copy_matrix.elements[row_num][j]
+                for j in range(col_num, self.cols):
+                    self.elements[i][j] -= scalar * self.elements[row_num][j]
 
-        return copy_matrix
+        return self
 
     def get_pivot_row(self, col_num):
         for i in self.elements:
-            j = self.find_col_num_of_first_nonzero_element_in_row(self.elements.index(i))
+            j = self.find_col_num_of_first_nonzero_element_in_row(
+                self.elements.index(i))
             if col_num == j:
                 return self.elements.index(i)
         return None
@@ -266,25 +287,26 @@ class Matrix():
         if exp == 0:
             return self.create_identity(self.rows, self.cols)
         else:
-            copy_matrix = self.copy(self)
+            a = self.copy(self)
             for _ in range(0, exp - 1):
-                copy_matrix @= self
+                a @= self
 
-            return copy_matrix
+            return a
 
     def show(self):
         for row in self.elements:
             print(row)
 
     def copy(self, matrix):
-        empty_matrix = self.create_matrix(matrix.rows, matrix.cols, 0)
+        c = self.create_matrix(matrix.rows, matrix.cols, 0)
         for i in range(0, self.rows):
             for j in range(0, self.cols):
-                empty_matrix.elements[i][j] = self.elements[i][j]
+                c.elements[i][j] = self.elements[i][j]
 
-        return empty_matrix
+        return c
 
     def compute_minor(self, i, j):
+        #print('minor', [row[:j] + row[j + 1:] for row in (self.elements[:i] + self.elements[i + 1:])])
         return Matrix(elements=[row[:j] + row[j + 1:] for row in (self.elements[:i] + self.elements[i + 1:])])
 
     def round(self, num_of_decimals=0):  # for tests
