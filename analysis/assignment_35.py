@@ -77,8 +77,14 @@ def solve_coefficients(data):
 #print('poly_regress')
 coefficients = solve_coefficients(data)
 print('No ingredients:', logistic_regression_function([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [coeff for coeff in coefficients]))  # 2.66
+assert logistic_regression_function([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [coeff for coeff in coefficients]) == 2.6649393988782637, 'logistic_regression_function was not right, it should be 2.66ish but was {}'.format(logistic_regression_function([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [coeff for coeff in coefficients]))
 print('mayo only:', logistic_regression_function([1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [coeff for coeff in coefficients]))  # 0.59
+assert logistic_regression_function([1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [coeff for coeff in coefficients]) == 0.5948305763144304, 'logistic_regression_function was not right, it should be 0.59ish but was {}'.format(logistic_regression_function([1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [coeff for coeff in coefficients]))
 print('mayo and jelly:', logistic_regression_function([1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1], [coeff for coeff in coefficients]))  # 0.07
+assert logistic_regression_function([1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1], [coeff for coeff in coefficients]) == 0.06645818238664847, 'logistic_regression_function was not right, it should be 0.07ish but was {}'.format(logistic_regression_function([1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1], [coeff for coeff in coefficients]))
 print('5 slices beef + mayo:', logistic_regression_function([1, 5, 0, 1, 0, 0, 5, 0, 0, 0, 0], [coeff for coeff in coefficients]))  # 7.64
-print('5 tbsp pb + jelly:', logistic_regression_function([1, 0, 5, 0, 1, 0, 0, 0, 0, 5, 0], [coeff for coeff in coefficients]))  # 8.94
-print('5 slices beef + 5 tbsp pb + mayo + jelly:', logistic_regression_function([1, 5, 5, 1, 1, 25, 5, 5, 5, 5, 1],[coeff for coeff in coefficients]))  # 0.02
+assert logistic_regression_function([1, 5, 0, 1, 0, 0, 5, 0, 0, 0, 0], [coeff for coeff in coefficients]) == 7.64416486422044, 'logistic_regression_function was not right, it should be 7.64ish but was {}'.format(logistic_regression_function([1, 5, 0, 1, 0, 0, 5, 0, 0, 0, 0], [coeff for coeff in coefficients]))
+print('5 tbsp pb + jelly:', logistic_regression_function([1, 0, 5, 0, 1, 0, 0, 0, 0, 5, 0], [coeff for coeff in coefficients]))  # 8.94\
+assert logistic_regression_function([1, 0, 5, 0, 1, 0, 0, 0, 0, 5, 0], [coeff for coeff in coefficients]) == 8.939575266972463, 'logistic_regression_function was not right, it should be 8.94ish but was {}'.format(logistic_regression_function([1, 0, 5, 0, 1, 0, 0, 0, 0, 5, 0], [coeff for coeff in coefficients]))
+print('5 slices beef + 5 tbsp pb + mayo + jelly:', logistic_regression_function([1, 5, 5, 1, 1, 25, 5, 5, 5, 5, 1], [coeff for coeff in coefficients]))  # 0.02
+assert logistic_regression_function([1, 5, 5, 1, 1, 25, 5, 5, 5, 5, 1], [coeff for coeff in coefficients]) == 0.023417479576338898, 'logistic_regression_function was not right, it should be 0.02ish but was {}'.format(logistic_regression_function([1, 5, 5, 1, 1, 25, 5, 5, 5, 5, 1], [coeff for coeff in coefficients]))
