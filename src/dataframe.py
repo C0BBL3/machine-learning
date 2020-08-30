@@ -8,23 +8,17 @@ class DataFrame:
             self.data_dict[person] = data_dict[person]
 
     def to_array(self):
-        self.array = []
-        for _, value in self.data_dict.items():
-            self.array.append(value)
-        mat = Matrix(elements=self.array)
-        self.array = mat.transpose().elements
+        self.array = [value for _, value in self.data_dict.items()]
+        self.array = Matrix(elements=[[row[i] for row in self.array] for i, col in enumerate(self.array[0])]).elements
         return self.array
 
     def filter_columns(self, columns):
-        self.columns = columns
-        self.array = []
-        data_dict = self.data_dict
-        self.data_dict = {}
-        for person in columns:
-            self.data_dict[person] = data_dict[person]
-            self.array.append([self.data_dict[person]])
-        mat = Matrix(elements=self.array)
-        self.array = mat.transpose().elements
+        self.data_dict = DataFrame(self.data_dict, columns).data_dict
+        self.columns = [key for key, _ in self.data_dict.items()]
+
+    def apply(self, column, function):
+        self.data_dict[column] = [function(value) for value in self.data_dict[column]]
+        
 
 
 

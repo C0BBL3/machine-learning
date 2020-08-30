@@ -32,4 +32,13 @@ print("    Testing DataFrame 2's columns")
 assert df2.columns == ['Sara', 'Pete'], "DataFrame 2's columns were not right, they should be ['Sara', 'Pete'], but were {}".format(df2.columns)
 print("    DataFrame 2's columns Passed!!!\n")
 
+def multiply_by_4(x):
+    return 4 * x
+
+df3 = DataFrame(data_dict, column_order=['Pete', 'John', 'Sara'])
+df3.apply('John', multiply_by_4)
+print("    Testing DataFrame 3's apply()")
+assert df3.to_array() == [[1, 8, 3], [0, 4, 1], [1, 0, 4], [0, 8, 0]], "DataFrame 2's apply() was not right, it should be [[1, 8, 3], [0, 4, 1], [1, 0, 4], [0, 8, 0]], but was {}".format(df2.to_array())
+print("    DataFrame 2's apply() Passed!!!\n")
+
 print('ALL TESTS PASS!!!!!')
