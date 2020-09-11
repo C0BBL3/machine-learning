@@ -31,28 +31,39 @@ class DataFrame:
         self.array = self.to_array()
 
     def append_columns(self, dictionary):
-        for col, value in dictionary.items():
-            self.columns.append(col)
-            self.data_dict[col] = value
+        for key, values in dictionary.items():
+            self.columns.append(key)
+            self.data_dict[key] = values
 
     def remove_columns(self, columns):
         self.columns = [col for col, _ in self.data_dict.items() if col not in columns]
         self.filter_columns(self.columns)
 
-    def create_dummy_variables(self, stoopid_column):
-        new_cols, rows = self.get_unique_dummy_columns(stoopid_column)
-        self.remove_columns(stoopid_column)
-        self.append_columns({col: rows[i] for i, col in enumerate(new_cols)})
+    def create_dummy_variables(self, dumb_column):
+        new_cols, rows = self.get_unique_dummy_columns(dumb_column)
+        self.remove_columns(dumb_column)
+        self.append_columns({col: [row[i] for row in rows] for i, col in enumerate(new_cols)})
 
-    def get_unique_dummy_columns(self, stoopid_column):
+    def get_unique_dummy_columns(self, dumb_column):
         new_cols, rows = [], []
-        for value_1 in self.data_dict[stoopid_column]:
-            if str(stoopid_column) + '-' + str(value_1) not in new_cols:
-                new_cols.append(str(stoopid_column) + '_' + str(value_1))
-                rows.append([1 if value_1 == value_2  else 0 for value_2 in self.data_dict[stoopid_column]])
+        if isinstance(self.data_dict[dumb_column][0], list):
+            longest_list = self.get_longest_list(dumb_column)
+            for list_1 in longest_list:
+                if list_1 != [] and list_1 not in new_cols:
+                    new_cols.append(list_1)
+            for list_2 in self.data_dict[dumb_column]:
+                rows.append([1 if value in list_2 else 0 for value in longest_list])
+            return new_cols, rows
+        else:
+            for value_1 in self.data_dict[dumb_column]:
+                if str(dumb_column) + '-' + str(value_1) not in new_cols:
+                    new_cols.append(str(dumb_column) + '_' + str(value_1))
+                    rows.append([1 if value_1 == value_2  else 0 for value_2 in self.data_dict[dumb_column]])
+            return new_cols, rows
 
-        return new_cols, rows
-
-
-
-
+    def get_longest_list(self, dumb_column):
+        longest_list = []
+        for list_1 in self.data_dict[dumb_column]:
+            if len(list_1) > len(longest_list):
+                longest_list = list_1
+        return longest_list

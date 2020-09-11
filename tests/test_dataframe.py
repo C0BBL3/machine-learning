@@ -85,5 +85,45 @@ print("    Testing DataFrame 5's to_array()")
 assert df5.to_array() == [[1, 0, 'Anna', 'a'], [0, 0, 'Bill', 'b'], [0, 1, 'Cayden', 'c'], [0, 0, 'Daphnie', 'd']], "DataFrame 5's to_array() was not right, it should be [[1, 0, 'Annna', 'a'], [0, 0, 'Bill', 'b'], [0, 1, 'Cayden', 'c'], [0, 0, 'Daphnie', 'd']], but was {}".format(df5.to_array())
 print("    DataFrame 5's to_array() Passed!!!\n")
 
+print('\n--------------------------------\n')
+
+data_dict_3 = {
+    'beef': [0, 0, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0, 5, 5, 5, 5],
+    'pb': [0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5],
+    'condiments': [[], ['mayo'], ['jelly'], ['mayo', 'jelly'],
+                   [], ['mayo'], ['jelly'], ['mayo', 'jelly'],
+                   [], ['mayo'], ['jelly'], ['mayo', 'jelly'],
+                   [], ['mayo'], ['jelly'], ['mayo', 'jelly']],
+    'rating': [1, 1, 4, 0, 4, 8, 1, 0, 5, 0, 9, 0, 0, 0, 0, 0]
+}
+df6 = DataFrame(data_dict_3, column_order=['beef', 'pb', 'condiments'])
+print("    Testing DataFrame 6's columns")
+assert df6.columns == ['beef', 'pb', 'condiments'], "DataFrame 6's columns were not right, they should be ['color_blue', 'color_green', 'name', 'letter'], but were {}".format(df6.columns)
+print("    DataFrame 6's append_columns() Passed!!!\n")
+
+print("    Testing DataFrame 6's to_array()")
+assert df6.to_array() == [[0,  0,  []], [0,  0,  ['mayo']], [0,  0,  ['jelly']], [0,  0,  ['mayo', 'jelly']], [5,  0,  []], [5,  0,  ['mayo']], [5,  0,  ['jelly']], [5,  0,  ['mayo', 'jelly']], [0,  5,  []], [0,  5,  ['mayo']], [0,  5,  ['jelly']], [0,  5,  ['mayo', 'jelly']], [5,  5,  []], [5,  5,  ['mayo']], [5,  5,  ['jelly']], [5, 5, ['mayo', 'jelly']]], "DataFrame 6's to_array() was not right, it should be [[0,  0,  []], [0,  0,  ['mayo']], [0,  0,  ['jelly']], [0,  0,  ['mayo', 'jelly']], [5,  0,  []], [5,  0,  ['mayo']], [5,  0,  ['jelly']], [5,  0,  ['mayo', 'jelly']], [0,  5,  []], [0,  5,  ['mayo']], [0,  5,  ['jelly']], [0,  5,  ['mayo', 'jelly']], [5,  5,  []], [5,  5,  ['mayo']], [5,  5,  ['jelly']], [5, 5, ['mayo', 'jelly']]], but was {}".format(df6.to_array())
+print("    DataFrame 6's to_array() Passed!!!\n")
+
+df6.create_dummy_variables('condiments')
+print("    Testing DataFrame 6's create_dummy_variables()")
+assert df6.columns == ['beef', 'pb', 'mayo', 'jelly'], "DataFrame 6's columns were not right, they should be ['beef', 'pb', 'mayo', 'jelly'], but were {}".format(df6.columns)
+assert df6.to_array() == [[0,  0,  0,  0], [0,  0,  1,  0], [0,  0,  0,  1], [0,  0,  1,  1], [5,  0,  0,  0], [5,  0,  1,  0], [5,  0,  0,  1], [5,  0,  1,  1], [0,  5,  0,  0], [0,  5,  1,  0], [0,  5,  0,  1], [0,  5,  1,  1], [5,  5,  0,  0], [5,  5,  1,  0], [5,  5,  0,  1], [5,  5,  1,  1]], "DataFrame 6's to_array() was not right, it should be [[0,  0,  0,  0], [0,  0,  1,  0], [0,  0,  0,  1], [0,  0,  1,  1], [5,  0,  0,  0], [5,  0,  1,  0], [5,  0,  0,  1], [5,  0,  1,  1], [0,  5,  0,  0], [0,  5,  1,  0], [0,  5,  0,  1], [0,  5,  1,  1], [5,  5,  0,  0], [5,  5,  1,  0], [5,  5,  0,  1], [5,  5,  1,  1]], but was {}".format(df6.to_array())
+print("    DataFrame 6's create_dummy_variables() Passed!!!\n")
+
+df6.append_pairwise_interactions()
+print("    Testing DataFrame 6's append_pairwise_interactions()")
+assert df6.columns == ['beef', 'pb', 'mayo', 'jelly', 'beef_pb', 'beef_mayo', 'beef_jelly', 'pb_mayo', 'pb_jelly', 'mayo_jelly'], "DataFrame 6's columns were not right, they should be ['beef', 'pb', 'mayo', 'jelly', 'beef_pb', 'beef_mayo', 'beef_jelly', 'pb_mayo', 'pb_jelly', 'mayo_jelly'], but were {}".format(df6.columns)
+assert df6.to_array() == [[0,  0,  0,  0,  0,  0,  0,  0,  0,  0], [0,  0,  1,  0,  0,  0,  0,  0,  0,  0], [0,  0,  0,  1,  0,  0,  0,  0,  0,  0], [0,  0,  1,  1,  0,  0,  0,  0,  0,  1], [5,  0,  0,  0,  0,  0,  0,  0,  0,  0], [5,  0,  1,  0,  0,  5,  0,  0,  0,  0], [5,  0,  0,  1,  0,  0,  5,  0,  0,  0], [5,  0,  1,  1,  0,  5,  5,  0,  0,  1], [0,  5,  0,  0,  0,  0,  0,  0,  0,  0], [0,  5,  1,  0,  0,  0,  0,  5,  0,  0], [0,  5,  0,  1,  0,  0,  0,  0,  5,  0], [0,  5,  1,  1,  0,  0,  0,  5,  5,  1], [5,  5,  0,  0, 25,  0,  0,  0,  0,  0], [5,  5,  1,  0, 25,  5,  0,  5,  0,  0], [5,  5,  0,  1, 25,  0,  5,  0,  5,  0], [5,  5,  1,  1, 25,  5,  5,  5,  5,  1]], "DataFrame 6's to_array() was not right, it should be [[0,  0,  0,  0,  0,  0,  0,  0,  0,  0], [0,  0,  1,  0,  0,  0,  0,  0,  0,  0], [0,  0,  0,  1,  0,  0,  0,  0,  0,  0], [0,  0,  1,  1,  0,  0,  0,  0,  0,  1], [5,  0,  0,  0,  0,  0,  0,  0,  0,  0], [5,  0,  1,  0,  0,  5,  0,  0,  0,  0], [5,  0,  0,  1,  0,  0,  5,  0,  0,  0], [5,  0,  1,  1,  0,  5,  5,  0,  0,  1], [0,  5,  0,  0,  0,  0,  0,  0,  0,  0], [0,  5,  1,  0,  0,  0,  0,  5,  0,  0], [0,  5,  0,  1,  0,  0,  0,  0,  5,  0], [0,  5,  1,  1,  0,  0,  0,  5,  5,  1], [5,  5,  0,  0, 25,  0,  0,  0,  0,  0], [5,  5,  1,  0, 25,  5,  0,  5,  0,  0], [5,  5,  0,  1, 25,  0,  5,  0,  5,  0], [5,  5,  1,  1, 25,  5,  5,  5,  5,  1]], but was {}".format(df6.to_array())
+print("    DataFrame 6's append_pairwise_interactions() Passed!!!\n")
+
+df6.append_columns({'constant': [1 for _ in range(len(data_dict['rating']))],'rating': data_dict['rating']})
+print("    Testing DataFrame 6's columns")
+assert df6.columns == ['beef', 'pb', 'mayo', 'jelly', 'beef_pb', 'beef_mayo', 'beef_jelly', 'pb_mayo', 'pb_jelly', 'mayo_jelly', 'constant', 'rating'], "DataFrame 6's columns were not right, they should be ['constant', 'beef', 'pb', 'mayo', 'jelly', 'beef_pb', 'beef_mayo', 'beef_jelly', 'pb_mayo', 'pb_jelly', 'mayo_jelly', 'rating'], but were {}".format(df6.columns)
+print("    DataFrame 6's columns Passed!!!\n")
+
+print("    Testing DataFrame 6's to_array()")
+assert df6.to_array() == [[0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  4], [0,  0,  1,  1,  0,  0,  0,  0,  0,  1,  1,  0], [5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  4], [5,  0,  1,  0,  0,  5,  0,  0,  0,  0,  1,  8], [5,  0,  0,  1,  0,  0,  5,  0,  0,  0,  1,  1], [5,  0,  1,  1,  0,  5,  5,  0,  0,  1,  1,  0], [0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  1,  5], [0,  5,  1,  0,  0,  0,  0,  5,  0,  0,  1,  0], [0,  5,  0,  1,  0,  0,  0,  0,  5,  0,  1,  9], [0,  5,  1,  1,  0,  0,  0,  5,  5,  1,  1,  0], [5,  5,  0,  0, 25,  0,  0,  0,  0,  0,  1,  0], [5,  5,  1,  0, 25,  5,  0,  5,  0,  0,  1,  0], [5,  5,  0,  1, 25,  0,  5,  0,  5,  0,  1,  0], [5,  5,  1,  1, 25,  5,  5,  5,  5,  1,  1,  0]], "DataFrame 6's to_array() was not right, it should be[[0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  4], [0,  0,  1,  1,  0,  0,  0,  0,  0,  1,  1,  0], [5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  4], [5,  0,  1,  0,  0,  5,  0,  0,  0,  0,  1,  8], [5,  0,  0,  1,  0,  0,  5,  0,  0,  0,  1,  1], [5,  0,  1,  1,  0,  5,  5,  0,  0,  1,  1,  0], [0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  1,  5], [0,  5,  1,  0,  0,  0,  0,  5,  0,  0,  1,  0], [0,  5,  0,  1,  0,  0,  0,  0,  5,  0,  1,  9], [0,  5,  1,  1,  0,  0,  0,  5,  5,  1,  1,  0], [5,  5,  0,  0, 25,  0,  0,  0,  0,  0,  1,  0], [5,  5,  1,  0, 25,  5,  0,  5,  0,  0,  1,  0], [5,  5,  0,  1, 25,  0,  5,  0,  5,  0,  1,  0], [5,  5,  1,  1, 25,  5,  5,  5,  5,  1,  1,  0]], but was {}".format(df6.to_array())
+print("    DataFrame 6's to_array() Passed!!!\n")
 
 print('ALL TESTS PASS!!!!!')
