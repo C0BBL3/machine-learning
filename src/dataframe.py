@@ -21,14 +21,35 @@ class DataFrame:
 
     def append_pairwise_interactions(self):
         new_cols, new_cols_in_matrix, length_of_old_cols = [], [], len(self.columns)
-        for j, (key_2, col_2) in enumerate(self.data_dict.items()):
-            for i, (key_1, col_1) in enumerate(self.data_dict.items()):
-                if j > i:
-                    new_cols.append(key_1 + '_' + key_2)
-                    new_cols_in_matrix.append([col_1[i] * col_2[i] for i in range(0, len(col_1))])
+        cartesian = self.cartesian_product([self.columns, self.columns])
+        for keys in cartesian:
+            new_cols.append('_'.join(keys))
+            new_cols_in_matrix.append([value_1 * value_2 for value_1, value_2 in zip(self.data_dict[keys[0]], self.data_dict[keys[1]])])
         self.columns += new_cols
         for i, col in enumerate(new_cols_in_matrix): self.data_dict[self.columns[i + length_of_old_cols]] = col
         self.array = self.to_array()
+
+    def next_set_of_combos(self, current_arr, next_arr): #ex current_arr = [a] next_arr = [1,2,3] then next_set_of_combos(current_arr, next_arr) would return [[a,1], [a,2], [a,3]]
+        result = [] 
+
+        for col_1 in current_arr: 
+
+            for col_2 in next_arr:
+                if [col_1, col_2] not in result and [col_2, col_1] not in result and col_1 != col_2:
+                    result.append([col_1, col_2])
+                
+        return result 
+  
+    def cartesian_product(self, arrays):
+        result = [], arrays[0], 
+        current_arr = arrays[0]
+        result = [arrays[0]]
+
+        for arr in arrays[1:]: 
+            current_arr = self.next_set_of_combos(current_arr, arr)
+            result.append(current_arr)
+        
+        return result[-1]
 
     def append_columns(self, dictionary):
         for key, values in dictionary.items():
