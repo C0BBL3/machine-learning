@@ -47,3 +47,5 @@ print("    LinearRegressor's predict() #3 Passed!!!\n")
 print("    Testing LinearRegressor's predict()")
 assert linear_regressor.predict({'beef': 6, 'pb': 0, 'mayo': 1, 'jelly': 0}) == 8.7375, "LinearRegressor's predict() was wrong, it should be 8.7375, but was {}".format(linear_regressor.predict({'beef': 6, 'pb': 0, 'mayo': 1, 'jelly': 0}))
 print("    LinearRegressor's predict() #4 Passed!!!\n")
+
+print('All Tests Passed!!!')
