@@ -6,6 +6,7 @@ class DataFrame:
         self.columns = column_order
         for key in self.columns:
             self.data_dict[key] = data_dict[key]
+        self.last_base_column_index = len(column_order)
 
     def to_array(self):
         self.array = [value for _, value in self.data_dict.items()]
@@ -31,24 +32,17 @@ class DataFrame:
 
     def next_set_of_combos(self, current_arr, next_arr): #ex current_arr = [a] next_arr = [1,2,3] then next_set_of_combos(current_arr, next_arr) would return [[a,1], [a,2], [a,3]]
         result = [] 
-
         for col_1 in current_arr: 
-
             for col_2 in next_arr:
                 if [col_1, col_2] not in result and [col_2, col_1] not in result and col_1 != col_2:
                     result.append([col_1, col_2])
-                
         return result 
   
     def cartesian_product(self, arrays):
-        result = [], arrays[0], 
-        current_arr = arrays[0]
-        result = [arrays[0]]
-
+        result, current_arr = [arrays[0]], arrays[0]
         for arr in arrays[1:]: 
             current_arr = self.next_set_of_combos(current_arr, arr)
             result.append(current_arr)
-        
         return result[-1]
 
     def append_columns(self, dictionary):

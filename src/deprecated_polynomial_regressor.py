@@ -1,4 +1,3 @@
-import random
 #import matplotlib.pyplot as plt
 #from matplotlib.ticker import MultipleLocator
 from matrix_class import Matrix

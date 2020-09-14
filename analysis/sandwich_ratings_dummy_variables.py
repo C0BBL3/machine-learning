@@ -1,6 +1,6 @@
 import sys
 sys.path.append('src')
-from polynomial_regressor import PolynomialRegressor
+from deprecated_polynomial_regressor import PolynomialRegressor
 
 # [[0, 0, 0, 0],                  [[1]
 #  [0, 0, 1, 0],                   [1]
