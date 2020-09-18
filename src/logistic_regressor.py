@@ -13,4 +13,4 @@ class LogisticRegressor(LinearRegressor):
             self.coefficients[key] = coeff_result[i]
 
     def regression_function(self, gathered_inputs, coeffs, max_value = 10):
-      return 10 / (1 + math.e ** sum([gathered_inputs[key] * coeffs[key] for key in gathered_inputs]))
+      return max_value / (1 + math.e ** sum([gathered_inputs[key] * coeffs[key] for key in gathered_inputs]))
