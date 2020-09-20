@@ -237,8 +237,7 @@ class Matrix():
 
     def get_pivot_row(self, col_num):
         for i in self.elements:
-            j = self.find_col_num_of_first_nonzero_element_in_row(
-                self.elements.index(i))
+            j = self.find_col_num_of_first_nonzero_element_in_row(self.elements.index(i))
             if col_num == j:
                 return self.elements.index(i)
         return None
