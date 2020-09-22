@@ -32,7 +32,7 @@ class LinearRegressor:
         return result
 
     def predict(self, input_dict):
-        return self.regression_function(self.gather_all_inputs(input_dict), self.coefficients, self.max_value)
+        return self.regression_function(self.gather_all_inputs(input_dict), self.coefficients)
     
     def regression_function(self, gathered_inputs, coeffs, max_value = 10):
         return sum([gathered_inputs[key] * coeffs[key] for key in gathered_inputs])
