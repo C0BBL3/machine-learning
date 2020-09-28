@@ -23,7 +23,7 @@ df1.filter_columns(['constant', 'beef', 'pb', 'mayo', 'jelly', 'beef_pb', 'beef_
 print('\nTesting...\n')
 
 linear_regressor = LinearRegressor(df1, data_dict_1['ratings'], prediction_column='ratings')
-linear_regressor.solve_coefficients()
+linear_regressor.solve_coefficients(round_ = True, num_decimal = 5)
 print("    Testing LinearRegressor's solve_coefficients()")
 assert linear_regressor.coefficients == {'beef': 0.25, 'pb': 0.4, 'mayo': -1.25, 'jelly': 1.5, 'beef_pb': -0.21, 'beef_mayo': 1.05, 'beef_jelly': -0.85, 'pb_mayo': -0.65, 'pb_jelly': 0.65, 'mayo_jelly': -3.25, 'constant': 2.1875}, "LinearRegressor's coeffs are wrong, they should be {'beef': 0.25, 'pb': 0.4, 'mayo': -1.25, 'jelly': 1.5, 'beef_pb': -0.21, 'beef_mayo': 1.05, 'beef_jelly': -0.85, 'pb_mayo': -0.65, 'pb_jelly': 0.65, 'mayo_jelly': -3.25, 'constant': 2.1875}, but were " + str(linear_regressor.coefficients)
 print("    LinearRegressor's solve_coefficients() Passed!!!\n")

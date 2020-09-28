@@ -3,25 +3,24 @@ from dataframe import DataFrame
 import math
 
 class LinearRegressor:
-    def __init__(self, dataframe, ratings, prediction_column='ratings', max_value = 10):
+    def __init__(self, dataframe, ratings, prediction_column='ratings'):
         data_dict = {key: value for key, value in dataframe.data_dict.items() if key != prediction_column}
         column_order = [col for col in dataframe.columns if col != prediction_column]
         self.dataframe = DataFrame(data_dict, column_order)
         self.ratings = ratings
         self.coefficients = {}
         self.array = dataframe.to_array()
-        self.max_value = max_value
 
-    def solve_coefficients(self, round_ = False):
+    def solve_coefficients(self, round_ = False, num_decimal = 2):
         X_matrix = Matrix(elements=self.array)
         #print('X_matrix', X_matrix.elements)
         Y_matrix = Matrix(elements=self.ratings)
         result = (((X_matrix.transpose() @ X_matrix).inverse()) @ X_matrix.transpose()) @ Y_matrix
-        self.apply_coeffs([arr[0] for arr in result.elements], round_)
+        self.apply_coeffs([arr[0] for arr in result.elements], round_, num_decimal)
 
-    def apply_coeffs(self, coeff_result, round_):
+    def apply_coeffs(self, coeff_result, round_, num_decimal = 2):
         for i, key in enumerate(self.dataframe.data_dict.keys()):
-            if round_: self.coefficients[key] = round(coeff_result[i],2)
+            if round_: self.coefficients[key] = round(coeff_result[i], num_decimal)
             else: self.coefficients[key] = coeff_result[i]
             
     def gather_all_inputs(self, inputs):
@@ -35,6 +34,6 @@ class LinearRegressor:
     def predict(self, input_dict):
         return self.regression_function(self.gather_all_inputs(input_dict), self.coefficients)
     
-    def regression_function(self, gathered_inputs, coeffs, max_value = 10):
+    def regression_function(self, gathered_inputs, coeffs):
         return sum([gathered_inputs[key] * coeffs[key] for key in gathered_inputs])
             
