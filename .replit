@@ -1,2 +1,2 @@
 language = "bash"
-run = "python tests/test_logistic_regressor.py"
+run = "python analysis\signal_separation.py"
