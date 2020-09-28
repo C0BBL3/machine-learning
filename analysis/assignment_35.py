@@ -1,7 +1,7 @@
 import math
 import sys
 sys.path.append('src')
-from matrix_class import Matrix
+from matrix import Matrix
 '''
 data = [[1, 0, 0, 0, 0, 1],
         [1, 0, 0, 1, 0, 1],

@@ -1,6 +1,6 @@
 import sys
 sys.path.append('src')
-from matrix_class import Matrix
+from matrix import Matrix
 
 print('Testing...')
 '''

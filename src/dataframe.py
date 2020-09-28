@@ -1,4 +1,4 @@
-from matrix_class import Matrix
+from matrix import Matrix
 
 class DataFrame:
     def __init__(self, data_dict, column_order):

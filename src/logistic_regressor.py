@@ -1,4 +1,4 @@
-from matrix_class import Matrix
+from matrix import Matrix
 from dataframe import DataFrame
 from linear_regressor import LinearRegressor
 import math
