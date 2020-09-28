@@ -3,7 +3,7 @@ sys.path.append('src')
 from linear_regressor import LinearRegressor
 from dataframe import DataFrame
 
-data_dict = {
+data_dict_1 = {
     'beef': [0, 0, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0, 5, 5, 5, 5],
     'pb': [0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5],
     'condiments': [[], ['mayo'], ['jelly'], ['mayo', 'jelly'],
@@ -12,17 +12,17 @@ data_dict = {
                    [], ['mayo'], ['jelly'], ['mayo', 'jelly']],
     'ratings': [[1], [1], [4], [0], [4], [8], [1], [0], [5], [0], [9], [0], [0], [0], [0], [0]]
 }
-df1 = DataFrame(data_dict, column_order=['beef', 'pb', 'condiments'])
+df1 = DataFrame(data_dict_1, column_order=['beef', 'pb', 'condiments'])
 df1.create_dummy_variables('condiments')
 df1.append_pairwise_interactions()
 df1.append_columns({
-    'constant': [1 for _ in range(len(data_dict['ratings']))],
+    'constant': [1 for _ in range(len(data_dict_1['ratings']))],
 })
 df1.filter_columns(['constant', 'beef', 'pb', 'mayo', 'jelly', 'beef_pb', 'beef_mayo', 'beef_jelly', 'pb_mayo', 'pb_jelly', 'mayo_jelly'])
 
 print('\nTesting...\n')
 
-linear_regressor = LinearRegressor(df1, data_dict['ratings'], prediction_column='ratings')
+linear_regressor = LinearRegressor(df1, data_dict_1['ratings'], prediction_column='ratings')
 linear_regressor.solve_coefficients()
 print("    Testing LinearRegressor's solve_coefficients()")
 assert linear_regressor.coefficients == {'beef': 0.25, 'pb': 0.4, 'mayo': -1.25, 'jelly': 1.5, 'beef_pb': -0.21, 'beef_mayo': 1.05, 'beef_jelly': -0.85, 'pb_mayo': -0.65, 'pb_jelly': 0.65, 'mayo_jelly': -3.25, 'constant': 2.1875}, "LinearRegressor's coeffs are wrong, they should be {'beef': 0.25, 'pb': 0.4, 'mayo': -1.25, 'jelly': 1.5, 'beef_pb': -0.21, 'beef_mayo': 1.05, 'beef_jelly': -0.85, 'pb_mayo': -0.65, 'pb_jelly': 0.65, 'mayo_jelly': -3.25, 'constant': 2.1875}, but were " + str(linear_regressor.coefficients)

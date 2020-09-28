@@ -12,16 +12,17 @@ class LinearRegressor:
         self.array = dataframe.to_array()
         self.max_value = max_value
 
-    def solve_coefficients(self):
+    def solve_coefficients(self, round_ = False):
         X_matrix = Matrix(elements=self.array)
         #print('X_matrix', X_matrix.elements)
         Y_matrix = Matrix(elements=self.ratings)
         result = (((X_matrix.transpose() @ X_matrix).inverse()) @ X_matrix.transpose()) @ Y_matrix
-        self.apply_coeffs([arr[0] for arr in result.elements])
+        self.apply_coeffs([arr[0] for arr in result.elements], round_)
 
-    def apply_coeffs(self, coeff_result):
+    def apply_coeffs(self, coeff_result, round_):
         for i, key in enumerate(self.dataframe.data_dict.keys()):
-            self.coefficients[key] = coeff_result[i]
+            if round_: self.coefficients[key] = round(coeff_result[i],2)
+            else: self.coefficients[key] = coeff_result[i]
             
     def gather_all_inputs(self, inputs):
         result = inputs
