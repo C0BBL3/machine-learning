@@ -281,12 +281,7 @@ class Matrix():
             print(row)
 
     def copy(self, matrix):
-        empty_matrix = self.create_matrix(matrix.rows, matrix.cols, 0)
-        for i in range(0, self.rows):
-            for j in range(0, self.cols):
-                empty_matrix.elements[i][j] = self.elements[i][j]
-
-        return empty_matrix
+        return Matrix(elements=[[value for value in row] for row in self.elements])
 
     def compute_minor(self, i, j):
         return Matrix(elements=[row[:j] + row[j + 1:] for row in (self.elements[:i] + self.elements[i + 1:])])
