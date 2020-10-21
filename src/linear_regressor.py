@@ -11,16 +11,15 @@ class LinearRegressor:
         self.coefficients = {}
         self.array = dataframe.to_array()
 
-    def solve_coefficients(self, round_ = False, num_decimal = 2):
+    def solve_coefficients(self, round_coeffs = False, num_decimal = 2):
         X_matrix = Matrix(elements=self.array)
-        #print('X_matrix', X_matrix.elements)
         Y_matrix = Matrix(elements=self.ratings)
         result = (((X_matrix.transpose() @ X_matrix).inverse()) @ X_matrix.transpose()) @ Y_matrix
-        self.apply_coeffs([arr[0] for arr in result.elements], round_, num_decimal)
+        self.apply_coeffs([arr[0] for arr in result.elements], round_coeffs, num_decimal)
 
-    def apply_coeffs(self, coeff_result, round_, num_decimal = 2):
+    def apply_coeffs(self, coeff_result, round_coeffs = False, num_decimal = 2):
         for i, key in enumerate(self.dataframe.data_dict.keys()):
-            if round_: self.coefficients[key] = round(coeff_result[i], num_decimal)
+            if round_coeffs: self.coefficients[key] = round(coeff_result[i], num_decimal)
             else: self.coefficients[key] = coeff_result[i]
             
     def gather_all_inputs(self, inputs):
@@ -37,3 +36,5 @@ class LinearRegressor:
     def regression_function(self, gathered_inputs, coeffs):
         return sum([gathered_inputs[key] * coeffs[key] for key in gathered_inputs])
             
+    def evaluate(self):
+        return {i: self.regression_function({key:values[i] for key, values in self.dataframe.data_dict.items()}, self.coefficients) for i in range(0, len(list(self.dataframe.data_dict.values())[0]))}

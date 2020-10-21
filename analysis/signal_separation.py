@@ -29,6 +29,18 @@ df2.append_columns({
     'd': [math.cos(2 * x) for x in data_dict_2['x']],
 })
 
+data_dict_3 = {
+    'constant': [1 for _ in range(0,3)],
+    'x': [2, 3, 4],
+    'ratings': [[27.0154], [64.0912], [159.817]]
+}
+df3 = DataFrame(data_dict_2, column_order=[])
+df3.append_columns({
+    'a': [math.log(x) for x in data_dict_3['x']],
+    'e^b': [math.exp(x) for x in data_dict_3['x']],
+    'sqrt(c)': [(x + 1) ** 0.5 for x in data_dict_3['x']],
+})
+
 linear_regressor_1 = LinearRegressor(df1, data_dict_1['ratings'], prediction_column='ratings')
 linear_regressor_1.solve_coefficients(round_ = True)
 assert  linear_regressor_1.coefficients == {'constant': 4.0, 'x': 15.0, 'x^2': 50.0, 'x^3': -12.5}, "Exponential Coeffs are wrong, they should be {'constant': 4.0, 'x': 15.0, 'x^2': 50.0, 'x^3': -12.5}, but were " + str(linear_regressor_1.coefficients)
@@ -38,3 +50,10 @@ linear_regressor_2 = LinearRegressor(df2, data_dict_2['ratings'], prediction_col
 linear_regressor_2.solve_coefficients(round_ = True)
 assert  linear_regressor_2.coefficients == {'a': 1.0, 'b': 2.0, 'c': -3.0, 'd': 5.0}, "Sine & Cosine Coeffs are wrong, they should be {'a': 1.0, 'b': 2.0, 'c': -3.0, 'd': 5.0}, but were " + str(linear_regressor_2.coefficients)
 print("Sine & Cosine Coeffs", linear_regressor_2.coefficients)
+
+linear_regressor_3 = LinearRegressor(df3, data_dict_3['ratings'], prediction_column='ratings')
+linear_regressor_3.solve_coefficients(round_ = True)
+assert  linear_regressor_3.coefficients == {'a': 5.0, 'e^b': 2.72, 'sqrt(c)': 2.0}, "Quiz 3 Coeffs are wrong, they should be {'a': 5.0, 'e^b': 2.72, 'sqrt(c)': 2.0}, but were " + str(linear_regressor_3.coefficients)
+print("Quiz 3 Coeffs", linear_regressor_3.coefficients)
+
+
