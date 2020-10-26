@@ -24,9 +24,7 @@ class DataFrame:
         return DataFrame(self.data_dict, columns)
 
     def select_rows(self, indices):
-        array = DataFrame(self.data_dict, self.columns).to_array()
-        print('arr', [array[i] for i in indices])
-        return self.from_array([array[i] for i in indices], self.columns)
+        return self.from_array([DataFrame(self.data_dict, self.columns).to_array()[i] for i in indices], self.columns)
 
     def select_rows_where(self, lambda_function):
         return self.select_rows([i for i in range(len(self.to_array()[0])) if lambda_function({column: value[i] for column, value in self.data_dict.items()})])
@@ -35,14 +33,7 @@ class DataFrame:
         return self.select_rows(self.get_sorted_indicies(column, ascending))
 
     def get_sorted_indicies(self, column, ascending):
-        if isinstance(self.data_dict[column][0], int):
-            sorted_rows = self.quick_sort(self.data_dict[column], ascending)
-            indices = [self.data_dict[column].index(row) for row in sorted_rows]
-            return self.select_rows(indices)
-        elif isinstance(self.data_dict[column][0], str):
-            sorted_rows = self.quick_sort_for_string(self.data_dict[column], ascending)
-            indices = [self.data_dict[column].index(row) for row in sorted_rows]
-            return self.select_rows(indices)
+        return [self.data_dict[column].index(row) for row in self.quick_sort(self.data_dict[column], ascending)]
 
     def quick_sort(self, arr, ascending):
         copy_arr, sorted_arr = [value for value in arr], []
@@ -51,29 +42,6 @@ class DataFrame:
             copy_arr.remove(min(copy_arr))
         if ascending: return sorted_arr
         else: return sorted_arr[::-1]
-
-    def quick_sort_for_string(self, arr, ascending):
-        copy_arr, sorted_arr = [value for value in arr], []
-        while len(copy_arr) > 0:
-            sorted_arr.append(self.min_value_of_strings(copy_arr))
-            copy_arr.remove(self.min_value_of_strings(copy_arr))
-        if ascending: return sorted_arr
-        else: return sorted_arr[::-1]
-
-    def min_value_of_strings(self, arr):
-        min_value = arr[0]
-        for value in arr[1:]:
-            if value != min_value: 
-                i = 0
-                while value[i] >= min_value[i]:
-                    if value[0] < min_value[0]:
-                        min_value = value
-                        continue
-                    if i < len(value) and i < len(min_value):
-                        i += 1
-                    else:
-                        continue
-        return min_value  
 
     def apply(self, column, function): 
         self.data_dict[column] = [function(value) for value in self.data_dict[column]]
