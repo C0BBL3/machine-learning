@@ -123,7 +123,40 @@ assert df6.columns == ['beef', 'pb', 'mayo', 'jelly', 'beef_pb', 'beef_mayo', 'b
 print("    DataFrame 6's columns Passed!!!\n")
 
 print("    Testing DataFrame 6's to_array()")
-assert df6.to_array() == [[0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  4], [0,  0,  1,  1,  0,  0,  0,  0,  0,  1,  1,  0], [5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  4], [5,  0,  1,  0,  0,  5,  0,  0,  0,  0,  1,  8], [5,  0,  0,  1,  0,  0,  5,  0,  0,  0,  1,  1], [5,  0,  1,  1,  0,  5,  5,  0,  0,  1,  1,  0], [0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  1,  5], [0,  5,  1,  0,  0,  0,  0,  5,  0,  0,  1,  0], [0,  5,  0,  1,  0,  0,  0,  0,  5,  0,  1,  9], [0,  5,  1,  1,  0,  0,  0,  5,  5,  1,  1,  0], [5,  5,  0,  0, 25,  0,  0,  0,  0,  0,  1,  0], [5,  5,  1,  0, 25,  5,  0,  5,  0,  0,  1,  0], [5,  5,  0,  1, 25,  0,  5,  0,  5,  0,  1,  0], [5,  5,  1,  1, 25,  5,  5,  5,  5,  1,  1,  0]], "DataFrame 6's to_array() was not right, it should be[[0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  4], [0,  0,  1,  1,  0,  0,  0,  0,  0,  1,  1,  0], [5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  4], [5,  0,  1,  0,  0,  5,  0,  0,  0,  0,  1,  8], [5,  0,  0,  1,  0,  0,  5,  0,  0,  0,  1,  1], [5,  0,  1,  1,  0,  5,  5,  0,  0,  1,  1,  0], [0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  1,  5], [0,  5,  1,  0,  0,  0,  0,  5,  0,  0,  1,  0], [0,  5,  0,  1,  0,  0,  0,  0,  5,  0,  1,  9], [0,  5,  1,  1,  0,  0,  0,  5,  5,  1,  1,  0], [5,  5,  0,  0, 25,  0,  0,  0,  0,  0,  1,  0], [5,  5,  1,  0, 25,  5,  0,  5,  0,  0,  1,  0], [5,  5,  0,  1, 25,  0,  5,  0,  5,  0,  1,  0], [5,  5,  1,  1, 25,  5,  5,  5,  5,  1,  1,  0]], but was {}".format(df6.to_array())
+assert df6.to_array() == [[0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  4], [0,  0,  1,  1,  0,  0,  0,  0,  0,  1,  1,  0], [5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  4], [5,  0,  1,  0,  0,  5,  0,  0,  0,  0,  1,  8], [5,  0,  0,  1,  0,  0,  5,  0,  0,  0,  1,  1], [5,  0,  1,  1,  0,  5,  5,  0,  0,  1,  1,  0], [0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  1,  5], [0,  5,  1,  0,  0,  0,  0,  5,  0,  0,  1,  0], [0,  5,  0,  1,  0,  0,  0,  0,  5,  0,  1,  9], [0,  5,  1,  1,  0,  0,  0,  5,  5,  1,  1,  0], [5,  5,  0,  0, 25,  0,  0,  0,  0,  0,  1,  0], [5,  5,  1,  0, 25,  5,  0,  5,  0,  0,  1,  0], [5,  5,  0,  1, 25,  0,  5,  0,  5,  0,  1,  0], [5,  5,  1,  1, 25,  5,  5,  5,  5,  1,  1,  0]], "DataFrame 6's to_array() was not right, it should be [[0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1], [0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  4], [0,  0,  1,  1,  0,  0,  0,  0,  0,  1,  1,  0], [5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  4], [5,  0,  1,  0,  0,  5,  0,  0,  0,  0,  1,  8], [5,  0,  0,  1,  0,  0,  5,  0,  0,  0,  1,  1], [5,  0,  1,  1,  0,  5,  5,  0,  0,  1,  1,  0], [0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  1,  5], [0,  5,  1,  0,  0,  0,  0,  5,  0,  0,  1,  0], [0,  5,  0,  1,  0,  0,  0,  0,  5,  0,  1,  9], [0,  5,  1,  1,  0,  0,  0,  5,  5,  1,  1,  0], [5,  5,  0,  0, 25,  0,  0,  0,  0,  0,  1,  0], [5,  5,  1,  0, 25,  5,  0,  5,  0,  0,  1,  0], [5,  5,  0,  1, 25,  0,  5,  0,  5,  0,  1,  0], [5,  5,  1,  1, 25,  5,  5,  5,  5,  1,  1,  0]], but was {}".format(df6.to_array())
 print("    DataFrame 6's to_array() Passed!!!\n")
+
+print('\n--------------------------------\n')
+
+columns = ['firstname', 'lastname', 'age']
+arr = [['Kevin', 'Fray', 5],
+           ['Charles', 'Trapp', 17],
+           ['Anna', 'Smith', 13],
+           ['Sylvia', 'Mendez', 9]]
+
+df7 = DataFrame.from_array(arr, columns)
+print("    Testing DataFrame 7's from_array()")
+assert df7.data_dict == {'firstname': ['Kevin', 'Charles', 'Anna', 'Sylvia'], 'lastname': ['Fray', 'Trapp', 'Smith', 'Mendez'], 'age':[5, 17, 13, 9]}, "DataFrame 7's from_array() was not right, it should be {'firstname': ['Kevin', 'Charles', 'Anna', 'Sylvia'], 'lastname': ['Fray', 'Trapp', 'Smith', 'Mendez'], 'age':[5, 17, 13, 9]}, but was {}".format(df7.data_dict)
+print("    DataFrame 7's from_array() Passed!!!\n")
+
+print("    Testing DataFrame 7's select_columns()")
+assert df7.select_columns(['firstname','age']).to_array() == [['Kevin', 5], ['Charles', 17], ['Anna', 13], ['Sylvia', 9]], "DataFrame 7's select_columns() was not right, it should be [['Kevin', 5], ['Charles', 17], ['Anna', 13], ['Sylvia', 9]], but was {}".format(df7.array)
+print("    DataFrame 7's select_columns() Passed!!!\n")
+
+print("    Testing DataFrame 7's select_rows()")
+assert df7.select_rows([1,3]).to_array() == [['Charles', 'Trapp', 17], ['Sylvia', 'Mendez', 9]], "DataFrame 7's select_columns() was not right, it should be [['Charles', 'Trapp', 17],['Sylvia', 'Mendez', 9]], but was {}".format(df7.select_rows([1,3]).to_array())
+print("    DataFrame 7's select_columns() Passed!!!\n")
+
+print("    Testing DataFrame 7's select_rows_where()")
+assert df7.select_rows_where(lambda row: len(row['firstname']) >= len(row['lastname']) and row['age'] > 10).to_array() == [['Charles', 'Trapp', 17]], "DataFrame 7's select_columns_where() was not right, it should be [['Charles', 'Trapp', 17]], but was {}".format(df7.select_rows_where(lambda row: len(row['firstname']) >= len(row['lastname']) and row['age'] > 10).to_array())
+print("    DataFrame 7's select_rows_where() Passed!!!\n")
+
+print("    Testing DataFrame 7's order_by()")
+assert df7.order_by('age', True).to_array() == [['Kevin', 'Fray', 5], ['Sylvia', 'Mendez', 9], ['Anna', 'Smith', 13], ['Charles', 'Trapp', 17]], "DataFrame 7's order_by() was not right, it should be [['Kevin', 'Fray', 5], ['Sylvia', 'Mendez', 9], ['Anna', 'Smith', 13], ['Charles', 'Trapp', 17]], but was {}".format(df7.order_by('age', True).to_array())
+print("    DataFrame 7's order_by() Passed!!!\n")
+
+print("    Testing DataFrame 7's order_by()")
+assert df7.order_by('firstname', False).to_array() == [['Sylvia', 'Mendez', 9], ['Kevin', 'Fray', 5], ['Charles', 'Trapp', 17], ['Anna', 'Smith', 13]], "DataFrame 7's order_by() was not right, it should be [['Sylvia', 'Mendez', 9], ['Kevin', 'Fray', 5], ['Charles', 'Trapp', 17], ['Anna', 'Smith', 13]], but was {}".format(df7.order_by('firstname', False).to_array())
+print("    DataFrame 7's order_by() Passed!!!\n")
 
 print('ALL TESTS PASS!!!!!')
