@@ -43,17 +43,20 @@ class Matrix():
         return copy_matrix
 
     def inverse(self):
-        copy_matrix = self.copy(self)
-        identity_elements = self.create_identity_elements(self.cols, self.rows)
-        for i, row in enumerate(copy_matrix.elements):
-            for value in identity_elements[i]:
-                row.append(value)
+        if self.rows == self.cols and self.determinant != 0:
+            copy_matrix = self.copy(self)
+            identity_elements = self.create_identity_elements(self.cols, self.rows)
+            for i, row in enumerate(copy_matrix.elements):
+                for value in identity_elements[i]:
+                    row.append(value)
 
-        copy_matrix.rows = len(copy_matrix.elements)
-        copy_matrix.cols = len(copy_matrix.elements[0])
-        solved_aug_matrix = copy_matrix.rref()
+            copy_matrix.rows = len(copy_matrix.elements)
+            copy_matrix.cols = len(copy_matrix.elements[0])
+            solved_aug_matrix = copy_matrix.rref()
 
-        return Matrix(elements=[row[solved_aug_matrix.cols // 2:] for row in solved_aug_matrix.elements])
+            return Matrix(elements=[row[solved_aug_matrix.cols // 2:] for row in solved_aug_matrix.elements])
+        else:
+            return 'Matrix not square, please give a square matrix'
 
     def determinant(self):
         if self.rows == self.cols:
@@ -179,6 +182,7 @@ class Matrix():
 
     def swap_rows(self, row_1_Num, row_2_Num):
         copy_matrix = self.copy(self)
+        print(row_1_Num, row_2_Num)
         copy_matrix.elements[row_1_Num], copy_matrix.elements[row_2_Num] = copy_matrix.elements[row_2_Num], copy_matrix.elements[row_1_Num]
 
         return copy_matrix

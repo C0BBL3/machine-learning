@@ -3,7 +3,7 @@ sys.path.append('src')
 from matrix import Matrix
 
 print('Testing...')
-'''
+
 add_1 = Matrix(elements=[[1, 1], [0, 1]])
 add_2 = Matrix(elements=[[1, 1], [0, 1]])
 result = add_1 + add_2
@@ -62,7 +62,7 @@ result = RREF_3.rref()
 assert result.elements == [[1.0, 0.0, -1.0], [0.0, 1.0, 3.0]
                            ], 'RREF #3 was wrong, should be [[1, 0, -1], [0, 1, 3]], but was {}'.format(result.elements)
 print('RREF #3 Passed!')
-'''
+
 RREF_4 = Matrix(elements=[[3, 1, 2], [0, 2, 3]])
 result = RREF_4.rref()
 
