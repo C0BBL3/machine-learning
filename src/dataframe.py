@@ -9,8 +9,7 @@ class DataFrame:
         self.last_base_column_index = len(column_order)
 
     def to_array(self):
-        self.array = Matrix(elements=[[row[i] for row in list(self.data_dict.values())] for i, _ in enumerate(list(self.data_dict.values())[0])]).elements
-        return self.array
+        return [list(row) for row in zip(*[self.data_dict[col] for col in self.columns])]
 
     @staticmethod
     def from_array(array, columns): 
