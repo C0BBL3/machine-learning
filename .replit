@@ -1,2 +1,2 @@
 language = "bash"
-run = "python analysis\signal_separation.py"
+run = "python analysis/assignment_58.py"

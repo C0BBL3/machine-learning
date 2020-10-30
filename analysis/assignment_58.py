@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
-from matplotlib.ticker import MultipleLocator
+#import matplotlib.pyplot as plt
+#from matplotlib.ticker import MultipleLocator
 import sys
 sys.path.append('src')
 from k_nearest_neighbors_classifier import KNearestNeighborsClassifier
@@ -25,9 +25,28 @@ data_set = [['Shortbread', 0.14, 0.14, 0.28, 0.44],
             ['Shortbread', 0.15, 0.23, 0.30, 0.32],
             ['Shortbread', 0.20, 0.10, 0.30, 0.40]]
 
+def percent_correct(k, knn, df, data_set_without_k):
+    observation = {
+    'Portion Eggs': data_set[k][1],
+    'Portion Butter': data_set[k][2],
+    'Portion Sugar': data_set[k][3],
+    'Portion Flour': data_set[k][4]
+    }
+    correct_observations = 0
+    for i in range(len(data_set_without_k)):
+        print('knn.classify(observation, k=i) == data_set[k][0]', knn.classify(observation, k=i) == data_set[k][0])
+        if knn.classify(observation, k=i) == data_set[k][0]:
+            correct_observations += 1
+    print('correct_observations', correct_observations)
+    print('(len(data_set_without_k))', (len(data_set_without_k)))
+    return correct_observations/(len(data_set_without_k))
+
+
 y_values = []
 for k in range(0, len(data_set)):
-    df = DataFrame.from_array(data_set[:k] + data_set[k+1:], 
+    data_set_without_k = data_set[:k] + data_set[k+1:]
+    print('k, data_set[k]', k, data_set[k])
+    df = DataFrame.from_array(data_set_without_k, 
     columns = ['Cookie Type', 
     'Portion Eggs', 
     'Portion Butter', 
@@ -35,21 +54,10 @@ for k in range(0, len(data_set)):
     'Portion Flour']
     )
     knn = KNearestNeighborsClassifier(df, prediction_column = 'Cookie Type')
-    y_values.append(percent_correct(k, knn, df))
+    y_values.append(percent_correct(k, knn, df, data_set_without_k))
+    print('y_values', y_values)
 
-def percent_correct(k, knn, df):
-    data_set_without_k = data_set[:k] + data_set[k+1:]
-    observation = {
-    'Portion Eggs': data_set[k][0],
-    'Portion Butter': data_set[k][1],
-    'Portion Sugar': data_set[k][2],
-    'Portion Flour': data_set[k][3]
-    }
-    for i in range(0, len(data_set) - 1):
-        correct_observations = 0
-        if knn.classify(observation, k=k) == data_set_without_k[i][0]:
-            correct_observations += 1
-    return correct_observations/(len(data_set)-1)
 
-plt.plot([x for x in range(1, len(data_set))],y_values,)
-plt.savefig('plot.png')
+#plt.plot([x for x in range(1, len(data_set)+1)],y_values)
+#plt.savefig('plot.png')
+#plt.show()
