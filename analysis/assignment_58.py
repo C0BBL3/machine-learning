@@ -25,36 +25,34 @@ data_set = [['Shortbread', 0.14, 0.14, 0.28, 0.44],
             ['Shortbread', 0.15, 0.23, 0.30, 0.32],
             ['Shortbread', 0.20, 0.10, 0.30, 0.40]]
 
-def percent_correct(k, knn, df, data_set_without_k):
-    observation = {
-    'Portion Eggs': data_set[k][1],
-    'Portion Butter': data_set[k][2],
-    'Portion Sugar': data_set[k][3],
-    'Portion Flour': data_set[k][4]
-    }
+def percent_correct(k):
     correct_observations = 0
-    for i in range(len(data_set_without_k)):
-        print('knn.classify(observation, k=i) == data_set[k][0]', knn.classify(observation, k=i) == data_set[k][0])
-        if knn.classify(observation, k=i) == data_set[k][0]:
+    for i in range(len(data_set)-1):
+        data_set_without_i = data_set[:i] + data_set[i+1:]
+        df = DataFrame.from_array(data_set_without_i, 
+        columns = ['Cookie Type', 'Portion Eggs', 'Portion Butter', 'Portion Sugar', 'Portion Flour']
+        )
+        knn = KNearestNeighborsClassifier(df, prediction_column = 'Cookie Type')
+        observation = {
+        'Portion Eggs': data_set[i][1],
+        'Portion Butter': data_set[i][2],
+        'Portion Sugar': data_set[i][3],
+        'Portion Flour': data_set[i][4]
+        }
+        print('data_set[k][0]', data_set[i][0])
+        print('knn.classify(observation, k=k)', knn.classify(observation, k=k+1))
+        print('knn.classify(observation, k=k) == data_set[k][0]', knn.classify(observation, k=k) == data_set[i][0])
+        if knn.classify(observation, k=k+1) == data_set[i][0]:
             correct_observations += 1
     print('correct_observations', correct_observations)
-    print('(len(data_set_without_k))', (len(data_set_without_k)))
-    return correct_observations/(len(data_set_without_k))
+    print('(len(data_set_without_i))', (len(data_set_without_i)))
+    return correct_observations/(len(data_set_without_i))
 
 
 y_values = []
-for k in range(0, len(data_set)):
-    data_set_without_k = data_set[:k] + data_set[k+1:]
+for k in range(1, len(data_set)):
     print('k, data_set[k]', k, data_set[k])
-    df = DataFrame.from_array(data_set_without_k, 
-    columns = ['Cookie Type', 
-    'Portion Eggs', 
-    'Portion Butter', 
-    'Portion Sugar', 
-    'Portion Flour']
-    )
-    knn = KNearestNeighborsClassifier(df, prediction_column = 'Cookie Type')
-    y_values.append(percent_correct(k, knn, df, data_set_without_k))
+    y_values.append(percent_correct(k))
     print('y_values', y_values)
 
 
