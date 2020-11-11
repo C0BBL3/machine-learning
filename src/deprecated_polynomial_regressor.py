@@ -44,7 +44,7 @@ class PolynomialRegressor:
 
     def evaluate(self, x):
         if self.coefficients == []: return sum([self.default_guess[i] * (x ** i) for i in range(0, self.degree)])
-        else: return sum([self.coefficients[i] * (x ** i) for i in range(0, self.degree)])
+        else: return sum([coeff * (x ** i) for i, coeff in enumerate(self.coefficients)])
 
 
 '''
