@@ -29,39 +29,22 @@ class PolynomialRegressor:
                     for k in range(0, self.degree + 1):
                         polynomial_function.append(arr[0] ** k)
                     X_data.append(polynomial_function)
-
                 else:
                     X_data.append([arr[0]])
                 Y_data.append([arr[1]])
         X_matrix = Matrix(elements=X_data)
-        print('\nX_matrix.elements', X_matrix.elements,)
         Y_matrix = Matrix(elements=Y_data)
-        print('Y_matrix.elements', Y_matrix.elements)
-        X_transpose = X_matrix.transpose()  # xT
-        print('xT', X_transpose.elements)
-        X_transpose_times_X = X_transpose @ X_matrix  # xT * x
-        print('(xT * x)', X_transpose_times_X.elements)
-        X_transpose_times_X_inverse = X_transpose_times_X.inverse_by_minors()
-        print('(xT * x)^-1', X_transpose_times_X_inverse.elements)
-        X_transpose_times_X_inverse_times_X_transpose = X_transpose_times_X_inverse @ X_transpose
-        print('(xT * x)^-1 * xT', X_transpose_times_X_inverse_times_X_transpose.elements)
-        result = X_transpose_times_X_inverse_times_X_transpose @ Y_matrix
-        print('(xT * x)^-1 * xT * y', result.elements, '\n')  # (xT * x)^-1 * xT * y
+        result = (((X_matrix.transpose() @ X_matrix).inverse()) @ X_matrix.transpose()) @ Y_matrix
         for results in result.elements:
             if results != result.elements:
                 self.coefficients.append(results[0])
 
-        print('Coeffs', self.coefficients, '\n')
-
-    def sum_squared_error(self):
-        print('baka')
-        return sum([(self.evaluate(x) - y)**2 for x, y in self.data])
+    def rss(self, data):
+        return sum([(y-self.evaluate(x))**2 for x, y in data])
 
     def evaluate(self, x):
-        if self.coefficients == []:
-            return sum([self.default_guess[i] * (x ** i) for i in range(0, self.degree)])
-        else:
-            return sum([self.coefficients[i] * (x ** i) for i in range(0, self.degree)])
+        if self.coefficients == []: return sum([self.default_guess[i] * (x ** i) for i in range(0, self.degree)])
+        else: return sum([self.coefficients[i] * (x ** i) for i in range(0, self.degree)])
 
 
 '''

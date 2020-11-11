@@ -8,7 +8,7 @@ class KNearestNeighborsClassifier:
         return [[sum([(self.data_dict[portion][i] - observations[portion]) ** 2 for portion in self.data_dict.keys()]) ** 0.5, distance] for i, distance in enumerate(self.prediction_column)]
 
     def nearest_neighbors(self, observations):
-        return self.quick_sort(self.compute_distances(observations))
+        return self.simple_sort(self.compute_distances(observations))
 
     def compute_average_distances(self, observations):
         distances = self.compute_distances(observations)
@@ -34,12 +34,13 @@ class KNearestNeighborsClassifier:
                 max_count = [_type_, count]
             elif count == max_count[1] and max_count[1] > 0:
                 return min(
-                    self.compute_average_distances(observations).keys(), 
-                    key=(lambda k: self.compute_average_distances(observations)[k])
-                    )
+                    self.compute_average_distances(observations).keys(),
+                    key=(lambda k: self.compute_average_distances(
+                        observations)[k])
+                )
         return max_count[0]
 
-    def quick_sort(self, distances):
+    def simple_sort(self, distances):
         sorted_list, copy_list = [], [i for i in distances]
         while len(copy_list) > 0:
             sorted_list.append(self.min_distance(copy_list))

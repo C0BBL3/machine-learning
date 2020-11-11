@@ -13,12 +13,9 @@ class LinearRegressor:
 
     def solve_coefficients(self, round_coeffs = False, num_decimal = 2):
         X_matrix = Matrix(elements=self.array)
-        print('xmatrix', X_matrix.elements)
         Y_matrix = Matrix(elements=self.ratings)
-        print('ymatrix', Y_matrix.elements)
         result = (((X_matrix.transpose() @ X_matrix).inverse()) @ X_matrix.transpose()) @ Y_matrix
         self.apply_coeffs([arr[0] for arr in result.elements], round_coeffs, num_decimal)
-        print('coeffs', self.coefficients)
 
     def apply_coeffs(self, coeff_result, round_coeffs = False, num_decimal = 2):
         for i, key in enumerate(self.dataframe.data_dict.keys()):

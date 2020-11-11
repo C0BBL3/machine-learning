@@ -23,4 +23,4 @@ class NaiveBayesClassifier:
         if self.likelihood((variable, True), observed_features) != self.likelihood((variable, False), observed_features):
             return self.likelihood((variable, True), observed_features) >= self.likelihood((variable, False), observed_features)
         else:
-            return 
+            return self.dataframe.data_dict[variable].count(True) > self.dataframe.data_dict[variable].count(False)
