@@ -37,4 +37,7 @@ class LinearRegressor:
         return sum([gathered_inputs[key] * coeffs[key] for key in gathered_inputs])
             
     def evaluate(self):
-        return {i: self.regression_function({key:values[i] for key, values in self.dataframe.data_dict.items()}, self.coefficients) for i in range(0, len(list(self.dataframe.data_dict.values())[0]))}
+        evaluation = {}
+        for i in range(0, len(list(self.dataframe.data_dict.values())[0])):
+            gathered_inputs = {key:values[i] for key, values in self.dataframe.data_dict.items()}
+            evaluation[i] = self.regression_function(gathered_inputs, self.coefficients)
