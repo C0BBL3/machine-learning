@@ -12,8 +12,7 @@ class DataFrame:
     def to_array(self):
         return [list(row) for row in zip(*[self.data_dict[col] for col in self.columns])]
 
-    @staticmethod
-    def from_array(array, columns):
+    def from_array(self, array, columns):
         return DataFrame(dict(zip(columns, [[row[i] for row in array] for i, _ in enumerate(array[0])])), columns)
 
     def filter_columns(self, columns):
