@@ -15,13 +15,10 @@ class LinearRegressor:
         X_matrix = Matrix(elements=self.array)
         Y_matrix = Matrix(elements=self.ratings)
         result = (((X_matrix.transpose() @ X_matrix).inverse()) @ X_matrix.transpose()) @ Y_matrix
-        self.apply_coeffs([arr[0] for arr in result.elements], round_coeffs, num_decimal)
-
-    def apply_coeffs(self, coeff_result, round_coeffs = False, num_decimal = 2):
+        coeff_result = [arr[0] for arr in result.elements]
         for i, key in enumerate(self.dataframe.data_dict.keys()):
             if round_coeffs: self.coefficients[key] = round(coeff_result[i], num_decimal)
             else: self.coefficients[key] = coeff_result[i]
-            
     def gather_all_inputs(self, inputs):
         result = inputs
         cartesian = self.dataframe.cartesian_product([inputs.keys(), inputs.keys()])
