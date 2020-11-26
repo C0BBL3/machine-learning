@@ -1,11 +1,14 @@
 class KNearestNeighborsClassifier:
-    def __init__(self, dataframe, prediction_column):
+    def __init__(self, k=5):
+        self.k = k
+
+    def fit(self, dataframe, dependent_variable):
         self.data_dict = {key: value for key, value in dataframe.data_dict.items(
-        ) if key != prediction_column}
-        self.prediction_column = dataframe.data_dict[prediction_column]
+        ) if key != dependent_variable}
+        self.dependent_variable = dataframe.data_dict[dependent_variable]
 
     def compute_distances(self, observations):
-        return [[sum([(self.data_dict[portion][i] - observations[portion]) ** 2 for portion in self.data_dict.keys()]) ** 0.5, distance] for i, distance in enumerate(self.prediction_column)]
+        return [[sum([(self.data_dict[portion][i] - observations[portion]) ** 2 for portion in self.data_dict.keys()]) ** 0.5, distance] for i, distance in enumerate(self.dependent_variable)]
 
     def nearest_neighbors(self, observations):
         return self.simple_sort(self.compute_distances(observations))
@@ -22,9 +25,9 @@ class KNearestNeighborsClassifier:
                 distance for distance in distances if distance not in current_distances]
         return average_distances
 
-    def classify(self, observations, k=5):
+    def classify(self, observations):
         k_nearest_neighbors = [neighbor[1]
-                               for neighbor in self.nearest_neighbors(observations)[:k]]
+                               for neighbor in self.nearest_neighbors(observations)[:self.k]]
         count_of_types = dict.fromkeys(k_nearest_neighbors, 0)
         for neighbor in k_nearest_neighbors:
             count_of_types[neighbor] += 1
@@ -36,7 +39,7 @@ class KNearestNeighborsClassifier:
                 return min(
                     self.compute_average_distances(observations).keys(),
                     key=(lambda k: self.compute_average_distances(
-                        observations)[k])
+                        observations)[self.k])
                 )
         return max_count[0]
 

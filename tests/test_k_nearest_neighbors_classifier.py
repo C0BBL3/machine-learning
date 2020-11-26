@@ -21,7 +21,7 @@ df = DataFrame.from_array(
     ['Fortune'     ,     0.22     ,       0.00     ,      0.40     ,     0.38      ]],
     columns = ['Cookie Type' ,'Portion Eggs','Portion Butter','Portion Sugar','Portion Flour' ]
     )
-knn = KNearestNeighborsClassifier(df, prediction_column = 'Cookie Type')
+knn = KNearestNeighborsClassifier(df, prediction_column = 'Cookie Type', k=5)
 observation = {
     'Portion Eggs': 0.10,
     'Portion Butter': 0.15,
@@ -41,5 +41,5 @@ assert knn.compute_average_distances(observation) == {'Shortbread': 0.0671098396
 print("    KNearestNeighborsClassifier's compute_average_distances() Passed!!!\n")
 
 print("    Testing KNearestNeighborsClassifier's classify()")
-assert knn.classify(observation, k=5) == 'Shortbread', "KNearestNeighborsClassifier's compute_distances() was not right, it should be Shortbread, but was {}".format(knn.classify(observation))
+assert knn.classify(observation) == 'Shortbread', "KNearestNeighborsClassifier's compute_distances() was not right, it should be Shortbread, but was {}".format(knn.classify(observation))
 print("    KNearestNeighborsClassifier's classify() Passed!!!\n")
