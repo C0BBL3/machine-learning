@@ -1,2 +1,2 @@
 language = "bash"
-run = "python analysis/assignment_62.py"
+run = "python tests\test_decision_tree.py"

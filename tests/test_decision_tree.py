@@ -59,19 +59,19 @@ print("    Decision Tree's low.best_split Passed!!!\n")
 
 dt.split()
 
-print("    Testing Decision Tree's low.low.row_indices", dt.root.low.low.row_indices)
+print("    Testing Decision Tree's low.low.row_indices")
 assert dt.root.low.low.row_indices == [0, 1, 2], "Decision Tree's low.low.row_indices was not right, it should be [0, 1, 2], but was {}".format(dt.root)
 print("    Decision Tree's low.low.row_indices Passed!!!\n")
 
-print("    Testing Decision Tree's low.high.row_indices", dt.root.low.high.row_indices)
+print("    Testing Decision Tree's low.high.row_indices")
 assert dt.root.low.high.row_indices == [6], "Decision Tree's low.high.row_indices was not right, it should be [6], but was {}".format(dt.root)
 print("    Decision Tree's low.high.row_indices Passed!!!\n")
 
-print("    Testing Decision Tree's low.low.impurity", dt.root.low.low.impurity)
+print("    Testing Decision Tree's low.low.impurity")
 assert dt.root.low.low.impurity == 0, "Decision Tree's low.low.impurity was not right, it should be 0, but was {}".format(dt.root)
 print("    Decision Tree's low.low.impurity Passed!!!\n")
 
-print("    Testing Decision Tree's low.high.impurity", dt.root.low.high.impurity)
+print("    Testing Decision Tree's low.high.impurity")
 assert dt.root.low.high.impurity == 0, "Decision Tree's low.high.impurity was not right, it should be 0, but was {}".format(dt.root)
 print("    Decision Tree's low.high.impurity Passed!!!\n")
 
