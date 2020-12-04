@@ -5,8 +5,11 @@ class DataFrame:
     def __init__(self, data_dict, column_order):
         self.data_dict = {}
         self.columns = column_order
-        for key in self.columns:
-            self.data_dict[key] = data_dict[key]
+        if data_dict != {}:
+            for key in self.columns:
+                self.data_dict[key] = data_dict[key]
+        else:
+            self.data_dict = {}
         self.last_base_column_index = len(column_order)
 
     def to_array(self):
@@ -14,7 +17,7 @@ class DataFrame:
 
     @staticmethod
     def from_array(array, columns):
-        return DataFrame(dict(zip(columns, [[row[i] for row in array] for i, _ in enumerate(array[0])])), columns)
+        return DataFrame({column: list(arr) for column, arr in zip(columns, zip(*array))}, columns)
 
     def filter_columns(self, columns):
         self.data_dict = DataFrame(self.data_dict, columns).data_dict
@@ -27,7 +30,13 @@ class DataFrame:
         return self.from_array([DataFrame(self.data_dict, self.columns).to_array()[i] for i in indices], self.columns)
 
     def select_rows_where(self, lambda_function):
-        return self.select_rows([i for i in range(len(self.to_array()[0])) if lambda_function({column: value[i] for column, value in self.data_dict.items()})])
+        rows = []
+        for i in range(len(self.to_array())):
+            x = {column: value[i] for column, value in self.data_dict.items()}
+            if lambda_function(x):
+                rows.append(i)
+        if rows != []:
+            return self.select_rows(rows)
 
     def order_by(self, column, ascending):
         return self.select_rows(self.get_sorted_indicies(column, ascending))
