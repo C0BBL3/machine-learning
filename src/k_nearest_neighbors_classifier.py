@@ -8,7 +8,14 @@ class KNearestNeighborsClassifier:
         self.dependent_variable = dataframe.data_dict[dependent_variable]
 
     def compute_distances(self, observations):
-        return [[sum([(self.data_dict[portion][i] - observations[portion]) ** 2 for portion in self.data_dict.keys()]) ** 0.5, distance] for i, distance in enumerate(self.dependent_variable)]
+        temp_1 = []
+        for i, distance in enumerate(self.dependent_variable):
+            temp_2 = 0
+            for portion in self.data_dict.keys():
+                temp_2 += (self.data_dict[portion][i] - observations[portion]) ** 2
+            temp_1.append([temp_2 ** 0.5, distance])
+        return temp_1
+        #return [[sum([(self.data_dict[portion][i] - observations[portion]) ** 2 for portion in self.data_dict.keys()]) ** 0.5, distance] for i, distance in enumerate(self.dependent_variable)]
 
     def nearest_neighbors(self, observations):
         return self.simple_sort(self.compute_distances(observations))
@@ -25,23 +32,22 @@ class KNearestNeighborsClassifier:
                 distance for distance in distances if distance not in current_distances]
         return average_distances
 
-    def classify(self, observations):
+    def classify(self, observations,i):
         k_nearest_neighbors = [neighbor[1]
                                for neighbor in self.nearest_neighbors(observations)[:self.k]]
         count_of_types = dict.fromkeys(k_nearest_neighbors, 0)
+        average_distances = self.compute_average_distances(observations)
         for neighbor in k_nearest_neighbors:
             count_of_types[neighbor] += 1
-        max_count = [None, 0]
+        classification = [None, 0]
         for _type_, count in count_of_types.items():
-            if count > max_count[1]:
-                max_count = [_type_, count]
-            elif count == max_count[1] and max_count[1] > 0:
-                return min(
-                    self.compute_average_distances(observations).keys(),
-                    key=(lambda k: self.compute_average_distances(
-                        observations)[self.k])
-                )
-        return max_count[0]
+            if count > classification[1]:
+                classification = [_type_, count]
+            elif count == classification[1] and classification[1] > 0:
+                if average_distances[_type_] < average_distances[classification[0]]:
+                    classification = [_type_, count]
+
+        return classification[0]
 
     def simple_sort(self, distances):
         sorted_list, copy_list = [], [i for i in distances]

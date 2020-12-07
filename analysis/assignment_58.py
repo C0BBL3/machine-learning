@@ -35,26 +35,25 @@ def percent_correct(k):
         'Portion Sugar': data_set[i][3],
         'Portion Flour': data_set[i][4]
         }
+        print(observation)
         data_set_without_i = data_set[:i] + data_set[i+1:]
         df = DataFrame.from_array(data_set_without_i, 
         columns = ['Cookie Type', 'Portion Eggs', 'Portion Butter', 'Portion Sugar', 'Portion Flour']
         )
-        knn = KNearestNeighborsClassifier(df, prediction_column = 'Cookie Type')
-        #print('observation["Cookie Type"]', observation["Cookie Type"])
-        print('knn.classify(observation, k=k)', knn.classify(observation, k=k))
-        #print('knn.classify(observation, k=k) == data_set[k][0]', knn.classify(observation, k=k) == observation["Cookie Type"])
-        if knn.classify(observation, k=k) == observation["Cookie Type"]:
+        knn = KNearestNeighborsClassifier(k=5)
+        knn.fit(dataframe=df, dependent_variable = 'Cookie Type')
+        observation_of_cookie = observation['Cookie Type']
+        classification = knn.classify(observation)
+        if_observation_equals_classification = classification == observation_of_cookie
+        if if_observation_equals_classification:
             correct_observations += 1
-    #print('correct_observations', correct_observations)
-    #print('len(data_set)', len(data_set))
     return correct_observations/len(data_set)
 
 
 y_values = []
-for k in range(2, len(data_set)):
-    print('k, data_set[k]', k, data_set[k])
+for k in range(0, len(data_set)):
+    data_set_k = data_set[k]
     y_values.append(percent_correct(k))
-    print('y_values', y_values)
 
 
 #plt.plot([x for x in range(1, len(data_set)+1)],y_values)
