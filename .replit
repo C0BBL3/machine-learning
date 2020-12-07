@@ -1,2 +1,2 @@
 language = "bash"
-run = "python tests\test_decision_tree.py"
+run = "python tests\test_leave_one_out_cross_validator.py"

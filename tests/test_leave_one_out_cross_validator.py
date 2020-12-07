@@ -32,10 +32,10 @@ knn = KNearestNeighborsClassifier(k=5)
 
 cross_validator_1 = LeaveOneOutCrossValidator(knn, df, prediction_column='Cookie Type')
 
-print('Testing...')
+print('\nTesting...\n')
 
-print("    Testing Leave One Out Cross Validator's accuracy()",cross_validator_1.accuracy())
-#assert cross_validator_1.accuracy()==0.6842105263157895, "Leave One Out Cross Validator's accuracy() was not right, it should be 0.6842105263157895, but was {}".format(cross_validator_1.accuracy())
+print("    Testing Leave One Out Cross Validator's accuracy()")
+assert cross_validator_1.accuracy()==0.7894736842105263, "Leave One Out Cross Validator's accuracy() was not right, it should be 0.6842105263157895, but was {}".format(cross_validator_1.accuracy())
 print("    Leave One Out Cross Validator's accuracy() Passed!!!\n")
 
 accuracies = []
@@ -44,44 +44,9 @@ for k in range(1,  len(df.to_array())-1):
     cross_validator_2 = LeaveOneOutCrossValidator(knn, df, prediction_column='Cookie Type')
     accuracies.append(cross_validator_2.accuracy())
 
-accuracies=[0.5789473684210527,
-           0.5263157894736842,
-           0.5789473684210527,
-           0.5789473684210527,
-           0.6842105263157895,
-           0.6842105263157895,
-           0.5789473684210527,
-           0.631578947368421,
-           0.5789473684210527,
-           0.5263157894736842,
-           0.5263157894736842,
-           0.42105263157894735,
-           0.47368421052631576,
-           0.42105263157894735,
-           0.42105263157894735,
-           0.3157894736842105,
-           0.42105263157894735]
-
-print("    Testing Leave One Out Cross Validator's accuracies",accuracies)
-'''assert accuracies==[0.5789473684210527,
-           0.5263157894736842,
-           0.5789473684210527,
-           0.5789473684210527,
-           0.6842105263157895,
-           0.6842105263157895,
-           0.5789473684210527,
-           0.631578947368421,
-           0.5789473684210527,
-           0.5263157894736842,
-           0.5263157894736842,
-           0.42105263157894735,
-           0.47368421052631576,
-           0.42105263157894735,
-           0.42105263157894735,
-           0.3157894736842105,
-           0.42105263157894735], "Leave One Out Cross Validator's accuracies was not right, it should be [0.5789473684210527,0.5263157894736842,0.5789473684210527,0.5789473684210527,0.6842105263157895,0.6842105263157895,0.5789473684210527,0.631578947368421,0.5789473684210527,0.5263157894736842,0.5263157894736842,0.42105263157894735,0.47368421052631576,0.42105263157894735,0.42105263157894735,0.3157894736842105,0.42105263157894735], but was {}".format(accuracies)
-'''
+print("    Testing Leave One Out Cross Validator's accuracies")
+assert accuracies==[0.5789473684210527, 0.7368421052631579, 0.5789473684210527, 0.6842105263157895, 0.7894736842105263, 0.7368421052631579, 0.5789473684210527, 0.6842105263157895, 0.631578947368421, 0.5263157894736842, 0.42105263157894735, 0.42105263157894735, 0.3684210526315789, 0.3157894736842105, 0.3684210526315789, 0.3157894736842105, 0.42105263157894735], "Leave One Out Cross Validator's accuracies was not right, it should be [0.5789473684210527, 0.7368421052631579, 0.5789473684210527, 0.6842105263157895, 0.7894736842105263, 0.7368421052631579, 0.5789473684210527, 0.6842105263157895, 0.631578947368421, 0.5263157894736842, 0.42105263157894735, 0.42105263157894735, 0.3684210526315789, 0.3157894736842105, 0.3684210526315789, 0.3157894736842105, 0.42105263157894735], but was {}".format(accuracies)
 print("    Leave One Out Cross Validator's accuracies Passed!!!\n")
 
-print('\nAll Tests Passed\n')
+print('All Tests Passed!!!')
 
