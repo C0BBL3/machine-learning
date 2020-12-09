@@ -5,7 +5,10 @@ class DecisionTree:
         self.root = DecisionTreeNode(dataframe)
 
     def split(self):
-         self.root.split(self.root)
+        self.root.split(self.root)
+    
+    def fit(self):
+        self.root.fit(self.root)
 
 class DecisionTreeNode:
     def __init__(self, dataframe):
@@ -20,8 +23,19 @@ class DecisionTreeNode:
         self.impurity = self.impurity_function()
         self.possible_splits = self.possible_splits_function()
         self.low, self.high = None, None
+        self.split_bool = False
+
+    def fit(self, current_node = None):
+        if current_node.low is None and current_node.high is None and current_node.impurity != 0:
+            current_node.split(current_node)
+        if current_node.low is not None and current_node.low.impurity != 0:
+            current_node.fit(current_node.low)
+        if current_node.high is not None and current_node.high.impurity != 0:
+            current_node.fit(current_node.high)
+
 
     def split(self, current_node):
+        current_node.split_bool = True
         x=current_node.low is None and current_node.high is None and current_node.impurity != 0
         y=current_node.low is not None and current_node.low.impurity != 0
         z=current_node.high is not None and current_node.high.impurity != 0

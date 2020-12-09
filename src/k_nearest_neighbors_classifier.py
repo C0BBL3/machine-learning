@@ -33,6 +33,7 @@ class KNearestNeighborsClassifier:
         return average_distances
 
     def classify(self, observations,i):
+        print(self.nearest_neighbors(observations)[:5])
         k_nearest_neighbors = [neighbor[1]
                                for neighbor in self.nearest_neighbors(observations)[:self.k]]
         count_of_types = dict.fromkeys(k_nearest_neighbors, 0)
