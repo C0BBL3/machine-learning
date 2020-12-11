@@ -16,15 +16,11 @@ a_x,a_y,b_x,b_y=[],[],[],[]
 
 for arr in data:
     if arr[2] == 'A':
-        if arr[0] not in a_x:
-            a_x.append(arr[0])
-        if arr[1] not in a_y:
-            a_y.append(arr[1])
+        a_x.append(arr[0])
+        a_y.append(arr[1])
     if arr[2] == 'B':
-        if arr[0] not in b_x:
-            b_x.append(arr[0])
-        if arr[1] not in b_y:
-            b_y.append(arr[1])
+        b_x.append(arr[0])
+        b_y.append(arr[1])
 
 plt.scatter(x=a_x, y=a_y, c='blue')
 plt.scatter(x=b_x, y=b_y, c='red')
