@@ -2,6 +2,7 @@ from dataframe import DataFrame
 
 class DecisionTree:
     def __init__(self, dataframe):
+        self.dataframe = dataframe
         self.root = DecisionTreeNode(dataframe)
 
     def split(self):
@@ -9,6 +10,10 @@ class DecisionTree:
     
     def fit(self):
         self.root.fit(self.root)
+    
+    def classify(self, coords):
+        return self.root.classify(coords)
+
 
 class DecisionTreeNode:
     def __init__(self, dataframe):
@@ -24,6 +29,21 @@ class DecisionTreeNode:
         self.possible_splits = self.possible_splits_function()
         self.low, self.high = None, None
         self.split_bool = False
+
+    def classify(self, coords, current_node=None):
+        if current_node == None:
+            current_node = self
+        if current_node.impurity != 0:
+            best_split_var = current_node.best_split()
+            if best_split_var is not None:
+                if coords[best_split_var[0]] < best_split_var[1]:
+                    return current_node.classify(coords, current_node = current_node.low)
+                elif coords[best_split_var[0]] >= best_split_var[1]:
+                    return current_node.classify(coords, current_node = current_node.high)
+            else:
+                return current_node.dataframe.data_dict['class'][0]
+        else:
+            return current_node.dataframe.data_dict['class'][0]
 
     def fit(self, current_node = None):
         if current_node.low is None and current_node.high is None and current_node.impurity != 0:
@@ -91,14 +111,20 @@ class DecisionTreeNode:
             for x in self.dataframe.data_dict['x']:
                 if x not in unique_xs:
                     unique_xs.append(x)
+            unique_xs.sort()
             split_xs = [(unique_xs[i] + unique_xs
                          [i+1]) / 2 for i in range(0, len(unique_xs) - 1)]
             unique_ys = []
             for y in self.dataframe.data_dict['y']:
                 if y not in unique_ys:
                     unique_ys.append(y)
-            split_ys = [(unique_ys[i] + unique_ys
-                         [i+1]) / 2 for i in range(0, len(unique_ys) - 1)]
+            unique_ys.sort()
+            split_ys = []
+            for i in range(0, len(unique_ys) - 1):
+                one = unique_ys[i]
+                two = unique_ys[i+1]
+                split_ys.append((unique_ys[i] + unique_ys
+                         [i+1]) / 2)
             possible_splits = []
             for x in split_xs:
                 possible_splits.append(

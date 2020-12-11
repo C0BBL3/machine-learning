@@ -149,5 +149,66 @@ print("    Testing Decision Tree's low.high.impurity")
 assert dt.root.low.high.impurity == 0, "Decision Tree's low.high.impurity was not right, it should be 0, but was {}".format(dt.root)
 print("    Decision Tree's low.high.impurity Passed!!!\n")
 
+print('\n--------------------------------\n')
+
+array = [[2,13,'B'],[2,13,'B'],[2,13,'B'],[2,13,'B'],[2,13,'B'],[2,13,'B'],
+    [3,13,'B'],[3,13,'B'],[3,13,'B'],[3,13,'B'],[3,13,'B'],[3,13,'B'],
+    [2,12,'B'],[2,12,'B'],
+    [3,12,'A'],[3,12,'A'],
+    [3,11,'A'],[3,11,'A'],
+    [3,11.5,'A'],[3,11.5,'A'],
+    [4,11,'A'],[4,11,'A'],
+    [4,11.5,'A'],[4,11.5,'A'],
+    [2,10.5,'A'],[2,10.5,'A'],
+    [3,10.5,'B'],
+    [4,10.5,'A']]
+df = DataFrame.from_array(
+    array,
+    columns = ['x', 'y', 'class']
+)
+df.append_columns({'indices': [i for i in range(0, len(array))]})
+dt = DecisionTree(df)
+
+dt.fit()
+
+print("    Testing Decision Tree's best_split")
+assert dt.root.best_split()[0:2] == ['y', 12.5], "Decision Tree's best_split was not right, it should be ['y', 12.5], but was {}".format(dt.root.best_split()[0:2])
+print("    Decision Tree's best_split Passed!!!\n")
+
+print("    Testing Decision Tree's best_split")
+assert dt.root.low.best_split()[0:2] == ['x', 2.5], "Decision Tree's best_split was not right, it should be ['x', 2.5], but was {}".format(dt.root.low.best_split()[0:2])
+print("    Decision Tree's best_split Passed!!!\n")
+
+print("    Testing Decision Tree's best_split")
+assert dt.root.low.low.best_split()[0:2] == ['y', 11.25], "Decision Tree's best_split was not right, it should be ['y', 11.25], but was {}".format(dt.root.low.low.best_split()[0:2])
+print("    Decision Tree's best_split Passed!!!\n")
+
+print("    Testing Decision Tree's best_split")
+assert dt.root.low.high.best_split()[0:2] == ['y', 10.75], "Decision Tree's best_split was not right, it should be ['y', 11], but was {}".format(dt.root.low.high.best_split()[0:2])
+print("    Decision Tree's best_split Passed!!!\n")
+
+print("    Testing Decision Tree's best_split")
+assert dt.root.low.high.low.best_split()[0:2] == ['x', 3.5], "Decision Tree's best_split was not right, it should be ['x', 3.5], but was {}".format(dt.root.low.high.low.best_split()[0:2])
+print("    Decision Tree's best_split Passed!!!\n")
+
+print("    Testing Decision Tree's classify")
+assert dt.classify({'x': 2, 'y': 11.5}) == 'B', "Decision Tree's classify was not right, it should be B, but was {}".format(dt.classify({'x': 2, 'y': 11.5}))
+print("    Decision Tree's classify Passed!!!\n")
+
+print("    Testing Decision Tree's classify")
+assert dt.classify({'x': 2.5, 'y': 13}) == 'B', "Decision Tree's classify was not right, it should be B, but was {}".format(dt.classify({'x': 2.5, 'y': 13}))
+print("    Decision Tree's classify Passed!!!\n")
+
+print("    Testing Decision Tree's classify")
+assert dt.classify({'x': 4, 'y': 12}) == 'A', "Decision Tree's classify was not right, it should be A, but was {}".format(dt.classify({'x': 4, 'y': 12}))
+print("    Decision Tree's classify Passed!!!\n")
+
+print("    Testing Decision Tree's classify")
+assert dt.classify({'x': 3.25, 'y': 10.5}) == 'B', "Decision Tree's classify was not right, it should be B, but was {}".format(dt.classify({'x': 3.25, 'y': 10.5}))
+print("    Decision Tree's classify Passed!!!\n")
+
+print("    Testing Decision Tree's classify")
+assert dt.classify({'x': 3.75, 'y': 10.5}) == 'A', "Decision Tree's classify was not right, it should be A, but was {}".format(dt.classify({'x': 3.75, 'y': 10.5}))
+print("    Decision Tree's classify Passed!!!\n")
 
 print('\nAll Tests Passed\n')
