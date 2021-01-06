@@ -1,23 +1,26 @@
 from dataframe import DataFrame
+import random
+
 
 class DecisionTree:
-    def __init__(self, dataframe):
+    def __init__(self, dataframe, split_metric='gini'):
         self.dataframe = dataframe
-        self.root = DecisionTreeNode(dataframe)
+        self.root = DecisionTreeNode(dataframe, split_metric)
 
     def split(self):
         self.root.split(self.root)
-    
+
     def fit(self):
         self.root.fit(self.root)
-    
+
     def classify(self, coords):
         return self.root.classify(coords)
 
 
 class DecisionTreeNode:
-    def __init__(self, dataframe):
+    def __init__(self, dataframe, split_metric):
         self.dataframe = dataframe
+        self.split_metric = split_metric
         self.row_indices = self.dataframe.data_dict['indices']
         self.class_count = {}
         for indice_class in dataframe.data_dict['class']:
@@ -34,18 +37,18 @@ class DecisionTreeNode:
         if current_node == None:
             current_node = self
         if current_node.impurity != 0:
-            best_split_var = current_node.best_split()
+            best_split_var = current_node.best_gini_split()
             if best_split_var is not None:
                 if coords[best_split_var[0]] < best_split_var[1]:
-                    return current_node.classify(coords, current_node = current_node.low)
+                    return current_node.classify(coords, current_node=current_node.low)
                 elif coords[best_split_var[0]] >= best_split_var[1]:
-                    return current_node.classify(coords, current_node = current_node.high)
+                    return current_node.classify(coords, current_node=current_node.high)
             else:
                 return current_node.dataframe.data_dict['class'][0]
         else:
             return current_node.dataframe.data_dict['class'][0]
 
-    def fit(self, current_node = None):
+    def fit(self, current_node=None):
         if current_node.low is None and current_node.high is None and current_node.impurity != 0:
             current_node.split(current_node)
         if current_node.low is not None and current_node.low.impurity != 0:
@@ -53,27 +56,33 @@ class DecisionTreeNode:
         if current_node.high is not None and current_node.high.impurity != 0:
             current_node.fit(current_node.high)
 
-
     def split(self, current_node):
         current_node.split_bool = True
-        x=current_node.low is None and current_node.high is None and current_node.impurity != 0
-        y=current_node.low is not None and current_node.low.impurity != 0
-        z=current_node.high is not None and current_node.high.impurity != 0
-        if current_node.low is None and current_node.high is None and current_node.impurity != 0:
-            best_split = current_node.best_split()
-            if best_split[0] == 'x':
-                current_node.low = current_node.get_low_split(x=best_split[1])
-                current_node.high = current_node.get_high_split(x=best_split[1])
-            if best_split[0] == 'y':
-                current_node.low = current_node.get_low_split(y=best_split[1])
-                current_node.high = current_node.get_high_split(y=best_split[1])
-        elif current_node.low is not None and current_node.low.impurity != 0:
+        current_node_needs_splitting = current_node.low is None and current_node.high is None and current_node.impurity != 0
+        current_node_low_needs_splitting = current_node.low is not None and current_node.low.impurity != 0
+        current_node_high_needs_splitting = current_node.high is not None and current_node.high.impurity != 0
+        if current_node_needs_splitting:
+            if self.split_metric == 'gini':
+                split = current_node.best_gini_split()
+            elif self.split_metric == 'random':
+                split = current_node.random_split()
+            if split[0] == 'x':
+                current_node.low = current_node.get_low_split(x=split[1])
+                current_node.high = current_node.get_high_split(x=split[1])
+            if split[0] == 'y':
+                current_node.low = current_node.get_low_split(y=split[1])
+                current_node.high = current_node.get_high_split(y=split[1])
+        elif current_node_low_needs_splitting:
             self.split(current_node.low)
-        elif current_node.high is not None and current_node.high.impurity != 0:
+        elif current_node_high_needs_splitting:
             self.split(current_node.high)
 
-    def best_split(self):
-        return max(self.possible_splits.to_array(), key=lambda split: split[2])
+    def random_split(self):
+        array = self.possible_splits.to_array()
+        return array[random.randint(0, len(array))]
+
+    def best_gini_split(self):
+        max(self.possible_splits.to_array(), key=lambda split: split[2])
 
     def impurity_function(self):
         impurity = 0
@@ -95,15 +104,15 @@ class DecisionTreeNode:
 
     def get_high_split(self, x=None, y=None):
         if y == None and self.dataframe.select_rows_where(lambda row: row['x'] >= x) != None:
-            return DecisionTreeNode(self.dataframe.select_rows_where(lambda row: row['x'] >= x))
+            return DecisionTreeNode(self.dataframe.select_rows_where(lambda row: row['x'] >= x), self.split_metric)
         if x == None and self.dataframe.select_rows_where(lambda row: row['y'] >= y) != None:
-            return DecisionTreeNode(self.dataframe.select_rows_where(lambda row: row['y'] >= y))
+            return DecisionTreeNode(self.dataframe.select_rows_where(lambda row: row['y'] >= y), self.split_metric)
 
     def get_low_split(self, x=None, y=None):
         if y == None and self.dataframe.select_rows_where(lambda row: row['x'] < x) != None:
-            return DecisionTreeNode(self.dataframe.select_rows_where(lambda row: row['x'] < x))
+            return DecisionTreeNode(self.dataframe.select_rows_where(lambda row: row['x'] < x), self.split_metric)
         if x == None and self.dataframe.select_rows_where(lambda row: row['y'] < y) != None:
-            return DecisionTreeNode(self.dataframe.select_rows_where(lambda row: row['y'] < y))
+            return DecisionTreeNode(self.dataframe.select_rows_where(lambda row: row['y'] < y), self.split_metric)
 
     def possible_splits_function(self):
         if self.impurity != 0:
@@ -121,10 +130,8 @@ class DecisionTreeNode:
             unique_ys.sort()
             split_ys = []
             for i in range(0, len(unique_ys) - 1):
-                one = unique_ys[i]
-                two = unique_ys[i+1]
                 split_ys.append((unique_ys[i] + unique_ys
-                         [i+1]) / 2)
+                                 [i+1]) / 2)
             possible_splits = []
             for x in split_xs:
                 possible_splits.append(
