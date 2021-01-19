@@ -19,6 +19,7 @@ class LinearRegressor:
         for i, key in enumerate(self.dataframe.data_dict.keys()):
             if round_coeffs: self.coefficients[key] = round(coeff_result[i], num_decimal)
             else: self.coefficients[key] = coeff_result[i]
+            
     def gather_all_inputs(self, inputs):
         result = inputs
         cartesian = self.dataframe.cartesian_product([inputs.keys(), inputs.keys()])
