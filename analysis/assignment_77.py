@@ -41,7 +41,7 @@ first_60_last_20_df = df.split_dataframe(3,(0,2), location_of_splits =[0.6,0.8])
 fifth_20_df = df.split_dataframe(5,4, location_of_splits = None)
 first_80_df = df.split_dataframe(2,0, location_of_splits =[0.8])
 
-prlast_80_decision_tree = DecisionTree(dataframe = last_80_df, class_name = '"Sex"')
+last_80_decision_tree = DecisionTree(dataframe = last_80_df, class_name = '"Sex"')
 last_80_decision_tree.fit()
 first_20_last_60_decision_tree = DecisionTree(dataframe = first_20_last_60_df, class_name = '"Sex"')
 first_20_last_60_decision_tree.fit()
@@ -97,7 +97,8 @@ forest_10_third_20_classifications = classifications(first_40_last_40_random_for
 forest_10_fourth_20_classifications = classifications(first_60_last_20_random_forest_10, fourth_20_df)
 forest_10_fifth_20_classifications = classifications(first_80_random_forest_10, fifth_20_df)
 
-forest_10_classifications = combine_lists([forest_10_first_20_classifications, forest_10_second_20_classifications, forest_10_third_20_classifications, forest_10_fourth_20_classifications, forest_10_fifth_20_classifications])print('forest 10 accuracy', forest_10_classifications.count(True) / len(forest_10_classifications))
+forest_10_classifications = combine_lists([forest_10_first_20_classifications, forest_10_second_20_classifications, forest_10_third_20_classifications, forest_10_fourth_20_classifications, forest_10_fifth_20_classifications])
+print('forest 10 accuracy', forest_10_classifications.count(True) / len(forest_10_classifications))
 
 last_80_random_forest_100 = RandomForest(100, class_name = '"Sex"')
 last_80_random_forest_100.fit(last_80_df)
